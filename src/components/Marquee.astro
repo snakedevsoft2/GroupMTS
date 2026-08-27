@@ -1,0 +1,117 @@
+---
+import { marquee } from '../data/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const items = marquee.map((item) => t(item, lang));
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {
+      [0, 1].map(() => (
+        <div class="marquee__group">
+          {items.map((label) => (
+            <span>{label}</span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    padding-block: 1.5rem;
+    border-block: 1px solid var(--line);
+    background: var(--paper-2);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* La velocidad real la pone el script; esto es el respaldo si el JS no carga */
+  .marquee__track { display: flex; width: max-content; animation: slide 22s linear infinite; will-change: transform }
+  .marquee:hover .marquee__track { animation-play-state: paused }
+
+  @keyframes slide {
+    to { transform: translateX(-50%) }
+  }
+
+  .marquee__group { display: flex; align-items: center; gap: 3.2rem; padding-right: 3.2rem }
+
+  .marquee__group span {
+    display: inline-flex;
+    align-items: center;
+    gap: .9rem;
+    font-family: var(--f-display);
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .marquee__group span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c1); flex: none }
+  .marquee__group span:nth-child(4n+2)::before { background: var(--c2) }
+  .marquee__group span:nth-child(4n+3)::before { background: var(--c3) }
+  .marquee__group span:nth-child(4n+4)::before { background: var(--c4) }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* La marquesina sigue andando, más lenta: es un desplazamiento suave,
+       no un efecto brusco. */
+    .marquee__track { animation-duration: 55s !important }
+  }
+</style>
+
+<script>
+  import { reduce } from '../scripts/scroll';
+
+  /* Marquesina: se mueve sola y reacciona al scroll. Sustituye la animación
+     CSS por un bucle propio para sumarle la velocidad del scroll. */
+  const track = document.querySelector<HTMLElement>('.marquee__track');
+  if (track) {
+    let groupW = 0;
+    let x = 0;
+    let vel = 0;
+    let hover = false;
+    let lastY = window.scrollY;
+
+    const measure = (): void => {
+      const first = track.firstElementChild;
+      if (first instanceof HTMLElement) groupW = first.offsetWidth;
+    };
+
+    track.style.animation = 'none';
+    measure();
+
+    const box = track.parentElement!;
+    box.addEventListener('mouseenter', () => { hover = true; });
+    box.addEventListener('mouseleave', () => { hover = false; });
+    window.addEventListener('resize', measure, { passive: true });
+
+    (function tick() {
+      const y = window.scrollY;
+      if (!reduce) {
+        vel += (y - lastY) * 0.45; /* el scroll la empuja */
+        vel *= 0.9; /* y se va frenando sola */
+      }
+      lastY = y;
+
+      /* Con "reducir movimiento" va más lenta y sin empujón de scroll,
+         pero no se detiene: es la única animación que se mantiene. */
+      const base = reduce ? 1.1 : hover ? 0.35 : 1.7;
+      x -= base + vel;
+
+      if (groupW > 0) {
+        while (x <= -groupW) { x += groupW; measure(); }
+        while (x > 0) x -= groupW;
+      }
+      track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+      requestAnimationFrame(tick);
+    })();
+  }
+</script>
