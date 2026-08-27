@@ -1,0 +1,76 @@
+---
+import { processHead, processSteps } from '../data/process';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section class="section section--tint" id="proceso">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow reveal">{t(processHead.eyebrow, lang)}</span>
+      <h2 class="reveal" data-d="1" set:html={t(processHead.titleHtml, lang)} />
+    </div>
+    <div class="steps reveal" data-d="1">
+      {
+        processSteps.map((step, i) => (
+          <div class="step">
+            <b>{String(i + 1).padStart(2, '0')}</b>
+            <h3>{t(step.title, lang)}</h3>
+            <p>{t(step.text, lang)}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-m);
+    overflow: hidden;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 560px) {
+    .steps { grid-template-columns: repeat(2, 1fr) }
+  }
+
+  @media (min-width: 1100px) {
+    .steps { grid-template-columns: repeat(4, 1fr) }
+  }
+
+  .step { background: var(--card); padding: clamp(1.8rem, 3vw, 2.4rem); transition: background .4s; position: relative }
+  .step:hover { background: var(--paper-2) }
+
+  /* Número grande solo con contorno; se rellena al pasar el mouse */
+  .step b {
+    font-family: var(--f-display);
+    font-size: 2.7rem;
+    color: transparent;
+    line-height: 1;
+    display: block;
+    margin-bottom: 1.2rem;
+    -webkit-text-stroke: 1.5px var(--c1);
+    transition: color .5s var(--ease);
+  }
+
+  .step:nth-child(2) b { -webkit-text-stroke-color: var(--c2) }
+  .step:nth-child(3) b { -webkit-text-stroke-color: var(--c3) }
+  .step:nth-child(4) b { -webkit-text-stroke-color: var(--c4) }
+  .step:hover b { color: rgba(var(--c1-rgb), .12) }
+  .step:nth-child(2):hover b { color: rgba(var(--c2-rgb), .14) }
+  .step:nth-child(3):hover b { color: rgba(var(--c3-rgb), .14) }
+  .step:nth-child(4):hover b { color: rgba(var(--c4-rgb), .16) }
+
+  .step h3 { font-size: 1.05rem; margin-bottom: .55rem }
+  .step p { font-size: .87rem; color: var(--muted) }
+</style>
