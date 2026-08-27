@@ -1,0 +1,129 @@
+---
+import './hero.css';
+import { hero, trust } from '../data/hero';
+import { site } from '../data/site';
+import { dicts, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = dicts[lang];
+const words = hero.h1[lang];
+---
+
+<header class="hero" id="hero">
+  <div class="hero__bg" data-parallax="-.14">
+    <video autoplay muted loop playsinline preload="metadata">
+      <source src={hero.video} type="video/mp4" />
+    </video>
+  </div>
+
+  <div class="hero__inner" id="heroInner">
+    <span class="badge hero__fade"><span class="dot"></span><span>{t(hero.badge, lang)}</span></span>
+
+    <h1>
+      {
+        words.map((w) => (
+          <Fragment>
+            <span class="w"><span>{w.em ? <em>{w.t}</em> : w.t}</span></span>
+            {w.br ? <br /> : ' '}
+          </Fragment>
+        ))
+      }
+    </h1>
+
+    <p class="lede hero__fade d2">{t(hero.lede, lang)}</p>
+
+    <div class="hero-cta hero__fade d3">
+      <a href={t(site.whatsapp, lang)} target="_blank" rel="noopener noreferrer" class="btn" data-magnetic>
+        <span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            style="width:1.15em;height:1.15em;vertical-align:-.18em;margin-right:.4em"
+          >
+            <path
+              d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.05-1.32A10 10 0 1 0 12 2zm-3.1 5.8h.55c.15.01.35-.06.54.41.2.49.68 1.7.74 1.82.06.12.1.26.02.42-.08.16-.12.26-.24.4-.12.14-.25.31-.36.42-.12.12-.24.25-.1.49.14.24.63 1.04 1.36 1.69.94.83 1.73 1.09 1.97 1.21.24.12.38.1.52-.06.14-.16.61-.71.77-.95.16-.24.33-.2.55-.12.22.08 1.43.67 1.67.79.24.12.4.18.46.28.06.11.06.6-.14 1.17-.21.58-1.21 1.13-1.66 1.17-.45.04-.87.2-2.94-.62-2.49-.98-4.07-3.52-4.19-3.68-.12-.16-.99-1.31-.99-2.5s.63-1.78.85-2.02c.22-.24.48-.3.64-.3z"
+            ></path>
+          </svg><span>{dict.quoteWhatsApp}</span>
+        </span>
+      </a>
+      <a href="#transformacion" class="btn btn--ghost" data-magnetic><span>{dict.seeRestorations}</span></a>
+    </div>
+
+    <span class="hero__tag hero__fade d3"><span class="dot"></span><span>{t(hero.tag, lang)}</span></span>
+  </div>
+
+  <div class="trust hero__fade d4" id="trust">
+    {
+      trust.map((item) => (
+        <div>
+          <b data-count={item.value} data-suffix={t(item.suffix, lang)}>0</b>
+          <span>{t(item.label, lang)}</span>
+        </div>
+      ))
+    }
+  </div>
+</header>
+
+<script>
+  import { onScroll, reduce } from '../scripts/scroll';
+
+  const hero = document.getElementById('hero')!;
+  requestAnimationFrame(() => hero.classList.add('ready'));
+
+  /* El autoplay puede rechazarse por política del navegador; no es un error */
+  hero.querySelector('video')?.play().catch(() => {});
+
+  /* El contenido se desvanece y sube al hacer scroll */
+  const heroInner = document.getElementById('heroInner')!;
+  onScroll(() => {
+    if (reduce) return;
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+    if (y > vh) return;
+    const p = Math.min(1, y / (vh * 0.85));
+    heroInner.style.transform = `translate3d(0,${(p * -70).toFixed(1)}px,0)`;
+    heroInner.style.opacity = (1 - p * 1.15).toFixed(3);
+  });
+
+  /* Contadores de cifras */
+  const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-count]'));
+  function runCounters(): void {
+    for (const el of counters) {
+      const target = parseFloat(el.dataset.count ?? '0');
+      const suffix = el.dataset.suffix ?? '';
+      if (reduce) {
+        el.textContent = `${target}${suffix}`;
+        continue;
+      }
+      let t0: number | null = null;
+      const dur = 1600;
+      const step = (ts: number): void => {
+        if (t0 === null) t0 = ts;
+        const p = Math.min(1, (ts - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = `${Math.round(target * eased)}${suffix}`;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+  }
+  const trustBox = document.getElementById('trust')!;
+  if ('IntersectionObserver' in window) {
+    const cio = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          runCounters();
+          cio.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    cio.observe(trustBox);
+  } else {
+    runCounters();
+  }
+</script>
