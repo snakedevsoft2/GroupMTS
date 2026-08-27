@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Marquee from '../components/Marquee.astro';
 import Services from '../components/Services.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -22,5 +23,6 @@ const lang: Lang = 'es';
   <Marquee {lang} />
   <main id="main">
     <Services {lang} />
+    <BeforeAfter {lang} />
   </main>
 </BaseLayout>
