@@ -12,7 +12,7 @@ const dict = dicts[lang];
 ---
 
 <section class="videoband">
-  <VideoBackdrop src={taller.video} parallax="-.12" />
+  <VideoBackdrop src={taller.video} parallax="-.12" poster={taller.poster} />
   <div>
     <span class="eyebrow reveal" style="justify-content:center">{t(taller.eyebrow, lang)}</span>
     <h2 class="reveal" data-d="1" set:html={t(taller.titleHtml, lang)} />

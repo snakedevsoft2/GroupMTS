@@ -1,16 +1,23 @@
 ---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 /* Fondo de video reutilizable para las bandas oscuras (taller y testimonios).
    Cada sección ajusta su velo con overrides sobre .vbg::after. */
 interface Props {
   src: string;
   parallax: string;
+  poster?: ImageMetadata;
 }
 
-const { src, parallax } = Astro.props;
+const { src, parallax, poster } = Astro.props;
+const posterUrl = poster
+  ? (await getImage({ src: poster, width: 1080, format: 'webp' })).src
+  : undefined;
 ---
 
 <div class="vbg" data-parallax={parallax}>
-  <video autoplay muted loop playsinline preload="none">
+  <video autoplay muted loop playsinline preload="none" poster={posterUrl}>
     <source src={src} type="video/mp4" />
   </video>
 </div>

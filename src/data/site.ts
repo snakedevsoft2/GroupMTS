@@ -1,4 +1,6 @@
+import type { ImageMetadata } from 'astro';
 import type { Localized } from '../i18n';
+import tallerPoster from '../assets/taller-poster.jpg';
 
 /* Identidad, contacto y metadatos de GroupMTS.
    Solo datos confirmados por el dueño (ver PRODUCT.md). */
@@ -73,6 +75,8 @@ export const marquee: Localized[] = [
 /* Banda oscura "Taller propio" (video del taller). */
 export const taller = {
   video: '/VIDEO/taller.mp4',
+  /* Frame real del propio video, extraído con ffmpeg */
+  poster: tallerPoster as ImageMetadata,
   eyebrow: { es: 'Taller propio', en: 'Our own shop' },
   titleHtml: {
     es: 'Hecho en Puerto Rico,<br>en nuestro propio <em>taller</em>',

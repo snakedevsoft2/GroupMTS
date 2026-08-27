@@ -1,5 +1,6 @@
 ---
 import './hero.css';
+import { getImage } from 'astro:assets';
 import { hero, trust } from '../data/hero';
 import { site } from '../data/site';
 import { dicts, t, type Lang } from '../i18n';
@@ -11,11 +12,12 @@ interface Props {
 const { lang } = Astro.props;
 const dict = dicts[lang];
 const words = hero.h1[lang];
+const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp' });
 ---
 
 <header class="hero" id="hero">
   <div class="hero__bg" data-parallax="-.14">
-    <video autoplay muted loop playsinline preload="metadata">
+    <video autoplay muted loop playsinline preload="metadata" poster={poster.src}>
       <source src={hero.video} type="video/mp4" />
     </video>
   </div>

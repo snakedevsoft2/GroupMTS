@@ -1,4 +1,6 @@
+import type { ImageMetadata } from 'astro';
 import type { Localized } from '../i18n';
+import fondoPoster from '../assets/fondo-poster.jpg';
 
 /* Hero: titular animado palabra a palabra, copy y cifras confirmadas. */
 
@@ -11,6 +13,8 @@ export interface HeroWord {
 
 export const hero = {
   video: '/VIDEO/fondo.mp4',
+  /* Frame real del propio video, extraído con ffmpeg */
+  poster: fondoPoster as ImageMetadata,
   badge: { es: 'Tapicería · Interiores · Plásticos', en: 'Upholstery · Interiors · Plastics' },
   h1: {
     es: [
