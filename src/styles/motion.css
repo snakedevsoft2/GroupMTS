@@ -15,8 +15,22 @@
 .reveal[data-d="3"] { transition-delay: .27s }
 .reveal[data-d="4"] { transition-delay: .36s }
 
-.mask { clip-path: inset(0 0 100% 0); transition: clip-path 1.25s var(--ease) }
-.mask.in { clip-path: inset(0 0 0 0) }
+/* Revelado tipo cortina. No usamos clip-path en el propio elemento:
+   Chrome lo descuenta del área de intersección y el observer nunca
+   dispararía (el elemento clippeado "no se ve" para el IO). */
+.mask { position: relative }
+
+.mask::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 5;
+    background: var(--paper);
+    pointer-events: none;
+    transition: transform 1.25s var(--ease);
+}
+
+.mask.in::after { transform: translateY(102%) }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -29,6 +43,6 @@
 
     /* El contenido nunca puede quedar oculto sin animación de entrada */
     .reveal, .hero__fade { opacity: 1; transform: none }
-    .mask { clip-path: none }
+    .mask::after { display: none }
     .w > span { transform: none }
 }
