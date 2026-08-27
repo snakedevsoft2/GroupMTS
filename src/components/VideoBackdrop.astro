@@ -17,9 +17,7 @@ const posterUrl = poster
 ---
 
 <div class="vbg" data-parallax={parallax}>
-  <video autoplay muted loop playsinline preload="none" poster={posterUrl}>
-    <source src={src} type="video/mp4" />
-  </video>
+  <video muted loop playsinline preload="none" poster={posterUrl} data-src={src}></video>
 </div>
 <div class="grain"></div>
 
@@ -53,3 +51,28 @@ const posterUrl = poster
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
   }
 </style>
+
+<script>
+  /* Los videos de fondo pesan varios MB: se cargan solo cuando su
+     banda se acerca al viewport. El poster (frame real) cubre mientras. */
+  const vids = Array.from(document.querySelectorAll<HTMLVideoElement>('.vbg video[data-src]'));
+  const start = (v: HTMLVideoElement): void => {
+    v.src = v.dataset.src ?? '';
+    v.play().catch(() => {});
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          start(e.target as HTMLVideoElement);
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: '600px 0px' },
+    );
+    for (const v of vids) io.observe(v);
+  } else {
+    for (const v of vids) start(v);
+  }
+</script>

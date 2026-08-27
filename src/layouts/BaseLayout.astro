@@ -10,6 +10,9 @@ import '../styles/motion.css';
 import Seo from '../components/Seo.astro';
 import SchemaOrg from '../components/SchemaOrg.astro';
 import { dicts, type Lang } from '../i18n';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
+import frauncesItalic from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
 
 interface Props {
   lang: Lang;
@@ -31,6 +34,9 @@ const dict = dicts[lang];
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#FCFBF9" />
     <link rel="icon" type="image/png" href="/icono.png" />
+    <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesLatin} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesItalic} crossorigin />
     <Seo {lang} {title} {description} {ogTitle} {ogDescription} />
     <SchemaOrg {lang} />
     <slot name="head" />

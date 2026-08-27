@@ -12,14 +12,14 @@ interface Props {
 const { lang } = Astro.props;
 const dict = dicts[lang];
 const words = hero.h1[lang];
-const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp' });
+/* Calidad alta a propósito: un poster demasiado comprimido queda por
+   debajo del umbral de entropía de Chrome y no califica como LCP. */
+const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', quality: 90 });
 ---
 
 <header class="hero" id="hero">
   <div class="hero__bg" data-parallax="-.14">
-    <video autoplay muted loop playsinline preload="metadata" poster={poster.src}>
-      <source src={hero.video} type="video/mp4" />
-    </video>
+    <video muted loop playsinline preload="none" poster={poster.src} data-src={hero.video}></video>
   </div>
 
   <div class="hero__inner" id="heroInner">
@@ -76,8 +76,18 @@ const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp' })
   const hero = document.getElementById('hero')!;
   requestAnimationFrame(() => hero.classList.add('ready'));
 
-  /* El autoplay puede rechazarse por política del navegador; no es un error */
-  hero.querySelector('video')?.play().catch(() => {});
+  /* El video (varios MB) arranca tras el load para no competir con el
+     primer pintado; el poster (frame real) cubre mientras. El play()
+     puede rechazarse por política del navegador; no es un error. */
+  const video = hero.querySelector<HTMLVideoElement>('video[data-src]');
+  if (video) {
+    const startVideo = (): void => {
+      video.src = video.dataset.src ?? '';
+      video.play().catch(() => {});
+    };
+    if (document.readyState === 'complete') startVideo();
+    else window.addEventListener('load', startVideo, { once: true });
+  }
 
   /* El contenido se desvanece y sube al hacer scroll */
   const heroInner = document.getElementById('heroInner')!;

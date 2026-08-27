@@ -116,7 +116,9 @@
 .hero.ready .w:nth-child(4) > span { transition-delay: .26s }
 .hero.ready .w:nth-child(5) > span { transition-delay: .33s }
 
-.hero__fade { opacity: 0; transform: translateY(22px); transition: opacity .9s var(--ease) .5s, transform .9s var(--ease) .5s }
+/* Arranca en .01 y no en 0: con opacity 0 el navegador no cuenta el texto
+   como pintado y el LCP se va al final de la animación de entrada. */
+.hero__fade { opacity: .01; transform: translateY(22px); transition: opacity .9s var(--ease) .5s, transform .9s var(--ease) .5s }
 .hero.ready .hero__fade { opacity: 1; transform: none }
 .hero__fade.d2 { transition-delay: .62s }
 .hero__fade.d3 { transition-delay: .74s }

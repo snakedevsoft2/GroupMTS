@@ -12,6 +12,7 @@
     --ink: #0A1823;     /* azul marino exacto del logo: titulares */
     --ink-2: #44535F;   /* texto de lectura */
     --muted: #7E8C99;   /* etiquetas y texto secundario */
+    --muted-strong: #5C6B78; /* como --muted pero con contraste AA sobre blanco */
 
     /* ---------- Líneas ---------- */
     --line: rgba(10, 24, 35, .13);

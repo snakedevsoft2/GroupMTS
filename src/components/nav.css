@@ -139,8 +139,8 @@
 .lang:hover { border-color: var(--c1); box-shadow: 0 6px 16px -8px rgba(var(--c1-rgb), .6) }
 .lang__sep { opacity: .35 }
 .lang__on { color: var(--c1) }
-.lang__off { color: var(--muted) }
-.lang.is-en .lang__on { color: var(--muted) }
+.lang__off { color: var(--muted-strong) }
+.lang.is-en .lang__on { color: var(--muted-strong) }
 .lang.is-en .lang__off { color: var(--c1) }
 
 .lang--drawer {

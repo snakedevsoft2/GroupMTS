@@ -13,6 +13,8 @@ import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { getImage } from 'astro:assets';
+import { hero } from '../data/hero';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -21,6 +23,8 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+// El poster del hero es el candidato a LCP: se precarga con prioridad.
+const heroPoster = await getImage({ src: hero.poster, width: 1600, format: 'webp', quality: 90 });
 ---
 
 <BaseLayout
@@ -30,6 +34,7 @@ const { lang } = Astro.props;
   ogTitle={t(meta.ogTitle, lang)}
   ogDescription={t(meta.ogDescription, lang)}
 >
+  <link slot="head" rel="preload" as="image" href={heroPoster.src} fetchpriority="high" />
   <Nav {lang} />
   <Hero {lang} />
   <Marquee {lang} />
