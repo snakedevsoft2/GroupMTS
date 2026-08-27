@@ -1,0 +1,47 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/buttons.css';
+import '../styles/chrome.css';
+import '../styles/motion.css';
+import Seo from '../components/Seo.astro';
+import { dicts, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+}
+
+const { lang, title, description, ogTitle, ogDescription } = Astro.props;
+const dict = dicts[lang];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#FCFBF9" />
+    <link rel="icon" type="image/png" href="/icono.png" />
+    <Seo {lang} {title} {description} {ogTitle} {ogDescription} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{dict.skip}</a>
+    <div class="progress" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <slot />
+    <script>
+      import { initGlobal } from '../scripts/global';
+      initGlobal();
+    </script>
+  </body>
+</html>

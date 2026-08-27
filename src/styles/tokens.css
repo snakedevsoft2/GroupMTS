@@ -1,0 +1,72 @@
+/* ============================================================
+   GroupMTS — Design tokens (portado de legacy/styles.css)
+   Para cambiar TODA la paleta, edita únicamente este archivo.
+   ============================================================ */
+:root {
+    /* ---------- Fondos ---------- */
+    --paper: #FCFBF9;   /* blanco cálido: fondo principal */
+    --paper-2: #F4F1EB; /* hueso: secciones alternas */
+    --card: #FFFFFF;
+
+    /* ---------- Tinta ---------- */
+    --ink: #0A1823;     /* azul marino exacto del logo: titulares */
+    --ink-2: #44535F;   /* texto de lectura */
+    --muted: #7E8C99;   /* etiquetas y texto secundario */
+
+    /* ---------- Líneas ---------- */
+    --line: rgba(10, 24, 35, .13);
+    --line-2: rgba(10, 24, 35, .26);
+    --line-soft: rgba(10, 24, 35, .08);
+
+    /* ---------- PALETA ACTIVA: AZUL DEL LOGO ----------
+       Cambiar estas 4 líneas cambia todo el acento del sitio.
+       Alternativas probadas (copia y pega):
+         Cobre ....... 168,95,34  | 122,66,20  | #C98B52 | #8F5320
+         Turquesa .... 11,124,140 | 8,95,108   | #2BA9BC | #096F7E
+         Verde jade .. 16,119,90  | 11,90,68   | #3FBF8F | #0D6B50 */
+    --accent-rgb: 9, 91, 190;      /* acento principal, en R,G,B */
+    --accent-deep-rgb: 7, 72, 152; /* versión oscura para hover */
+    --accent: rgb(var(--accent-rgb));
+    --accent-deep: rgb(var(--accent-deep-rgb));
+    --accent-lt: #3D8BF2;
+    --accent-hover: var(--accent-deep);
+    --accent-wash: rgba(var(--accent-rgb), .08);
+
+    /* ---------- COLORES VIVOS (Puerto Rico) ----------
+       c1 azul del logo · c2 turquesa Caribe · c3 coral atardecer · c4 sol
+       Se usan en botones, iconos, números y manchas de color del hero. */
+    --c1: #0A5BC4; --c1-rgb: 10, 91, 196;
+    --c2: #00BFC9; --c2-rgb: 0, 191, 201;
+    --c3: #FF6B3D; --c3-rgb: 255, 107, 61;
+    --c4: #FFB627; --c4-rgb: 255, 182, 39;
+    --grad: linear-gradient(100deg, var(--c1) 0%, #0C86D6 48%, var(--c2) 100%);
+    --grad-warm: linear-gradient(100deg, var(--c3), var(--c4));
+
+    /* ---------- Sombras (suaves, tipo papel) ---------- */
+    --shadow-s: 0 1px 2px rgba(10, 24, 35, .05), 0 2px 8px rgba(10, 24, 35, .04);
+    --shadow-m: 0 2px 4px rgba(10, 24, 35, .04), 0 12px 28px -10px rgba(10, 24, 35, .14);
+    --shadow-l: 0 4px 8px rgba(10, 24, 35, .05), 0 30px 60px -22px rgba(10, 24, 35, .28);
+
+    --r-s: 8px;
+    --r-m: 16px;
+    --r-l: 24px;
+    --r-pill: 999px;
+    --pad: clamp(1.25rem, 5vw, 5.5rem);
+    --section: clamp(5rem, 11vw, 10rem);
+    --maxw: 1240px;
+
+    /* Fuentes self-hosted vía @fontsource-variable */
+    --f-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+    --f-body: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+/* Pantallas muy grandes: más ancho útil, para que el contenido no
+   quede como una columnita perdida en el centro */
+@media (min-width: 1600px) {
+    :root { --maxw: 1380px }
+}
+
+@media (min-width: 2000px) {
+    :root { --maxw: 1500px }
+}

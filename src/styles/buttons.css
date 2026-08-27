@@ -1,0 +1,66 @@
+/* ============================================================
+   Botones (portado de legacy/styles.css)
+   ============================================================ */
+.btn {
+    --bg: var(--accent);
+    --fg: #fff;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .65em;
+    padding: 1em 1.85em;
+    border-radius: var(--r-pill);
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    background: var(--grad);
+    color: var(--fg);
+    white-space: nowrap;
+    overflow: hidden;
+    background-size: 150% 100%;
+    background-position: 0% 50%;
+    box-shadow: 0 1px 2px rgba(10, 24, 35, .08), 0 12px 26px -12px rgba(var(--c1-rgb), .7);
+    transition: box-shadow .4s var(--ease), background-position .6s var(--ease);
+    will-change: transform;
+}
+
+.btn > * { position: relative; z-index: 1 }
+
+/* Destello que recorre el botón al pasar el mouse */
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    transform: translateX(-110%);
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .34), transparent);
+    transition: transform .8s var(--ease);
+}
+
+.btn:hover::after { transform: translateX(110%) }
+
+.btn:hover {
+    background-position: 100% 50%;
+    box-shadow: 0 2px 4px rgba(10, 24, 35, .1), 0 20px 38px -14px rgba(var(--c2-rgb), .8);
+}
+
+.btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line-2);
+    box-shadow: none;
+}
+
+.btn--ghost:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    box-shadow: none;
+}
+
+.btn svg { width: 1.15em; height: 1.15em; flex: none }
+
+@media (max-width: 360px) {
+    .btn { padding: .9em 1.4em; font-size: .85rem }
+}
