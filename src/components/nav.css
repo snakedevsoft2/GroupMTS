@@ -159,62 +159,6 @@
 .nav .btn { animation: navDown .7s var(--ease) backwards .90s }
 .nav .burger { animation: navDown .6s var(--ease) backwards .55s }
 
-.burger { display: none; width: 2.6rem; height: 2.6rem; place-items: center; border-radius: 50%; border: 1px solid var(--line) }
-.burger span { display: block; width: 17px; height: 1.5px; background: var(--ink); position: relative; transition: .3s var(--ease) }
-
-.burger span::before, .burger span::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 17px;
-    height: 1.5px;
-    background: var(--ink);
-    transition: .3s var(--ease);
-}
-
-.burger span::before { top: -5.5px }
-.burger span::after { top: 5.5px }
-body.menu-open .burger span { background: transparent }
-body.menu-open .burger span::before { top: 0; transform: rotate(45deg) }
-body.menu-open .burger span::after { top: 0; transform: rotate(-45deg) }
-
-.drawer {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-    background: rgba(252, 251, 249, .98);
-    backdrop-filter: blur(14px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: .3rem;
-    padding: var(--pad);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .4s var(--ease), visibility .4s;
-}
-
-body.menu-open .drawer { opacity: 1; visibility: visible }
-
-.drawer a {
-    font-family: var(--f-display);
-    font-size: clamp(1.7rem, 7vw, 2.6rem);
-    padding-block: .4rem;
-    border-bottom: 1px solid var(--line);
-    color: var(--ink);
-    transform: translateY(14px);
-    opacity: 0;
-    transition: .45s var(--ease);
-}
-
-body.menu-open .drawer a { transform: none; opacity: 1 }
-.drawer a:nth-child(1) { transition-delay: .06s }
-.drawer a:nth-child(2) { transition-delay: .11s }
-.drawer a:nth-child(3) { transition-delay: .16s }
-.drawer a:nth-child(4) { transition-delay: .21s }
-.drawer a:nth-child(5) { transition-delay: .26s }
-.drawer a:hover { color: var(--accent) }
-
 /* --- Barra superior responsiva ---
    Debajo de 1360px se esconden los iconos sociales (el pie los tiene).
    Debajo de 1180px se pasa al menú hamburguesa. */
@@ -232,12 +176,6 @@ body.menu-open .drawer a { transform: none; opacity: 1 }
 @media (max-width: 620px) {
     .nav .btn { display: none }
     .logo small { font-size: .5rem; letter-spacing: .24em }
-}
-
-/* Celular en horizontal: el drawer necesita scroll propio */
-@media (max-height: 560px) and (orientation: landscape) {
-    .drawer { justify-content: flex-start; padding-top: 5rem; overflow-y: auto }
-    .drawer a { font-size: 1.4rem; padding-block: .2rem }
 }
 
 @media (prefers-reduced-motion: reduce) {
