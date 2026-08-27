@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -13,5 +14,6 @@ const lang: Lang = 'es';
   ogTitle={t(meta.ogTitle, lang)}
   ogDescription={t(meta.ogDescription, lang)}
 >
+  <Nav {lang} />
   <main id="main"></main>
 </BaseLayout>

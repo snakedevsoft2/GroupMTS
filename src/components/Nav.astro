@@ -1,0 +1,157 @@
+---
+import './nav.css';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import SocialLinks from './SocialLinks.astro';
+import { site } from '../data/site';
+import { altPath, dicts, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = dicts[lang];
+const switchHref = altPath(Astro.url.pathname, lang === 'es' ? 'en' : 'es');
+
+const links = [
+  { href: '#servicios', label: dict.nav.servicios },
+  { href: '#transformacion', label: dict.nav.transformacion },
+  { href: '#proceso', label: dict.nav.proceso },
+  { href: '#trabajos', label: dict.nav.trabajos },
+  { href: '#contacto', label: dict.nav.contacto },
+];
+---
+
+<nav class="nav" id="nav">
+  <a href="#" class="logo logo-mark" aria-label={site.name}>
+    <span class="logo__img"><Image src={logo} alt={site.name} /></span>
+    <small>{site.tagline}</small>
+  </a>
+  <div class="nav-links" id="navLinks">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <span class="nav-pill" id="navPill" aria-hidden="true"></span>
+  </div>
+  <div class="nav-right">
+    <a
+      class:list={['lang', { 'is-en': lang === 'en' }]}
+      href={switchHref}
+      aria-label={dict.langAria}
+      title={dict.langTitle}
+    >
+      <span class="lang__on">ES</span><span class="lang__sep">/</span><span class="lang__off">EN</span>
+    </a>
+    <SocialLinks {lang} />
+    <a href={t(site.whatsapp, lang)} target="_blank" rel="noopener noreferrer" class="btn" data-magnetic>
+      <span>{dict.quoteNow}</span>
+    </a>
+    <button
+      class="burger"
+      id="burger"
+      aria-label={dict.menuOpen}
+      aria-expanded="false"
+      aria-controls="drawer"
+      data-open-label={dict.menuOpen}
+      data-close-label={dict.menuClose}><span></span></button>
+  </div>
+</nav>
+
+<div class="drawer" id="drawer">
+  {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  <a
+    class:list={['lang', 'lang--drawer', { 'is-en': lang === 'en' }]}
+    href={switchHref}
+    aria-label={dict.langAria}
+    title={dict.langTitle}
+  >
+    <span class="lang__on">ES</span><span class="lang__sep">/</span><span class="lang__off">EN</span>
+  </a>
+</div>
+
+<script>
+  import { onScroll } from '../scripts/scroll';
+
+  const nav = document.getElementById('nav')!;
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('#navLinks a'));
+  const navLinksBox = document.getElementById('navLinks');
+  const pill = document.getElementById('navPill');
+  let overNav = false;
+  let lastY = 0;
+
+  /* Relevo de letras: la copia de abajo sube al pasar el mouse */
+  for (const a of links) {
+    const text = a.textContent ?? '';
+    const roll = document.createElement('span');
+    roll.className = 'roll';
+    for (const hidden of [false, true]) {
+      const s = document.createElement('span');
+      s.textContent = text;
+      if (hidden) s.setAttribute('aria-hidden', 'true');
+      roll.appendChild(s);
+    }
+    a.textContent = '';
+    a.appendChild(roll);
+  }
+
+  /* Píldora deslizante: sigue al mouse y, al salir, vuelve a la sección activa */
+  function movePill(el: HTMLElement): void {
+    if (!pill) return;
+    pill.style.width = `${el.offsetWidth + 28}px`;
+    pill.style.left = `${el.offsetLeft - 14}px`;
+    pill.style.opacity = '1';
+  }
+  function restPill(): void {
+    if (!pill || !navLinksBox) return;
+    const act = navLinksBox.querySelector<HTMLElement>('a.active');
+    if (act) movePill(act);
+    else pill.style.opacity = '0';
+  }
+  if (pill && navLinksBox) {
+    for (const a of links) a.addEventListener('mouseenter', () => { overNav = true; movePill(a); });
+    navLinksBox.addEventListener('mouseleave', () => { overNav = false; restPill(); });
+    window.addEventListener('resize', restPill, { passive: true });
+  }
+
+  /* Pegajosa: se esconde al bajar, vuelve al subir */
+  onScroll(() => {
+    const y = window.scrollY;
+    nav.classList.toggle('is-stuck', y > 40);
+    nav.classList.toggle('is-hidden', y > 420 && y > lastY && !document.body.classList.contains('menu-open'));
+    lastY = y;
+  });
+
+  /* Menú móvil */
+  const burger = document.getElementById('burger')!;
+  const drawer = document.getElementById('drawer')!;
+  function setMenu(open: boolean): void {
+    document.body.classList.toggle('menu-open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', (open ? burger.dataset.closeLabel : burger.dataset.openLabel) ?? '');
+  }
+  burger.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+  drawer.addEventListener('click', (e) => {
+    if (e.target instanceof HTMLElement && e.target.tagName === 'A') setMenu(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
+  });
+
+  /* Scrollspy: resalta la sección visible */
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          for (const a of links) a.classList.toggle('active', a.getAttribute('href') === `#${e.target.id}`);
+          if (!overNav) restPill();
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    for (const id of ['servicios', 'transformacion', 'proceso', 'trabajos', 'contacto']) {
+      const s = document.getElementById(id);
+      if (s) spy.observe(s);
+    }
+  }
+</script>
