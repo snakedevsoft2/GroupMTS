@@ -1,0 +1,94 @@
+---
+import VideoBackdrop from './VideoBackdrop.astro';
+import { taller } from '../data/site';
+import { dicts, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = dicts[lang];
+---
+
+<section class="videoband">
+  <VideoBackdrop src={taller.video} parallax="-.12" />
+  <div>
+    <span class="eyebrow reveal" style="justify-content:center">{t(taller.eyebrow, lang)}</span>
+    <h2 class="reveal" data-d="1" set:html={t(taller.titleHtml, lang)} />
+    <p class="lede reveal" data-d="2">{t(taller.lede, lang)}</p>
+    <button class="play reveal" data-d="3" id="playBtn" aria-label={dict.playAria}>
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .videoband {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: clamp(26rem, 60vh, 38rem);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: var(--section) var(--pad);
+    background: var(--ink);
+  }
+
+  .videoband :global(.vbg) { background: linear-gradient(160deg, #122636, #0A1823) }
+
+  .videoband :global(.vbg::after) {
+    background: linear-gradient(180deg, var(--ink), rgba(10, 24, 35, .72) 30%, rgba(10, 24, 35, .72) 70%, var(--ink)),
+        radial-gradient(50% 60% at 20% 30%, rgba(var(--c2-rgb), .28), transparent 65%),
+        radial-gradient(45% 55% at 85% 75%, rgba(var(--c3-rgb), .22), transparent 65%),
+        rgba(10, 24, 35, .25);
+  }
+
+  .videoband :global(.grain) { opacity: .4 }
+
+  .videoband h2 { max-width: 20ch; margin-inline: auto; color: #fff }
+  .videoband h2 :global(em) { background: none; color: var(--c2); -webkit-text-fill-color: var(--c2) }
+  .videoband .eyebrow { color: var(--c2) }
+  .videoband .eyebrow::before { background: var(--c2) }
+  .videoband .lede { margin-inline: auto; color: rgba(255, 255, 255, .72) }
+
+  .play {
+    margin-top: 2.3rem;
+    width: 4.6rem;
+    height: 4.6rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, .35);
+    color: #fff;
+    background: rgba(255, 255, 255, .06);
+    backdrop-filter: blur(8px);
+    transition: .4s var(--ease);
+  }
+
+  .play:hover { background: #fff; color: var(--ink); transform: scale(1.07); border-color: #fff }
+  .play :global(svg) { width: 1.4rem; height: 1.4rem; margin-left: 3px }
+
+  @media (max-height: 560px) and (orientation: landscape) {
+    .videoband { min-height: auto }
+  }
+</style>
+
+<script>
+  /* Botón play / pausa del video del taller */
+  const playBtn = document.getElementById('playBtn');
+  playBtn?.addEventListener('click', () => {
+    const video = playBtn.closest('.videoband')?.querySelector('video');
+    if (!video) return;
+    if (video.paused) {
+      void video.play();
+      playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>';
+    } else {
+      video.pause();
+      playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    }
+  });
+</script>
