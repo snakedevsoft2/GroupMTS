@@ -10,6 +10,7 @@ import Gallery from '../components/Gallery.astro';
 import VideoBand from '../components/VideoBand.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -34,5 +35,6 @@ const lang: Lang = 'es';
     <VideoBand {lang} />
     <Testimonials {lang} />
     <Faq {lang} />
+    <Contact {lang} />
   </main>
 </BaseLayout>
