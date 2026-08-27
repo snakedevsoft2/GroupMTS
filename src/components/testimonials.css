@@ -1,0 +1,110 @@
+/* ============================================================
+   Testimonios — banda oscura con video de fondo y carrusel
+   de tarjetas de "vidrio" (portado de legacy/styles.css)
+   ============================================================ */
+.quotes-band {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: var(--section) 0;
+    background: var(--ink);
+}
+
+.quotes-band .vbg { background: linear-gradient(160deg, #122636, #0A1823) }
+
+.quotes-band .vbg::after {
+    background: linear-gradient(180deg, var(--ink) 0%, rgba(10, 24, 35, .68) 22%, rgba(10, 24, 35, .68) 78%, var(--ink) 100%),
+        radial-gradient(50% 60% at 15% 25%, rgba(var(--c2-rgb), .25), transparent 65%),
+        radial-gradient(45% 55% at 88% 80%, rgba(var(--c3-rgb), .20), transparent 65%),
+        rgba(10, 24, 35, .30);
+}
+
+.quotes-band .grain { opacity: .4 }
+
+.carousel {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    padding: 0 var(--pad) 1.4rem;
+    scrollbar-width: none;
+    cursor: grab;
+    /* difumina las tarjetas en los bordes de la pantalla */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.carousel::-webkit-scrollbar { display: none }
+.carousel.dragging { cursor: grabbing }
+.carousel.dragging * { pointer-events: none }
+
+.quote {
+    flex: 0 0 min(86vw, 24rem);
+    padding: clamp(1.9rem, 3vw, 2.5rem);
+    border-radius: var(--r-m);
+    background: rgba(255, 255, 255, .10);
+    border: 1px solid rgba(255, 255, 255, .16);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    position: relative;
+    color: #fff;
+    transition: transform .5s var(--ease), background .4s, border-color .4s;
+}
+
+.quote:hover { transform: translateY(-6px); background: rgba(255, 255, 255, .15); border-color: rgba(255, 255, 255, .3) }
+
+.quote::before {
+    content: "\201C";
+    position: absolute;
+    top: .2rem;
+    right: 1.4rem;
+    font-family: var(--f-display);
+    font-size: 5.5rem;
+    color: rgba(255, 255, 255, .14);
+    line-height: 1;
+}
+
+.stars { display: flex; gap: .2rem; color: var(--c4); margin-bottom: 1.2rem; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .4)) }
+.stars svg { width: .95rem; height: .95rem }
+
+.quote p { font-size: .97rem; color: rgba(255, 255, 255, .92) }
+
+.quote cite {
+    display: block;
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, .18);
+    font-style: normal;
+    font-size: .78rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .55);
+}
+
+.quote cite b {
+    display: block;
+    color: #fff;
+    letter-spacing: .01em;
+    text-transform: none;
+    font-family: var(--f-display);
+    font-size: 1.08rem;
+    font-weight: 400;
+    margin-bottom: .2rem;
+}
+
+.car-ctrl { display: flex; gap: .6rem; align-items: center; margin-top: 1.6rem }
+
+.car-ctrl button {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, .28);
+    color: #fff;
+    background: rgba(255, 255, 255, .08);
+    transition: .3s var(--ease);
+}
+
+.car-ctrl button:hover { background: #fff; color: var(--ink); border-color: #fff }
+.car-ctrl svg { width: 1.05rem; height: 1.05rem }
+.car-ctrl .hint { margin-left: .6rem; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .45) }

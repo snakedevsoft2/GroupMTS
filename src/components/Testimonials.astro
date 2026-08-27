@@ -1,0 +1,125 @@
+---
+import './testimonials.css';
+import VideoBackdrop from './VideoBackdrop.astro';
+import { hero } from '../data/hero';
+import { testimonials, testimonialsHead } from '../data/testimonials';
+import { dicts, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = dicts[lang];
+const stars = [1, 2, 3, 4, 5];
+---
+
+<section class="quotes-band">
+  <VideoBackdrop src={hero.video} parallax="-.10" />
+
+  <div class="wrap">
+    <div class="head head--light">
+      <span class="eyebrow reveal">{t(testimonialsHead.eyebrow, lang)}</span>
+      <h2 class="reveal" data-d="1" set:html={t(testimonialsHead.titleHtml, lang)} />
+    </div>
+  </div>
+
+  <div class="carousel reveal" data-d="1" id="carousel" tabindex="0" aria-label={dict.carouselAria}>
+    {
+      testimonials.map((q) => (
+        <article class="quote">
+          <div class="stars" aria-label="5/5">
+            {stars.map(() => (
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="m12 2 3 6.5 7 .9-5 4.9 1.2 7L12 18l-6.2 3.3L7 14.3l-5-4.9 7-.9z" />
+              </svg>
+            ))}
+          </div>
+          <p>{t(q.quote, lang)}</p>
+          <cite><b>{q.name}</b>{q.boat}</cite>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="wrap">
+    <div class="car-ctrl">
+      <button id="carPrev" aria-label={dict.prev}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+      </button>
+      <button id="carNext" aria-label={dict.next}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </button>
+      <span class="hint">{dict.dragHint}</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { reduce } from '../scripts/scroll';
+
+  const car = document.getElementById('carousel');
+  if (car) {
+    const step = (): number => {
+      const q = car.querySelector<HTMLElement>('.quote');
+      return q ? q.offsetWidth + 18 : 320;
+    };
+    const carGo = (dir: number): void => car.scrollBy({ left: dir * step(), behavior: 'smooth' });
+    document.getElementById('carPrev')?.addEventListener('click', () => carGo(-1));
+    document.getElementById('carNext')?.addEventListener('click', () => carGo(1));
+
+    /* Desfile continuo: se duplican las tarjetas para que el bucle sea
+       infinito y sin saltos. Las copias quedan ocultas para lectores. */
+    for (const q of Array.from(car.querySelectorAll('.quote'))) {
+      const clone = q.cloneNode(true) as HTMLElement;
+      clone.setAttribute('aria-hidden', 'true');
+      car.appendChild(clone);
+    }
+    const half = (): number => car.scrollWidth / 2;
+
+    let paused = false;
+    for (const ev of ['mouseenter', 'pointerdown', 'focusin'] as const) {
+      car.addEventListener(ev, () => { paused = true; });
+    }
+    for (const ev of ['mouseleave', 'focusout'] as const) {
+      car.addEventListener(ev, () => { paused = false; });
+    }
+
+    (function tick() {
+      if (!paused && !document.hidden && !reduce) {
+        car.scrollLeft += 0.6; /* velocidad del desfile */
+      }
+      const h = half();
+      if (h > 0) {
+        if (car.scrollLeft >= h) car.scrollLeft -= h;
+        else if (car.scrollLeft < 0) car.scrollLeft += h;
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    /* Arrastre con el puntero */
+    let down = false;
+    let startX = 0;
+    let startL = 0;
+    car.addEventListener('pointerdown', (e) => {
+      down = true;
+      startX = e.clientX;
+      startL = car.scrollLeft;
+      car.classList.add('dragging');
+    });
+    car.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      car.scrollLeft = startL - (e.clientX - startX);
+    });
+    for (const ev of ['pointerup', 'pointerleave', 'pointercancel'] as const) {
+      car.addEventListener(ev, () => {
+        down = false;
+        car.classList.remove('dragging');
+      });
+    }
+  }
+</script>
