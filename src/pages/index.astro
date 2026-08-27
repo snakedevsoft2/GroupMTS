@@ -11,6 +11,7 @@ import VideoBand from '../components/VideoBand.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -37,4 +38,5 @@ const lang: Lang = 'es';
     <Faq {lang} />
     <Contact {lang} />
   </main>
+  <Footer {lang} />
 </BaseLayout>

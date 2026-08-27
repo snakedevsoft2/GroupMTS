@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import SocialLinks from './SocialLinks.astro';
+import { footerTagline, site } from '../data/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<footer>
+  <div class="wrap foot">
+    <a href="#" class="logo logo-mark foot__logo reveal" aria-label={site.name}>
+      <span class="logo__img"><Image src={logo} alt={site.name} /></span>
+      <small>{site.tagline}</small>
+    </a>
+    <div class="foot__social reveal" data-d="1">
+      <SocialLinks {lang} />
+    </div>
+    <a class="foot__mail reveal" data-d="2" href={t(site.mailto, lang)}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+        <path d="m3 6 9 7 9-7"></path>
+      </svg>{site.email}
+    </a>
+    <p class="reveal" data-d="3">&copy; <span id="year">{new Date().getFullYear()}</span> {site.name} · <span>{t(footerTagline, lang)}</span></p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--line);
+    padding: clamp(3rem, 6vw, 4.5rem) 0 clamp(2.2rem, 4vw, 3rem);
+    background: var(--paper-2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  footer::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 -60% 0;
+    height: 120%;
+    pointer-events: none;
+    background: radial-gradient(40% 60% at 50% 100%, rgba(var(--c2-rgb), .16), transparent 70%);
+  }
+
+  .foot { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.6rem }
+  .foot p { font-size: .78rem; color: var(--muted); padding-top: 1.6rem; border-top: 1px solid var(--line); width: min(100%, 32rem) }
+
+  .foot__logo { align-items: center; text-align: center; transition: transform .5s var(--ease) }
+  .foot__logo:hover { transform: translateY(-3px) scale(1.03) }
+  .foot__logo :global(img) { height: 2.5rem }
+  .foot__logo :global(small) { letter-spacing: .36em; margin-top: .6rem }
+
+  /* El destello también recorre el logo del pie */
+  .foot__logo :global(.logo__img)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform: translateX(-130%);
+    background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, .9) 50%, transparent 62%);
+    animation: shine 8s var(--ease) 4s infinite;
+  }
+
+  .foot__social :global(.social a) { width: 2.6rem; height: 2.6rem }
+
+  .foot__mail {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--ink);
+    padding: .55rem 1.15rem;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line-2);
+    background: var(--card);
+    transition: .35s var(--ease);
+  }
+
+  .foot__mail svg { width: 1.05rem; height: 1.05rem; color: var(--c1) }
+
+  .foot__mail:hover {
+    border-color: var(--c1);
+    color: var(--c1);
+    box-shadow: 0 10px 24px -12px rgba(var(--c1-rgb), .7);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 420px) {
+    .foot__mail { font-size: .8rem; padding: .5rem .9rem }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .foot__logo :global(.logo__img)::after { display: none }
+  }
+</style>
+
+<script>
+  /* Año siempre al día aunque el sitio no se reconstruya */
+  const year = document.getElementById('year');
+  if (year) year.textContent = String(new Date().getFullYear());
+</script>
