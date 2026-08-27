@@ -9,6 +9,7 @@ import Process from '../components/Process.astro';
 import Gallery from '../components/Gallery.astro';
 import VideoBand from '../components/VideoBand.astro';
 import Testimonials from '../components/Testimonials.astro';
+import Faq from '../components/Faq.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -32,5 +33,6 @@ const lang: Lang = 'es';
     <Gallery {lang} />
     <VideoBand {lang} />
     <Testimonials {lang} />
+    <Faq {lang} />
   </main>
 </BaseLayout>
