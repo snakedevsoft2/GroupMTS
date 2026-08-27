@@ -1,0 +1,146 @@
+---
+import './gallery.css';
+import { getImage, Picture } from 'astro:assets';
+import Lightbox from './Lightbox.astro';
+import { gallery, galleryFilters, galleryHead } from '../data/gallery';
+import { dicts, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = dicts[lang];
+
+/* Variante grande de cada foto para el lightbox */
+const fulls = await Promise.all(
+  gallery.map((shot) => getImage({ src: shot.img, width: 1600, format: 'webp' })),
+);
+const shots = gallery.map((shot, i) => ({ ...shot, full: fulls[i]!.src }));
+---
+
+<section class="section section--tint" id="trabajos">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow reveal">{t(galleryHead.eyebrow, lang)}</span>
+      <h2 class="reveal" data-d="1" set:html={t(galleryHead.titleHtml, lang)} />
+      <p class="lede reveal" data-d="2">{t(galleryHead.lede, lang)}</p>
+    </div>
+
+    <div class="filters reveal" data-d="1" role="group" aria-label={dict.filtersAria}>
+      {
+        galleryFilters.map((f, i) => (
+          <button class="filter" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>
+            {t(f.label, lang)}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="gallery reveal" data-d="2" id="gallery">
+      {
+        shots.map((shot) => (
+          <figure class="shot" data-cat={shot.cat} data-full={shot.full} tabindex="0" role="button">
+            <Picture
+              src={shot.img}
+              alt={t(shot.alt, lang)}
+              formats={['avif', 'webp']}
+              widths={[400, 600, 800]}
+              sizes="(max-width: 520px) 92vw, (max-width: 1000px) 46vw, 290px"
+              loading="lazy"
+            />
+            <span class="shot__zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5M11 8v6M8 11h6" />
+              </svg>
+            </span>
+            <figcaption>{t(shot.caption, lang)}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<Lightbox {lang} />
+
+<script>
+  /* Filtros de la galería */
+  const shots = Array.from(document.querySelectorAll<HTMLElement>('#gallery .shot'));
+  const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter'));
+  for (const btn of filterBtns) {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      for (const b of filterBtns) b.setAttribute('aria-pressed', String(b === btn));
+      for (const s of shots) {
+        if (f === 'all' || s.dataset.cat === f) {
+          s.classList.remove('hide');
+          s.classList.add('enter');
+          requestAnimationFrame(() => requestAnimationFrame(() => s.classList.remove('enter')));
+        } else {
+          s.classList.add('hide');
+        }
+      }
+    });
+  }
+
+  /* Lightbox */
+  const lb = document.getElementById('lb')!;
+  const lbImg = document.getElementById('lbImg') as HTMLImageElement;
+  const lbCap = document.getElementById('lbCap')!;
+  const lbCount = document.getElementById('lbCount')!;
+  let idx = 0;
+  let lastFocus: Element | null = null;
+
+  const visibleShots = (): HTMLElement[] => shots.filter((s) => !s.classList.contains('hide'));
+
+  function show(i: number): void {
+    const list = visibleShots();
+    if (!list.length) return;
+    idx = (i + list.length) % list.length;
+    const s = list[idx]!;
+    const im = s.querySelector('img');
+    lbImg.src = s.dataset.full ?? (im ? im.currentSrc || im.src : '');
+    lbImg.alt = im?.alt ?? '';
+    lbCap.textContent = s.querySelector('figcaption')?.textContent ?? '';
+    lbCount.textContent = `${idx + 1} / ${list.length}`;
+  }
+
+  function openLb(s: HTMLElement): void {
+    lastFocus = document.activeElement;
+    show(visibleShots().indexOf(s));
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lbClose')?.focus();
+  }
+
+  function closeLb(): void {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus instanceof HTMLElement) lastFocus.focus();
+  }
+
+  for (const s of shots) {
+    s.addEventListener('click', () => openLb(s));
+    s.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLb(s);
+      }
+    });
+  }
+
+  document.getElementById('lbClose')?.addEventListener('click', closeLb);
+  document.getElementById('lbPrev')?.addEventListener('click', () => show(idx - 1));
+  document.getElementById('lbNext')?.addEventListener('click', () => show(idx + 1));
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) closeLb();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLb();
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    if (e.key === 'ArrowRight') show(idx + 1);
+  });
+</script>

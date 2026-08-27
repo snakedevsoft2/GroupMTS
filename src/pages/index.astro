@@ -6,6 +6,7 @@ import Marquee from '../components/Marquee.astro';
 import Services from '../components/Services.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import Process from '../components/Process.astro';
+import Gallery from '../components/Gallery.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -26,5 +27,6 @@ const lang: Lang = 'es';
     <Services {lang} />
     <BeforeAfter {lang} />
     <Process {lang} />
+    <Gallery {lang} />
   </main>
 </BaseLayout>
