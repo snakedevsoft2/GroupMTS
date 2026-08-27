@@ -1,2 +1,23 @@
+# build
+dist/
+.astro/
+
+# dependencias
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# variables de entorno
+.env
+.env.production
+
+# sistema / editores
+.DS_Store
+.idea/
+
 # Tooling local de Claude (skills y settings de la máquina)
 .claude/
