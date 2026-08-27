@@ -8,6 +8,7 @@ import '../styles/buttons.css';
 import '../styles/chrome.css';
 import '../styles/motion.css';
 import Seo from '../components/Seo.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
 import { dicts, type Lang } from '../i18n';
 
 interface Props {
@@ -31,6 +32,7 @@ const dict = dicts[lang];
     <meta name="theme-color" content="#FCFBF9" />
     <link rel="icon" type="image/png" href="/icono.png" />
     <Seo {lang} {title} {description} {ogTitle} {ogDescription} />
+    <SchemaOrg {lang} />
     <slot name="head" />
   </head>
   <body>

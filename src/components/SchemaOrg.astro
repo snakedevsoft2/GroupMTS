@@ -1,0 +1,50 @@
+---
+import logo from '../assets/logo.png';
+import { faqs } from '../data/faqs';
+import { meta, site } from '../data/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const base = Astro.site!;
+
+/* LocalBusiness: solo datos confirmados (PRODUCT.md). */
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'GroupMTS - Marine Tops',
+  legalName: site.legalName,
+  description: t(meta.schemaDescription, lang),
+  url: new URL(lang === 'es' ? '/' : '/en/', base).href,
+  image: new URL(logo.src, base).href,
+  telephone: site.phoneSchema,
+  email: site.email,
+  areaServed: 'Puerto Rico',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.address.locality,
+    postalCode: site.address.postalCode,
+    addressRegion: site.address.region,
+    addressCountry: site.address.country,
+  },
+  sameAs: [site.instagram, site.facebook],
+  openingHours: site.openingHoursSchema,
+};
+
+/* FAQPage generado desde src/data/faqs.ts — nunca duplicado a mano. */
+const faqPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: t(faq.q, lang),
+    acceptedAnswer: { '@type': 'Answer', text: t(faq.a, lang) },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(business)} />
+<script type="application/ld+json" set:html={JSON.stringify(faqPage)} />

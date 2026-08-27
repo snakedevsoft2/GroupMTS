@@ -1,0 +1,6 @@
+# GroupMTS
+User-agent: *
+Allow: /
+
+# PLACEHOLDER: actualizar cuando exista el dominio final
+Sitemap: https://www.ejemplo.com/sitemap-index.xml
