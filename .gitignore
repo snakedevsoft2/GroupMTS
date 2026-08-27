@@ -19,5 +19,7 @@ pnpm-debug.log*
 .DS_Store
 .idea/
 
-# Tooling local de Claude (skills y settings de la máquina)
+# Tooling local de Claude (skills, settings y docs de trabajo — solo locales)
 .claude/
+CLAUDE.md
+PRODUCT.md
