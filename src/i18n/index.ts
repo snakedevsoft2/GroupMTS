@@ -14,6 +14,35 @@ export const t = (l: Localized, lang: Lang): string => l[lang];
 /** Textos de interfaz (chrome del sitio). El copy de contenido vive en src/data/. */
 export interface Dict {
   skip: string;
+  nav: {
+    servicios: string;
+    transformacion: string;
+    proceso: string;
+    trabajos: string;
+    contacto: string;
+  };
+  quoteNow: string;
+  quoteWhatsApp: string;
+  seeRestorations: string;
+  menuOpen: string;
+  menuClose: string;
+  /** El switcher siempre apunta al otro idioma. */
+  langAria: string;
+  langTitle: string;
+  before: string;
+  after: string;
+  baAria: string;
+  baHint: string;
+  filtersAria: string;
+  galleryAria: string;
+  lightboxAria: string;
+  prev: string;
+  next: string;
+  close: string;
+  playAria: string;
+  carouselAria: string;
+  dragHint: string;
+  waFab: string;
 }
 
 export const dicts: Record<Lang, Dict> = { es, en };

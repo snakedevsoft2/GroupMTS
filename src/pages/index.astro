@@ -1,13 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { meta } from '../data/site';
+import { t, type Lang } from '../i18n';
+
+const lang: Lang = 'es';
 ---
 
 <BaseLayout
-  lang="es"
-  title="GroupMTS — Tapicería, interiores y plásticos náuticos en Puerto Rico"
-  description="Tapicería náutica, interiores completos y plásticos para botes en Puerto Rico. Cojinería, plafones, paredes, muebles, enclosures blandos y duros, back drops y capotas extendidas."
-  ogTitle="GroupMTS — Marine Upholstery, Interiors & Plastics"
-  ogDescription="Tapicería, interiores, plásticos y capotas para botes. Taller propio en Puerto Rico."
+  {lang}
+  title={t(meta.title, lang)}
+  description={t(meta.description, lang)}
+  ogTitle={t(meta.ogTitle, lang)}
+  ogDescription={t(meta.ogDescription, lang)}
 >
   <main id="main"></main>
 </BaseLayout>
