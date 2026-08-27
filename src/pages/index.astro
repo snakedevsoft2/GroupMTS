@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Marquee from '../components/Marquee.astro';
+import Services from '../components/Services.astro';
 import { meta } from '../data/site';
 import { t, type Lang } from '../i18n';
 
@@ -19,5 +20,7 @@ const lang: Lang = 'es';
   <Nav {lang} />
   <Hero {lang} />
   <Marquee {lang} />
-  <main id="main"></main>
+  <main id="main">
+    <Services {lang} />
+  </main>
 </BaseLayout>
