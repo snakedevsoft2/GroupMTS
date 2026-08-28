@@ -172,6 +172,11 @@
     .hero__rose { right: auto; left: var(--pad); top: auto; bottom: 2rem; opacity: .22 }
 }
 
+@media (max-width: 767px) {
+    /* En pantalla angosta el rumbo cruzaría los CTAs */
+    .hero__course { display: none }
+}
+
 @media (max-width: 620px) {
     .hero { padding-top: 6.5rem }
     .hero__coast { width: 34vw; opacity: .55 }
