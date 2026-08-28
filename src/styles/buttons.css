@@ -1,46 +1,24 @@
+/* Botones del mundo carta: el primario es el waypoint de destino (rumbo
+   rojo, esquinas casi rectas); el secundario, un recuadro de tinta. */
 .btn {
-    --bg: var(--accent);
-    --fg: #fff;
-    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .65em;
-    padding: 1em 1.85em;
-    border-radius: var(--r-pill);
-    font-size: .9rem;
-    font-weight: 500;
+    gap: .5rem;
+    padding: .95rem 1.6rem;
+    border-radius: var(--r-s);
+    background: var(--course);
+    color: #FDF6F1;
+    font-weight: 600;
+    font-size: .95rem;
     letter-spacing: .02em;
-    background: var(--grad);
-    color: var(--fg);
-    white-space: nowrap;
-    overflow: hidden;
-    background-size: 150% 100%;
-    background-position: 0% 50%;
-    box-shadow: 0 1px 2px rgba(10, 24, 35, .08), 0 12px 26px -12px rgba(var(--c1-rgb), .7);
-    transition: box-shadow .4s var(--ease), background-position .6s var(--ease);
-    will-change: transform;
+    border: 1px solid var(--course-deep);
+    box-shadow: var(--shadow-s);
+    transition: background .25s, box-shadow .3s var(--ease), transform .25s var(--ease);
 }
 
-.btn > * { position: relative; z-index: 1 }
-
-/* Shine sweep on hover */
-.btn::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    transform: translateX(-110%);
-    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .34), transparent);
-    transition: transform .8s var(--ease);
-}
-
-.btn:hover::after { transform: translateX(110%) }
-
-.btn:hover {
-    background-position: 100% 50%;
-    box-shadow: 0 2px 4px rgba(10, 24, 35, .1), 0 20px 38px -14px rgba(var(--c2-rgb), .8);
-}
+.btn:hover { background: var(--course-deep); box-shadow: var(--shadow-m) }
+.btn:active { transform: translateY(1px) }
 
 .btn--ghost {
     background: transparent;
@@ -49,15 +27,13 @@
     box-shadow: none;
 }
 
-.btn--ghost:hover {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-    box-shadow: none;
+.btn--ghost:hover { background: rgba(34, 52, 60, .06); border-color: var(--ink-2) }
+
+/* Botón sobre bandas marinas oscuras */
+.btn--light {
+    background: var(--land);
+    color: var(--sea-2);
+    border-color: var(--land-2);
 }
 
-.btn svg { width: 1.15em; height: 1.15em; flex: none }
-
-@media (max-width: 360px) {
-    .btn { padding: .9em 1.4em; font-size: .85rem }
-}
+.btn--light:hover { background: var(--land-2) }

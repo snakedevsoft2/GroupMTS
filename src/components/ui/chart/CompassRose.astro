@@ -1,0 +1,58 @@
+---
+/* Rosa de compás dibujada en la gramática de la carta: anillo graduado,
+   estrella de 8 puntas, flor de lis al norte. Decorativa (aria-hidden). */
+interface Props {
+  size?: string;
+  class?: string;
+}
+const { size = '160px', class: cls = '' } = Astro.props;
+---
+
+<svg
+  class={`compass ${cls}`}
+  viewBox="0 0 200 200"
+  style={`width:${size};height:${size}`}
+  aria-hidden="true"
+  fill="none"
+>
+  <g stroke="currentColor">
+    <circle cx="100" cy="100" r="96" stroke-width="1" opacity=".55"></circle>
+    <circle cx="100" cy="100" r="88" stroke-width=".6" opacity=".4"></circle>
+    <circle cx="100" cy="100" r="58" stroke-width=".6" opacity=".4"></circle>
+    {/* graduación cada 10° */}
+    <g opacity=".6">
+      {Array.from({ length: 36 }, (_, i) => {
+        const a = (i * 10 * Math.PI) / 180;
+        const r1 = i % 9 === 0 ? 80 : 84;
+        const x1 = 100 + r1 * Math.sin(a);
+        const y1 = 100 - r1 * Math.cos(a);
+        const x2 = 100 + 88 * Math.sin(a);
+        const y2 = 100 - 88 * Math.cos(a);
+        return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke-width={i % 9 === 0 ? 1.4 : 0.7} />;
+      })}
+    </g>
+  </g>
+  {/* estrella: 4 cardinales llenas (mitad luz/mitad sombra), 4 diagonales finas */}
+  <g stroke="currentColor" stroke-width="1" opacity=".55">
+    <line x1="61" y1="61" x2="139" y2="139"></line>
+    <line x1="139" y1="61" x2="61" y2="139"></line>
+  </g>
+  <g>
+    <path d="M100 30 L107 100 L100 100 Z" fill="currentColor"></path>
+    <path d="M100 30 L93 100 L100 100 Z" fill="currentColor" opacity=".35"></path>
+    <path d="M100 170 L93 100 L100 100 Z" fill="currentColor"></path>
+    <path d="M100 170 L107 100 L100 100 Z" fill="currentColor" opacity=".35"></path>
+    <path d="M170 100 L100 93 L100 100 Z" fill="currentColor"></path>
+    <path d="M170 100 L100 107 L100 100 Z" fill="currentColor" opacity=".35"></path>
+    <path d="M30 100 L100 107 L100 100 Z" fill="currentColor"></path>
+    <path d="M30 100 L100 93 L100 100 Z" fill="currentColor" opacity=".35"></path>
+  </g>
+  {/* flor de lis al norte */}
+  <path
+    d="M100 12 C97 18 96 21 100 26 C104 21 103 18 100 12 Z M95 22 C92 24 92 27 95 28 M105 22 C108 24 108 27 105 28"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="none"
+  ></path>
+  <text x="100" y="49" text-anchor="middle" font-size="11" fill="currentColor" font-family="var(--f-display)">N</text>
+</svg>
