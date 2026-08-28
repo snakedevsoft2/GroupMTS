@@ -1,5 +1,5 @@
 ---
-import './gallery.css';
+import '@/styles/gallery.css';
 import { getImage, Picture } from 'astro:assets';
 import Lightbox from '@/components/ui/Lightbox.astro';
 import { gallery, galleryFilters, galleryHead } from '@/data/gallery';
@@ -22,7 +22,6 @@ const shots = gallery.map((shot, i) => ({ ...shot, full: fulls[i]!.src }));
 <section class="section section--tint" id="trabajos">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow reveal">{t(galleryHead.eyebrow, lang)}</span>
       <h2 class="reveal" data-d="1" set:html={t(galleryHead.titleHtml, lang)} />
       <p class="lede reveal" data-d="2">{t(galleryHead.lede, lang)}</p>
     </div>
