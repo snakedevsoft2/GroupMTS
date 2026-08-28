@@ -47,14 +47,7 @@ const dict = dicts[lang];
 
   .wa:active { transform: scale(.98) }
 
-  .wa svg { width: 2rem; height: 2rem; flex: none; animation: waNudge 5s ease-in-out infinite }
-
-  @keyframes waNudge {
-    0%, 86%, 100% { transform: rotate(0) scale(1) }
-    89% { transform: rotate(-14deg) scale(1.08) }
-    92% { transform: rotate(12deg) scale(1.08) }
-    95% { transform: rotate(-7deg) scale(1.04) }
-  }
+  .wa svg { width: 2rem; height: 2rem; flex: none }
 
   /* Label unfolds on hover or focus */
   .wa__txt {
@@ -66,22 +59,6 @@ const dict = dicts[lang];
   }
 
   .wa:hover .wa__txt, .wa:focus-visible .wa__txt { max-width: 12rem; opacity: 1 }
-
-  /* Pulsing ring around the button */
-  .wa::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: var(--r-pill);
-    border: 2px solid #25D366;
-    animation: ring 2.8s ease-out infinite;
-    pointer-events: none;
-  }
-
-  @keyframes ring {
-    0% { transform: scale(1); opacity: .65 }
-    100% { transform: scale(1.35); opacity: 0 }
-  }
 
   @media (max-width: 620px) {
     .wa { height: 4rem; padding: 0 1.05rem }

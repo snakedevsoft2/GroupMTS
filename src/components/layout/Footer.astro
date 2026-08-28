@@ -40,15 +40,6 @@ const { lang } = Astro.props;
     overflow: hidden;
   }
 
-  footer::before {
-    content: "";
-    position: absolute;
-    inset: auto 0 -60% 0;
-    height: 120%;
-    pointer-events: none;
-    background: radial-gradient(40% 60% at 50% 100%, rgba(var(--c2-rgb), .16), transparent 70%);
-  }
-
   .foot { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.6rem }
   .foot p { font-size: .78rem; color: var(--muted); padding-top: 1.6rem; border-top: 1px solid var(--line); width: min(100%, 32rem) }
 
@@ -75,21 +66,21 @@ const { lang } = Astro.props;
     align-items: center;
     gap: .6rem;
     font-size: .95rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--ink);
     padding: .55rem 1.15rem;
-    border-radius: var(--r-pill);
+    border-radius: var(--r-s);
     border: 1px solid var(--line-2);
     background: var(--card);
     transition: .35s var(--ease);
   }
 
-  .foot__mail svg { width: 1.05rem; height: 1.05rem; color: var(--c1) }
+  .foot__mail svg { width: 1.05rem; height: 1.05rem; color: var(--course) }
 
   .foot__mail:hover {
-    border-color: var(--c1);
-    color: var(--c1);
-    box-shadow: 0 10px 24px -12px rgba(var(--c1-rgb), .7);
+    border-color: var(--course);
+    color: var(--course);
+    box-shadow: var(--shadow-m);
     transform: translateY(-2px);
   }
 

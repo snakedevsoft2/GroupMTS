@@ -59,41 +59,34 @@ const { lang } = Astro.props;
 </section>
 
 <style>
+  /* La recalada: panel de mar profundo con marco de carta */
   .cta {
     position: relative;
     overflow: hidden;
-    border-radius: var(--r-l);
+    border-radius: var(--r-s);
     padding: clamp(3rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
-    background: linear-gradient(145deg, #071B2C 0%, #0A2E5C 52%, #06485E 100%);
-    border: 0;
+    background: linear-gradient(160deg, var(--sea), var(--sea-2));
+    border: 1px solid var(--sea-2);
+    outline: 3px double var(--line-2);
+    outline-offset: 5px;
     text-align: center;
   }
 
-  /* Color washes at the top of the card */
-  .cta::before {
-    content: "";
-    position: absolute;
-    inset: -30% -10% auto;
-    height: 90%;
-    background: radial-gradient(45% 60% at 28% 0%, rgba(var(--c2-rgb), .42), transparent 68%),
-        radial-gradient(40% 55% at 82% 10%, rgba(var(--c3-rgb), .28), transparent 68%);
-  }
-
   .cta > :global(*) { position: relative }
-  .cta h2 { color: #fff }
-  .cta h2 :global(em) { color: var(--c2) }
-  .cta .lede { margin-inline: auto; color: rgba(255, 255, 255, .72) }
+  .cta h2 { color: var(--sea-ink) }
+  .cta h2 :global(em) { color: var(--land) }
+  .cta .lede { margin-inline: auto; color: var(--sea-muted) }
 
   .cta :global(.btn:not(.btn--ghost)) {
-    background: #fff;
-    background-image: none;
-    color: var(--ink);
-    box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .6);
+    background: var(--land);
+    color: var(--sea-2);
+    border-color: var(--land-2);
+    box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .5);
   }
 
-  .cta :global(.btn:not(.btn--ghost)):hover { background: var(--c2); color: #04252B }
-  .cta :global(.btn--ghost) { color: #fff; border-color: rgba(255, 255, 255, .3) }
-  .cta :global(.btn--ghost):hover { background: #fff; color: var(--ink); border-color: #fff }
+  .cta :global(.btn:not(.btn--ghost)):hover { background: var(--land-2) }
+  .cta :global(.btn--ghost) { color: var(--sea-ink); border-color: rgba(220, 231, 237, .35) }
+  .cta :global(.btn--ghost):hover { background: rgba(220, 231, 237, .12); border-color: var(--sea-ink) }
 
   .cta-buttons { display: flex; flex-wrap: wrap; gap: .85rem; justify-content: center; margin-top: 2.5rem }
 
@@ -104,12 +97,12 @@ const { lang } = Astro.props;
     justify-content: center;
     margin-top: 2.8rem;
     padding-top: 2.1rem;
-    border-top: 1px solid rgba(255, 255, 255, .15);
+    border-top: 1px dashed rgba(220, 231, 237, .3);
     font-size: .85rem;
-    color: rgba(255, 255, 255, .72);
+    color: var(--sea-muted);
   }
 
   .contact-line a, .contact-line > span { display: inline-flex; align-items: center; gap: .55rem; transition: color .3s }
-  .contact-line a:hover { color: #fff }
-  .contact-line svg { width: 1rem; height: 1rem; color: var(--c2) }
+  .contact-line a:hover { color: var(--sea-ink) }
+  .contact-line svg { width: 1rem; height: 1rem; color: var(--land) }
 </style>

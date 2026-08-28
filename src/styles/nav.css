@@ -12,11 +12,11 @@
 }
 
 .nav.is-stuck {
-    background: rgba(252, 251, 249, .86);
+    background: rgba(227, 236, 238, .9);
     backdrop-filter: blur(16px) saturate(140%);
     border-bottom-color: var(--line);
     padding-block: .85rem;
-    box-shadow: 0 1px 20px -10px rgba(10, 24, 35, .35);
+    box-shadow: 0 1px 20px -10px rgba(34, 52, 60, .35);
 }
 
 .nav.is-hidden { transform: translateY(-115%) }
@@ -90,22 +90,19 @@
 .nav-links a:nth-of-type(3) { animation-delay: .44s }
 .nav-links a:nth-of-type(4) { animation-delay: .51s }
 .nav-links a:nth-of-type(5) { animation-delay: .58s }
-.nav-links a:hover, .nav-links a.active { color: var(--accent) }
+.nav-links a:hover, .nav-links a.active { color: var(--course) }
 
-/* Sliding pill: follows the mouse, rests on the active link */
+/* Subrayado de rumbo: sigue el mouse, descansa en el link activo */
 .nav-pill {
     position: absolute;
-    top: 50%;
+    bottom: -.2rem;
     left: 0;
     width: 0;
-    height: 2.1rem;
+    height: 0;
     z-index: 0;
     opacity: 0;
-    transform: translateY(-50%);
-    border-radius: var(--r-pill);
+    border-bottom: 2px dashed var(--course);
     pointer-events: none;
-    background: rgba(var(--accent-rgb), .09);
-    border: 1px solid rgba(var(--accent-rgb), .24);
     transition: left .5s var(--ease), width .5s var(--ease), opacity .35s var(--ease);
 }
 
@@ -122,7 +119,7 @@
     align-items: center;
     gap: .22rem;
     padding: .45rem .8rem;
-    border-radius: var(--r-pill);
+    border-radius: var(--r-s);
     border: 1px solid var(--line);
     background: var(--card);
     font-size: .7rem;
@@ -133,12 +130,12 @@
     animation: navDown .6s var(--ease) backwards .66s;
 }
 
-.lang:hover { border-color: var(--c1); box-shadow: 0 6px 16px -8px rgba(var(--c1-rgb), .6) }
+.lang:hover { border-color: var(--course); box-shadow: var(--shadow-s) }
 .lang__sep { opacity: .35 }
-.lang__on { color: var(--c1) }
+.lang__on { color: var(--course) }
 .lang__off { color: var(--muted-strong) }
 .lang.is-en .lang__on { color: var(--muted-strong) }
-.lang.is-en .lang__off { color: var(--c1) }
+.lang.is-en .lang__off { color: var(--course) }
 
 .lang--drawer {
     display: none;

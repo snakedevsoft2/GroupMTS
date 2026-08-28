@@ -57,14 +57,15 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
   .ba {
     position: relative;
     aspect-ratio: 16/9;
-    border-radius: var(--r-l);
     overflow: hidden;
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-2);
+    outline: 3px double var(--line);
+    outline-offset: 4px;
     box-shadow: var(--shadow-l);
     touch-action: pan-y;
     cursor: ew-resize;
     user-select: none;
-    background: var(--paper-2);
+    background: var(--water-2);
   }
 
   @media (max-width: 640px) {
@@ -74,15 +75,15 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
   .ba :global(.ba__img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
   .ba :global(.ba__top) { clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0) }
 
+  /* Rótulos de carta: rectangulares, tinta sobre papel */
   .ba__tag {
     position: absolute;
     bottom: 1.1rem;
     z-index: 3;
     padding: .45rem 1rem;
-    border-radius: var(--r-pill);
-    background: rgba(252, 251, 249, .92);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--line);
+    border-radius: var(--r-s);
+    background: rgba(239, 244, 245, .94);
+    border: 1px solid var(--line-2);
     font-size: .68rem;
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -91,7 +92,7 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
   }
 
   .ba__tag--l { left: 1.1rem }
-  .ba__tag--r { right: 1.1rem; background: var(--grad); color: #fff; border-color: transparent }
+  .ba__tag--r { right: 1.1rem; background: var(--course); color: #FDF6F1; border-color: var(--course-deep) }
 
   .ba__handle {
     position: absolute;
@@ -99,9 +100,8 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
     bottom: 0;
     left: var(--pos, 50%);
     z-index: 4;
-    width: 2px;
-    background: #fff;
-    box-shadow: 0 0 12px rgba(10, 24, 35, .4);
+    width: 0;
+    border-left: 2px dashed var(--course);
     transform: translateX(-1px);
     pointer-events: none;
   }
@@ -116,10 +116,10 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: #fff;
-    border: 1px solid var(--line);
-    color: var(--accent);
-    box-shadow: 0 6px 22px rgba(10, 24, 35, .28);
+    background: var(--card);
+    border: 1px solid var(--course);
+    color: var(--course);
+    box-shadow: 0 6px 22px rgba(34, 52, 60, .28);
   }
 
   .ba__knob svg { width: 1.3rem; height: 1.3rem }

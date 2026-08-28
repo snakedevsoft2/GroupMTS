@@ -23,7 +23,7 @@ body.menu-open .burger span::after { top: 0; transform: rotate(-45deg) }
     position: fixed;
     inset: 0;
     z-index: 99;
-    background: rgba(252, 251, 249, .98);
+    background: rgba(227, 236, 238, .98);
     backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
@@ -54,7 +54,7 @@ body.menu-open .drawer a { transform: none; opacity: 1 }
 .drawer a:nth-child(3) { transition-delay: .16s }
 .drawer a:nth-child(4) { transition-delay: .21s }
 .drawer a:nth-child(5) { transition-delay: .26s }
-.drawer a:hover { color: var(--accent) }
+.drawer a:hover { color: var(--course) }
 
 /* Landscape phones: the drawer needs its own scroll */
 @media (max-height: 560px) and (orientation: landscape) {

@@ -1,4 +1,5 @@
 ---
+/* El proceso como derrota trazada: 4 waypoints sobre la línea de rumbo. */
 import { processHead, processSteps } from '@/data/process';
 import { t, type Lang } from '@/i18n';
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const stageWord = lang === 'es' ? 'ETAPA' : 'LEG';
 ---
 
 <section class="section section--tint" id="proceso">
@@ -14,62 +16,78 @@ const { lang } = Astro.props;
     <div class="head">
       <h2 class="reveal" data-d="1" set:html={t(processHead.titleHtml, lang)} />
     </div>
-    <div class="steps reveal" data-d="1">
+    <ol class="route reveal" data-d="1">
       {
         processSteps.map((step, i) => (
-          <div class="step">
-            <b>{String(i + 1).padStart(2, '0')}</b>
+          <li class="leg">
+            <span class="leg__pt" aria-hidden="true"></span>
+            <span class="leg__no">{stageWord} {i + 1}</span>
             <h3>{t(step.title, lang)}</h3>
             <p>{t(step.text, lang)}</p>
-          </div>
+          </li>
         ))
       }
-    </div>
+    </ol>
   </div>
 </section>
 
 <style>
-  .steps {
+  .route {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--r-m);
-    overflow: hidden;
     grid-template-columns: 1fr;
+    gap: 2.4rem 1.6rem;
+    position: relative;
   }
 
-  @media (min-width: 560px) {
-    .steps { grid-template-columns: repeat(2, 1fr) }
+  @media (min-width: 900px) {
+    .route { grid-template-columns: repeat(4, 1fr) }
   }
 
-  @media (min-width: 1100px) {
-    .steps { grid-template-columns: repeat(4, 1fr) }
+  .leg { position: relative; padding-top: 1.7rem }
+
+  /* La línea de derrota pasa por los waypoints */
+  .leg::before {
+    content: "";
+    position: absolute;
+    top: .55rem;
+    left: 0;
+    right: 0;
+    border-top: 2px dashed var(--course);
+    opacity: .8;
   }
 
-  .step { background: var(--card); padding: clamp(1.8rem, 3vw, 2.4rem); transition: background .4s; position: relative }
-  .step:hover { background: var(--paper-2) }
+  .leg__pt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: var(--course);
+    border: 2px solid var(--water-2);
+    box-shadow: 0 0 0 1px var(--course);
+  }
 
-  /* Big outlined number that fills on hover */
-  .step b {
-    font-family: var(--f-display);
-    font-size: 2.7rem;
-    color: transparent;
-    line-height: 1;
+  /* En columna (móvil) la línea baja en vertical */
+  @media (max-width: 899px) {
+    .leg::before { right: auto; bottom: -2.4rem; left: .5rem; top: 1.3rem; border-top: 0; border-left: 2px dashed var(--course) }
+    .leg:last-child::before { display: none }
+    .leg { padding-left: 2.2rem; padding-top: 0 }
+    .leg__pt { top: .15rem }
+  }
+
+  .leg__no {
     display: block;
-    margin-bottom: 1.2rem;
-    -webkit-text-stroke: 1.5px var(--c1);
-    transition: color .5s var(--ease);
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    color: var(--course);
+    margin-bottom: .6rem;
   }
 
-  .step:nth-child(2) b { -webkit-text-stroke-color: var(--c2) }
-  .step:nth-child(3) b { -webkit-text-stroke-color: var(--c3) }
-  .step:nth-child(4) b { -webkit-text-stroke-color: var(--c4) }
-  .step:hover b { color: rgba(var(--c1-rgb), .12) }
-  .step:nth-child(2):hover b { color: rgba(var(--c2-rgb), .14) }
-  .step:nth-child(3):hover b { color: rgba(var(--c3-rgb), .14) }
-  .step:nth-child(4):hover b { color: rgba(var(--c4-rgb), .16) }
-
-  .step h3 { font-size: 1.05rem; margin-bottom: .55rem }
-  .step p { font-size: .87rem; color: var(--muted) }
+  .leg h3 { font-size: 1.05rem; margin-bottom: .55rem }
+  .leg p { font-size: .87rem; color: var(--muted-strong) }
 </style>

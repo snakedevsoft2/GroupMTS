@@ -25,6 +25,7 @@ const dict = dicts[lang];
 </section>
 
 <style>
+  /* Banda de mar profundo: el marino de la carta, sin luces de neón */
   .videoband {
     position: relative;
     overflow: hidden;
@@ -34,39 +35,35 @@ const dict = dicts[lang];
     place-items: center;
     text-align: center;
     padding: var(--section) var(--pad);
-    background: var(--ink);
+    background: var(--sea-2);
   }
 
-  .videoband :global(.vbg) { background: linear-gradient(160deg, #122636, #0A1823) }
+  .videoband :global(.vbg) { background: linear-gradient(160deg, var(--sea), var(--sea-2)) }
 
   .videoband :global(.vbg::after) {
-    background: linear-gradient(180deg, var(--ink), rgba(10, 24, 35, .72) 30%, rgba(10, 24, 35, .72) 70%, var(--ink)),
-        radial-gradient(50% 60% at 20% 30%, rgba(var(--c2-rgb), .28), transparent 65%),
-        radial-gradient(45% 55% at 85% 75%, rgba(var(--c3-rgb), .22), transparent 65%),
-        rgba(10, 24, 35, .25);
+    background: linear-gradient(180deg, var(--sea-2), rgba(22, 44, 73, .66) 30%, rgba(22, 44, 73, .66) 70%, var(--sea-2));
   }
 
-  .videoband :global(.grain) { opacity: .4 }
+  .videoband :global(.grain) { opacity: .35 }
 
-  .videoband h2 { max-width: 20ch; margin-inline: auto; color: #fff }
-  .videoband h2 :global(em) { color: var(--c2) }
-  .videoband .lede { margin-inline: auto; color: rgba(255, 255, 255, .72) }
+  .videoband h2 { max-width: 20ch; margin-inline: auto; color: var(--sea-ink) }
+  .videoband h2 :global(em) { color: var(--land) }
+  .videoband .lede { margin-inline: auto; color: var(--sea-muted) }
 
   .play {
     margin-top: 2.3rem;
-    width: 4.6rem;
-    height: 4.6rem;
-    border-radius: 50%;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: var(--r-s);
     display: grid;
     place-items: center;
-    border: 1px solid rgba(255, 255, 255, .35);
-    color: #fff;
-    background: rgba(255, 255, 255, .06);
-    backdrop-filter: blur(8px);
+    border: 1px solid rgba(220, 231, 237, .4);
+    color: var(--sea-ink);
+    background: rgba(220, 231, 237, .08);
     transition: .4s var(--ease);
   }
 
-  .play:hover { background: #fff; color: var(--ink); transform: scale(1.07); border-color: #fff }
+  .play:hover { background: var(--land); color: var(--sea-2); border-color: var(--land-2); transform: scale(1.05) }
   .play :global(svg) { width: 1.4rem; height: 1.4rem; margin-left: 3px }
 
   @media (max-height: 560px) and (orientation: landscape) {
