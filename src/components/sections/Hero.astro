@@ -1,9 +1,9 @@
 ---
 import './hero.css';
 import { getImage } from 'astro:assets';
-import { hero, trust } from '../data/hero';
-import { site } from '../data/site';
-import { dicts, t, type Lang } from '../i18n';
+import { hero, trust } from '@/data/hero';
+import { site } from '@/data/site';
+import { dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -12,8 +12,8 @@ interface Props {
 const { lang } = Astro.props;
 const dict = dicts[lang];
 const words = hero.h1[lang];
-/* Calidad alta a propósito: un poster demasiado comprimido queda por
-   debajo del umbral de entropía de Chrome y no califica como LCP. */
+/* High quality on purpose: an over-compressed poster falls below
+   Chrome's entropy threshold and never qualifies as the LCP. */
 const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', quality: 90 });
 ---
 
@@ -71,14 +71,14 @@ const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', q
 </header>
 
 <script>
-  import { onScroll, reduce } from '../scripts/scroll';
+  import { onScroll, reduce } from '@/scripts/scroll';
 
   const hero = document.getElementById('hero')!;
   requestAnimationFrame(() => hero.classList.add('ready'));
 
-  /* El video (varios MB) arranca tras el load para no competir con el
-     primer pintado; el poster (frame real) cubre mientras. El play()
-     puede rechazarse por política del navegador; no es un error. */
+  /* The video (several MB) starts after load so it does not compete with
+     first paint; the poster (a real frame) covers meanwhile. play() may be
+     rejected by autoplay policy; that is not an error. */
   const video = hero.querySelector<HTMLVideoElement>('video[data-src]');
   if (video) {
     const startVideo = (): void => {
@@ -89,7 +89,7 @@ const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', q
     else window.addEventListener('load', startVideo, { once: true });
   }
 
-  /* El contenido se desvanece y sube al hacer scroll */
+  /* Hero content fades and lifts on scroll */
   const heroInner = document.getElementById('heroInner')!;
   onScroll(() => {
     if (reduce) return;
@@ -101,7 +101,7 @@ const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', q
     heroInner.style.opacity = (1 - p * 1.15).toFixed(3);
   });
 
-  /* Contadores de cifras */
+  /* Trust counters */
   const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-count]'));
   function runCounters(): void {
     for (const el of counters) {

@@ -1,6 +1,3 @@
-/* ============================================================
-   Navegación fija + drawer móvil (portado de legacy/styles.css)
-   ============================================================ */
 .nav {
     position: fixed;
     inset: 2px 0 auto 0;
@@ -28,7 +25,7 @@
 .nav .logo { animation: navDown .85s var(--ease) backwards .12s }
 .logo__img { position: relative; display: block; overflow: hidden }
 
-/* Destello que recorre el logo */
+/* Shine sweep across the logo */
 .nav .logo__img::after {
     content: "";
     position: absolute;
@@ -95,7 +92,7 @@
 .nav-links a:nth-of-type(5) { animation-delay: .58s }
 .nav-links a:hover, .nav-links a.active { color: var(--accent) }
 
-/* Píldora deslizante que sigue al enlace activo / al mouse */
+/* Sliding pill: follows the mouse, rests on the active link */
 .nav-pill {
     position: absolute;
     top: 50%;
@@ -112,14 +109,14 @@
     transition: left .5s var(--ease), width .5s var(--ease), opacity .35s var(--ease);
 }
 
-/* Relevo de letras al pasar el mouse */
+/* Letter relay on hover */
 .nav-links .roll { display: block; overflow: hidden; height: 1.15em; white-space: nowrap }
 .nav-links .roll span { display: block; line-height: 1.15em; white-space: nowrap; transition: transform .45s var(--ease) }
 .nav-links a:hover .roll span { transform: translateY(-100%) }
 
 .nav-right { display: flex; align-items: center; gap: 1.05rem }
 
-/* Switcher de idioma ES / EN (link a la otra ruta) */
+/* ES / EN language switcher (a link to the other route) */
 .lang {
     display: inline-flex;
     align-items: center;
@@ -159,9 +156,8 @@
 .nav .btn { animation: navDown .7s var(--ease) backwards .90s }
 .nav .burger { animation: navDown .6s var(--ease) backwards .55s }
 
-/* --- Barra superior responsiva ---
-   Debajo de 1360px se esconden los iconos sociales (el pie los tiene).
-   Debajo de 1180px se pasa al menú hamburguesa. */
+/* Below 1360px the social icons hide (the footer has them);
+   below 1180px we switch to the burger menu. */
 @media (max-width: 1360px) {
     .nav .social { display: none }
 }

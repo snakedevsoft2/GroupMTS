@@ -2,10 +2,10 @@
 import './nav.css';
 import './drawer.css';
 import { Image } from 'astro:assets';
-import logo from '../assets/logo.png';
-import SocialLinks from './SocialLinks.astro';
-import { site } from '../data/site';
-import { altPath, dicts, t, type Lang } from '../i18n';
+import logo from '@/assets/brand/logo.png';
+import SocialLinks from '@/components/ui/SocialLinks.astro';
+import { site } from '@/data/site';
+import { altPath, dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -70,7 +70,7 @@ const links = [
 </div>
 
 <script>
-  import { onScroll } from '../scripts/scroll';
+  import { onScroll } from '@/scripts/scroll';
 
   const nav = document.getElementById('nav')!;
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('#navLinks a'));
@@ -79,7 +79,7 @@ const links = [
   let overNav = false;
   let lastY = 0;
 
-  /* Relevo de letras: la copia de abajo sube al pasar el mouse */
+  /* Letter relay: the duplicate below slides up on hover */
   for (const a of links) {
     const text = a.textContent ?? '';
     const roll = document.createElement('span');
@@ -94,7 +94,7 @@ const links = [
     a.appendChild(roll);
   }
 
-  /* Píldora deslizante: sigue al mouse y, al salir, vuelve a la sección activa */
+  /* Sliding pill: follows the mouse, rests on the active section */
   function movePill(el: HTMLElement): void {
     if (!pill) return;
     pill.style.width = `${el.offsetWidth + 28}px`;
@@ -113,7 +113,7 @@ const links = [
     window.addEventListener('resize', restPill, { passive: true });
   }
 
-  /* Pegajosa: se esconde al bajar, vuelve al subir */
+  /* Sticky bar: hides scrolling down, returns scrolling up */
   onScroll(() => {
     const y = window.scrollY;
     nav.classList.toggle('is-stuck', y > 40);
@@ -121,7 +121,7 @@ const links = [
     lastY = y;
   });
 
-  /* Menú móvil */
+  /* Mobile menu */
   const burger = document.getElementById('burger')!;
   const drawer = document.getElementById('drawer')!;
   function setMenu(open: boolean): void {
@@ -138,7 +138,7 @@ const links = [
     if (e.key === 'Escape') setMenu(false);
   });
 
-  /* Scrollspy: resalta la sección visible */
+  /* Scrollspy */
   if ('IntersectionObserver' in window) {
     const spy = new IntersectionObserver(
       (entries) => {

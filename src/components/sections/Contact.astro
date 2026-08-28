@@ -1,7 +1,7 @@
 ---
-import { contact } from '../data/contact';
-import { site } from '../data/site';
-import { t, type Lang } from '../i18n';
+import { contact } from '@/data/contact';
+import { site } from '@/data/site';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -70,7 +70,7 @@ const { lang } = Astro.props;
     text-align: center;
   }
 
-  /* Manchas de color arriba de la tarjeta */
+  /* Color washes at the top of the card */
   .cta::before {
     content: "";
     position: absolute;

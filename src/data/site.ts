@@ -1,9 +1,8 @@
 import type { ImageMetadata } from 'astro';
-import type { Localized } from '../i18n';
-import tallerPoster from '../assets/taller-poster.jpg';
+import type { Localized } from '@/i18n';
+import tallerPoster from '@/assets/posters/taller-poster.jpg';
 
-/* Identidad, contacto y metadatos de GroupMTS.
-   Solo datos confirmados por el dueño (ver PRODUCT.md). */
+/* Identity, contact and metadata. Owner-confirmed data only (see PRODUCT.md). */
 
 const waMessage: Localized = {
   es: ' ¡Hola! Vi su sitio web y me interesa solicitar una cotización. ¿Me podrían indicar cuál es el proceso, por favor?',
@@ -72,10 +71,9 @@ export const marquee: Localized[] = [
   { es: 'Acero inoxidable 316', en: '316 stainless steel' },
 ];
 
-/* Banda oscura "Taller propio" (video del taller). */
 export const taller = {
-  video: '/VIDEO/taller.mp4',
-  /* Frame real del propio video, extraído con ffmpeg */
+  video: '/videos/taller.mp4',
+  /* Real frame extracted from the video itself. */
   poster: tallerPoster as ImageMetadata,
   eyebrow: { es: 'Taller propio', en: 'Our own shop' },
   titleHtml: {

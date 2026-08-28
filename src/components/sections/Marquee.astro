@@ -1,6 +1,6 @@
 ---
-import { marquee } from '../data/site';
-import { t, type Lang } from '../i18n';
+import { marquee } from '@/data/site';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -35,7 +35,7 @@ const items = marquee.map((item) => t(item, lang));
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
 
-  /* La velocidad real la pone el script; esto es el respaldo si el JS no carga */
+  /* The script drives the real speed; this is the no-JS fallback */
   .marquee__track { display: flex; width: max-content; animation: slide 22s linear infinite; will-change: transform }
   .marquee:hover .marquee__track { animation-play-state: paused }
 
@@ -61,17 +61,16 @@ const items = marquee.map((item) => t(item, lang));
   .marquee__group span:nth-child(4n+4)::before { background: var(--c4) }
 
   @media (prefers-reduced-motion: reduce) {
-    /* La marquesina sigue andando, más lenta: es un desplazamiento suave,
-       no un efecto brusco. */
+    /* Keeps moving, just slower: it is a gentle drift, not a harsh effect */
     .marquee__track { animation-duration: 55s !important }
   }
 </style>
 
 <script>
-  import { reduce } from '../scripts/scroll';
+  import { reduce } from '@/scripts/scroll';
 
-  /* Marquesina: se mueve sola y reacciona al scroll. Sustituye la animación
-     CSS por un bucle propio para sumarle la velocidad del scroll. */
+  /* Self-moving marquee that reacts to scroll. Replaces the CSS
+     animation with its own loop to add scroll velocity. */
   const track = document.querySelector<HTMLElement>('.marquee__track');
   if (track) {
     let groupW = 0;
@@ -96,13 +95,13 @@ const items = marquee.map((item) => t(item, lang));
     (function tick() {
       const y = window.scrollY;
       if (!reduce) {
-        vel += (y - lastY) * 0.45; /* el scroll la empuja */
-        vel *= 0.9; /* y se va frenando sola */
+        vel += (y - lastY) * 0.45; /* scroll pushes it */
+        vel *= 0.9; /* and it brakes on its own */
       }
       lastY = y;
 
-      /* Con "reducir movimiento" va más lenta y sin empujón de scroll,
-         pero no se detiene: es la única animación que se mantiene. */
+      /* With reduced motion it drifts slower and ignores scroll pushes,
+         but it never stops: it is the one animation we keep. */
       const base = reduce ? 1.1 : hover ? 0.35 : 1.7;
       x -= base + vel;
 

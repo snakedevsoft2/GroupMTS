@@ -1,7 +1,7 @@
 ---
-import ServiceIcon from './ServiceIcon.astro';
-import { services, servicesHead } from '../data/services';
-import { t, type Lang } from '../i18n';
+import ServiceIcon from '@/components/ui/ServiceIcon.astro';
+import { services, servicesHead } from '@/data/services';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -64,7 +64,7 @@ const { lang } = Astro.props;
   .card[data-tone="3"] { --tone: var(--c3); --tone-rgb: var(--c3-rgb) }
   .card[data-tone="4"] { --tone: var(--c4); --tone-rgb: var(--c4-rgb) }
 
-  /* Filo superior que se dibuja al pasar el mouse */
+  /* Top edge that draws itself on hover */
   .card::after {
     content: "";
     position: absolute;
@@ -78,7 +78,7 @@ const { lang } = Astro.props;
 
   .card:hover::after { transform: scaleX(1) }
 
-  /* Luz que sigue al mouse (coordenadas --mx/--my desde cursor.ts) */
+  /* Spotlight following the mouse (--mx/--my set by cursor.ts) */
   .card::before {
     content: "";
     position: absolute;

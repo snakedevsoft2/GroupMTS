@@ -1,6 +1,6 @@
 ---
-import { site } from '../data/site';
-import { t, type Lang } from '../i18n';
+import { site } from '@/data/site';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -34,7 +34,7 @@ const { lang } = Astro.props;
 </div>
 
 <style is:global>
-  /* Global: .nav y .foot ajustan tamaño/animación de estos iconos desde su propio CSS */
+  /* Global on purpose: .nav and .foot override icon size/animation from their own CSS */
   .social { display: flex; gap: .5rem }
 
   .social a {

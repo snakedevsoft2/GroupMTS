@@ -1,7 +1,3 @@
-/* ============================================================
-   Revelado al hacer scroll + preferencia de menos movimiento
-   (portado de legacy/styles.css)
-   ============================================================ */
 .reveal {
     opacity: 0;
     transform: translateY(26px);
@@ -15,9 +11,8 @@
 .reveal[data-d="3"] { transition-delay: .27s }
 .reveal[data-d="4"] { transition-delay: .36s }
 
-/* Revelado tipo cortina. No usamos clip-path en el propio elemento:
-   Chrome lo descuenta del área de intersección y el observer nunca
-   dispararía (el elemento clippeado "no se ve" para el IO). */
+/* Curtain reveal. Not clip-path on the element itself: Chrome subtracts
+   the clip from the intersection area, so the observer would never fire. */
 .mask { position: relative }
 
 .mask::after {
@@ -41,7 +36,7 @@
 
     html { scroll-behavior: auto }
 
-    /* El contenido nunca puede quedar oculto sin animación de entrada */
+    /* Content must never stay hidden behind an entrance animation */
     .reveal, .hero__fade { opacity: 1; transform: none }
     .mask::after { display: none }
     .w > span { transform: none }

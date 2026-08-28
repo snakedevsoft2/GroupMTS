@@ -1,6 +1,6 @@
-import type { Localized } from '../i18n';
+import type { Localized } from '@/i18n';
 
-/* FAQ: única fuente de verdad; el JSON-LD FAQPage se genera de aquí. */
+/* Single source of truth: the FAQPage JSON-LD is generated from here. */
 
 export const faqsHead = {
   eyebrow: { es: 'Preguntas frecuentes', en: 'FAQ' },

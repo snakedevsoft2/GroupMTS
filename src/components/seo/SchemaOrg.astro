@@ -1,8 +1,8 @@
 ---
-import logo from '../assets/logo.png';
-import { faqs } from '../data/faqs';
-import { meta, site } from '../data/site';
-import { t, type Lang } from '../i18n';
+import logo from '@/assets/brand/logo.png';
+import { faqs } from '@/data/faqs';
+import { meta, site } from '@/data/site';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -11,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const base = Astro.site!;
 
-/* LocalBusiness: solo datos confirmados (PRODUCT.md). */
+/* Owner-confirmed data only (see PRODUCT.md). */
 const business = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -34,7 +34,7 @@ const business = {
   openingHours: site.openingHoursSchema,
 };
 
-/* FAQPage generado desde src/data/faqs.ts — nunca duplicado a mano. */
+/* Generated from src/data/faqs.ts — never duplicated by hand. */
 const faqPage = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',

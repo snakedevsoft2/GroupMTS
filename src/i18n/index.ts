@@ -3,7 +3,7 @@ import { en } from './en';
 
 export type Lang = 'es' | 'en';
 
-/** Par de textos ES/EN; el español manda como fuente. */
+/** ES/EN copy pair; Spanish is the source of truth. */
 export interface Localized {
   es: string;
   en: string;
@@ -11,7 +11,7 @@ export interface Localized {
 
 export const t = (l: Localized, lang: Lang): string => l[lang];
 
-/** Textos de interfaz (chrome del sitio). El copy de contenido vive en src/data/. */
+/** UI chrome strings. Content copy lives in src/data/. */
 export interface Dict {
   skip: string;
   nav: {
@@ -26,7 +26,7 @@ export interface Dict {
   seeRestorations: string;
   menuOpen: string;
   menuClose: string;
-  /** El switcher siempre apunta al otro idioma. */
+  /** The switcher always points to the other language. */
   langAria: string;
   langTitle: string;
   before: string;
@@ -47,7 +47,7 @@ export interface Dict {
 
 export const dicts: Record<Lang, Dict> = { es, en };
 
-/** Ruta equivalente en el otro idioma (para el switcher y hreflang). */
+/** Equivalent path in the other language (switcher and hreflang). */
 export function altPath(path: string, target: Lang): string {
   const clean = path.replace(/^\/en(?=\/|$)/, '') || '/';
   return target === 'es' ? clean : clean === '/' ? '/en/' : `/en${clean}`;

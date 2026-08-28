@@ -1,6 +1,6 @@
-import type { Localized } from '../i18n';
+import type { Localized } from '@/i18n';
 
-/* CTA final de contacto. Los datos duros (teléfono, email, redes) viven en site.ts. */
+/* Final contact CTA. Hard data (phone, email, socials) lives in site.ts. */
 
 export const contact = {
   eyebrow: { es: 'Conecta con nosotros', en: 'Get in touch' },

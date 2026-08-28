@@ -1,29 +1,29 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Marquee from '../components/Marquee.astro';
-import Services from '../components/Services.astro';
-import BeforeAfter from '../components/BeforeAfter.astro';
-import Process from '../components/Process.astro';
-import Gallery from '../components/Gallery.astro';
-import VideoBand from '../components/VideoBand.astro';
-import Testimonials from '../components/Testimonials.astro';
-import Faq from '../components/Faq.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
-import WhatsAppFab from '../components/WhatsAppFab.astro';
 import { getImage } from 'astro:assets';
-import { hero } from '../data/hero';
-import { meta } from '../data/site';
-import { t, type Lang } from '../i18n';
+import BaseLayout from './BaseLayout.astro';
+import Nav from '@/components/layout/Nav.astro';
+import Footer from '@/components/layout/Footer.astro';
+import WhatsAppFab from '@/components/layout/WhatsAppFab.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Marquee from '@/components/sections/Marquee.astro';
+import Services from '@/components/sections/Services.astro';
+import BeforeAfter from '@/components/sections/BeforeAfter.astro';
+import Process from '@/components/sections/Process.astro';
+import Gallery from '@/components/sections/Gallery.astro';
+import VideoBand from '@/components/sections/VideoBand.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import Faq from '@/components/sections/Faq.astro';
+import Contact from '@/components/sections/Contact.astro';
+import { hero } from '@/data/hero';
+import { meta } from '@/data/site';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
-// El poster del hero es el candidato a LCP: se precarga con prioridad.
+// The hero poster is the LCP candidate: preload it with priority.
 const heroPoster = await getImage({ src: hero.poster, width: 1600, format: 'webp', quality: 90 });
 ---
 

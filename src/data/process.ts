@@ -1,6 +1,6 @@
-import type { Localized } from '../i18n';
+import type { Localized } from '@/i18n';
 
-/* Proceso en 4 pasos (PRODUCT.md). */
+/* The 4-step process (see PRODUCT.md). */
 
 export const processHead = {
   eyebrow: { es: 'Cómo trabajamos', en: 'How we work' },

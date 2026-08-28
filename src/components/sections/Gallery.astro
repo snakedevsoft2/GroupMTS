@@ -1,9 +1,9 @@
 ---
 import './gallery.css';
 import { getImage, Picture } from 'astro:assets';
-import Lightbox from './Lightbox.astro';
-import { gallery, galleryFilters, galleryHead } from '../data/gallery';
-import { dicts, t, type Lang } from '../i18n';
+import Lightbox from '@/components/ui/Lightbox.astro';
+import { gallery, galleryFilters, galleryHead } from '@/data/gallery';
+import { dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -12,7 +12,7 @@ interface Props {
 const { lang } = Astro.props;
 const dict = dicts[lang];
 
-/* Variante grande de cada foto para el lightbox */
+/* Large variant of each photo for the lightbox */
 const fulls = await Promise.all(
   gallery.map((shot) => getImage({ src: shot.img, width: 1600, format: 'webp' })),
 );
@@ -66,7 +66,7 @@ const shots = gallery.map((shot, i) => ({ ...shot, full: fulls[i]!.src }));
 <Lightbox {lang} />
 
 <script>
-  /* Filtros de la galería */
+  /* Gallery filters */
   const shots = Array.from(document.querySelectorAll<HTMLElement>('#gallery .shot'));
   const filterBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter'));
   for (const btn of filterBtns) {

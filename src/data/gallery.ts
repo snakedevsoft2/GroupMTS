@@ -1,18 +1,18 @@
 import type { ImageMetadata } from 'astro';
-import type { Localized } from '../i18n';
+import type { Localized } from '@/i18n';
 
-import antes from '../assets/antes-silla-larga.jpg';
-import despues from '../assets/despues-silla-larga.jpg';
-import t01 from '../assets/trabajo-01.jpg';
-import t02 from '../assets/trabajo-02.jpg';
-import t03 from '../assets/trabajo-03.jpg';
-import t04 from '../assets/trabajo-04.jpg';
-import t05 from '../assets/trabajo-05.jpg';
-import t06 from '../assets/trabajo-06.jpg';
-import t07 from '../assets/trabajo-07.jpg';
-import t08 from '../assets/trabajo-08.jpg';
+import antes from '@/assets/before-after/antes-silla-larga.jpg';
+import despues from '@/assets/before-after/despues-silla-larga.jpg';
+import t01 from '@/assets/gallery/trabajo-01.jpg';
+import t02 from '@/assets/gallery/trabajo-02.jpg';
+import t03 from '@/assets/gallery/trabajo-03.jpg';
+import t04 from '@/assets/gallery/trabajo-04.jpg';
+import t05 from '@/assets/gallery/trabajo-05.jpg';
+import t06 from '@/assets/gallery/trabajo-06.jpg';
+import t07 from '@/assets/gallery/trabajo-07.jpg';
+import t08 from '@/assets/gallery/trabajo-08.jpg';
 
-/* Comparador antes / después (fotos reales del par silla larga). */
+/* Real before/after photo pair. */
 export const beforeAfter = {
   eyebrow: { es: 'Restauraciones', en: 'Before & After' },
   titleHtml: { es: 'Transformación <em>impecable</em>', en: 'Flawless <em>restoration</em>' },
@@ -24,7 +24,7 @@ export const beforeAfter = {
   after: { img: despues, alt: { es: 'Interior restaurado', en: 'Restored interior' } },
 };
 
-/* Galería de trabajos reales trabajo-01..08. */
+/* Real work gallery. */
 export const galleryHead = {
   eyebrow: { es: 'Trabajos recientes', en: 'Recent work' },
   titleHtml: { es: 'Nuestro portafolio <em>a bordo</em>', en: 'Our portfolio <em>on board</em>' },

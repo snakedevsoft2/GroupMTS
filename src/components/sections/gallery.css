@@ -1,6 +1,3 @@
-/* ============================================================
-   Galería: filtros + grid de trabajos (portado de legacy/styles.css)
-   ============================================================ */
 .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.2rem }
 
 .filter {

@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import { beforeAfter } from '../data/gallery';
-import { dicts, t, type Lang } from '../i18n';
+import { beforeAfter } from '@/data/gallery';
+import { dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -139,7 +139,7 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
 </style>
 
 <script>
-  /* Comparador antes / después: arrastre con puntero y control por teclado */
+  /* Before/after comparator: pointer drag plus keyboard control */
   const ba = document.getElementById('ba');
   const range = document.getElementById('baRange') as HTMLInputElement | null;
   if (ba && range) {

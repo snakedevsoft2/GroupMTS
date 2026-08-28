@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '../assets/logo.png';
-import SocialLinks from './SocialLinks.astro';
-import { footerTagline, site } from '../data/site';
-import { t, type Lang } from '../i18n';
+import logo from '@/assets/brand/logo.png';
+import SocialLinks from '@/components/ui/SocialLinks.astro';
+import { footerTagline, site } from '@/data/site';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -57,7 +57,7 @@ const { lang } = Astro.props;
   .foot__logo :global(img) { height: 2.5rem }
   .foot__logo :global(small) { letter-spacing: .36em; margin-top: .6rem }
 
-  /* El destello también recorre el logo del pie */
+  /* The shine also sweeps the footer logo */
   .foot__logo :global(.logo__img)::after {
     content: "";
     position: absolute;
@@ -103,7 +103,7 @@ const { lang } = Astro.props;
 </style>
 
 <script>
-  /* Año siempre al día aunque el sitio no se reconstruya */
+  /* Keeps the year current even if the site is not rebuilt */
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
 </script>

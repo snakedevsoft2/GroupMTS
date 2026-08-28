@@ -1,7 +1,4 @@
-/* ============================================================
-   Chrome global: barra de progreso + cursor personalizado
-   (portado de legacy/styles.css)
-   ============================================================ */
+/* Global chrome: scroll progress bar + custom cursor. */
 .progress {
     position: fixed;
     top: 0;

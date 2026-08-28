@@ -1,6 +1,6 @@
-import type { Localized } from '../i18n';
+import type { Localized } from '@/i18n';
 
-/* Testimonios reales confirmados por el dueño (PRODUCT.md). */
+/* Owner-confirmed real testimonials (see PRODUCT.md). */
 
 export const testimonialsHead = {
   eyebrow: { es: 'Lo que dicen', en: 'What they say' },

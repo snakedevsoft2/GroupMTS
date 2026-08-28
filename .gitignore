@@ -2,7 +2,7 @@
 dist/
 .astro/
 
-# dependencias
+# dependencies
 node_modules/
 
 # logs
@@ -11,15 +11,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# variables de entorno
+# environment variables
 .env
 .env.production
 
-# sistema / editores
+# system / editors
 .DS_Store
 .idea/
 
-# Tooling local de Claude (skills, settings y docs de trabajo — solo locales)
+# local Claude tooling and working docs (never committed)
 .claude/
 CLAUDE.md
 PRODUCT.md

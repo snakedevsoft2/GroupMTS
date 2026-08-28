@@ -1,19 +1,17 @@
 import type { ImageMetadata } from 'astro';
-import type { Localized } from '../i18n';
-import fondoPoster from '../assets/fondo-poster.jpg';
-
-/* Hero: titular animado palabra a palabra, copy y cifras confirmadas. */
+import type { Localized } from '@/i18n';
+import fondoPoster from '@/assets/posters/fondo-poster.jpg';
 
 export interface HeroWord {
   t: string;
   em?: boolean;
-  /** Salto de línea después de esta palabra. */
+  /** Line break after this word. */
   br?: boolean;
 }
 
 export const hero = {
-  video: '/VIDEO/fondo.mp4',
-  /* Frame real del propio video, extraído con ffmpeg */
+  video: '/videos/fondo.mp4',
+  /* Real frame extracted from the video itself. */
   poster: fondoPoster as ImageMetadata,
   badge: { es: 'Tapicería · Interiores · Plásticos', en: 'Upholstery · Interiors · Plastics' },
   h1: {
@@ -38,7 +36,7 @@ export const hero = {
   tag: { es: 'Taller propio · Puerto Rico', en: 'Our own shop · Puerto Rico' },
 };
 
-/* Cifras reales confirmadas por el dueño (PRODUCT.md). */
+/* Owner-confirmed figures only (see PRODUCT.md). */
 export interface TrustItem {
   value: number;
   suffix: Localized;

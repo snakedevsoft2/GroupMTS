@@ -1,5 +1,5 @@
-/* Bucle único de scroll con rAF (portado de legacy/script.js):
-   cada componente registra su tarea y todas corren en el mismo frame. */
+/* Single rAF scroll loop: every component registers its task here
+   so they all run in the same frame. */
 export const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 type Task = () => void;
@@ -15,7 +15,7 @@ function run(): void {
   });
 }
 
-/** Registra una tarea de scroll/resize y la ejecuta una vez de entrada. */
+/** Registers a scroll/resize task and runs it once right away. */
 export function onScroll(task: Task): void {
   tasks.push(task);
   task();

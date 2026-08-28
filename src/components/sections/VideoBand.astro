@@ -1,7 +1,7 @@
 ---
-import VideoBackdrop from './VideoBackdrop.astro';
-import { taller } from '../data/site';
-import { dicts, t, type Lang } from '../i18n';
+import VideoBackdrop from '@/components/ui/VideoBackdrop.astro';
+import { taller } from '@/data/site';
+import { dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -78,7 +78,7 @@ const dict = dicts[lang];
 </style>
 
 <script>
-  /* Botón play / pausa del video del taller */
+  /* Play / pause button for the shop video */
   const playBtn = document.getElementById('playBtn');
   playBtn?.addEventListener('click', () => {
     const video = playBtn.closest('.videoband')?.querySelector('video');

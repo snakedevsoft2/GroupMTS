@@ -1,6 +1,3 @@
-/* ============================================================
-   Botones (portado de legacy/styles.css)
-   ============================================================ */
 .btn {
     --bg: var(--accent);
     --fg: #fff;
@@ -27,7 +24,7 @@
 
 .btn > * { position: relative; z-index: 1 }
 
-/* Destello que recorre el botón al pasar el mouse */
+/* Shine sweep on hover */
 .btn::after {
     content: "";
     position: absolute;

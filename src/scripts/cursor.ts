@@ -1,8 +1,7 @@
 import { reduce } from './scroll';
 
-/* Cursor personalizado + hover magnético + luz que sigue al mouse
-   en tarjetas. Solo con puntero fino y sin "reducir movimiento".
-   (portado de legacy/script.js) */
+/* Custom cursor, magnetic hover and card spotlight.
+   Fine pointers only, and never with reduced motion. */
 export function initCursor(): void {
   const fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
   if (!fine || reduce) return;

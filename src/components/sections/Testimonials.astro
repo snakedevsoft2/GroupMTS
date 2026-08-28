@@ -1,9 +1,9 @@
 ---
 import './testimonials.css';
-import VideoBackdrop from './VideoBackdrop.astro';
-import { hero } from '../data/hero';
-import { testimonials, testimonialsHead } from '../data/testimonials';
-import { dicts, t, type Lang } from '../i18n';
+import VideoBackdrop from '@/components/ui/VideoBackdrop.astro';
+import { hero } from '@/data/hero';
+import { testimonials, testimonialsHead } from '@/data/testimonials';
+import { dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -60,7 +60,7 @@ const stars = [1, 2, 3, 4, 5];
 </section>
 
 <script>
-  import { reduce } from '../scripts/scroll';
+  import { reduce } from '@/scripts/scroll';
 
   const car = document.getElementById('carousel');
   if (car) {
@@ -72,8 +72,8 @@ const stars = [1, 2, 3, 4, 5];
     document.getElementById('carPrev')?.addEventListener('click', () => carGo(-1));
     document.getElementById('carNext')?.addEventListener('click', () => carGo(1));
 
-    /* Desfile continuo: se duplican las tarjetas para que el bucle sea
-       infinito y sin saltos. Las copias quedan ocultas para lectores. */
+    /* Continuous parade: cards are cloned so the loop is seamless.
+       Clones stay hidden from screen readers. */
     for (const q of Array.from(car.querySelectorAll('.quote'))) {
       const clone = q.cloneNode(true) as HTMLElement;
       clone.setAttribute('aria-hidden', 'true');
@@ -91,7 +91,7 @@ const stars = [1, 2, 3, 4, 5];
 
     (function tick() {
       if (!paused && !document.hidden && !reduce) {
-        car.scrollLeft += 0.6; /* velocidad del desfile */
+        car.scrollLeft += 0.6; /* parade speed */
       }
       const h = half();
       if (h > 0) {
@@ -101,7 +101,7 @@ const stars = [1, 2, 3, 4, 5];
       requestAnimationFrame(tick);
     })();
 
-    /* Arrastre con el puntero */
+    /* Pointer drag */
     let down = false;
     let startX = 0;
     let startL = 0;

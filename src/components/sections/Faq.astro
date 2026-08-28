@@ -1,6 +1,6 @@
 ---
-import { faqs, faqsHead } from '../data/faqs';
-import { t, type Lang } from '../i18n';
+import { faqs, faqsHead } from '@/data/faqs';
+import { t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -45,7 +45,7 @@ const { lang } = Astro.props;
 
   .faq summary::-webkit-details-marker { display: none }
 
-  /* Flecha que gira al abrir */
+  /* Chevron rotates when open */
   .faq summary::after {
     content: "";
     position: absolute;

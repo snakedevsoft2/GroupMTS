@@ -1,6 +1,6 @@
-import type { Localized } from '../i18n';
+import type { Localized } from '@/i18n';
 
-/* Las cuatro líneas de servicio (PRODUCT.md). */
+/* The four service lines (see PRODUCT.md). */
 
 export const servicesHead = {
   eyebrow: { es: 'Nuestras especialidades', en: 'What we do' },

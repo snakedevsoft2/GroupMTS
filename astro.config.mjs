@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // PLACEHOLDER: sin dominio confirmado aún; afecta canonical, hreflang, OG y sitemap.
+  // PLACEHOLDER: final domain not decided yet; affects canonical, hreflang, OG and sitemap.
   site: 'https://www.ejemplo.com',
   integrations: [
     sitemap({

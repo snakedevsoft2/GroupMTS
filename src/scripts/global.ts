@@ -2,8 +2,7 @@ import { onScroll, reduce } from './scroll';
 import { initReveal } from './reveal';
 import { initCursor } from './cursor';
 
-/* Comportamiento global de la página: barra de progreso, parallax
-   de fondos, revelado y cursor. (portado de legacy/script.js) */
+/* Page-wide behavior: progress bar, background parallax, reveal, cursor. */
 export function initGlobal(): void {
   const bar = document.querySelector<HTMLElement>('.progress');
   if (bar) {

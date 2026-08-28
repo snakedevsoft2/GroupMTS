@@ -1,6 +1,6 @@
 ---
-import { site } from '../data/site';
-import { dicts, t, type Lang } from '../i18n';
+import { site } from '@/data/site';
+import { dicts, t, type Lang } from '@/i18n';
 
 interface Props {
   lang: Lang;
@@ -56,7 +56,7 @@ const dict = dicts[lang];
     95% { transform: rotate(-7deg) scale(1.04) }
   }
 
-  /* El texto se despliega al pasar el mouse o enfocar */
+  /* Label unfolds on hover or focus */
   .wa__txt {
     max-width: 0;
     opacity: 0;
@@ -67,7 +67,7 @@ const dict = dicts[lang];
 
   .wa:hover .wa__txt, .wa:focus-visible .wa__txt { max-width: 12rem; opacity: 1 }
 
-  /* Anillo que late alrededor del botón */
+  /* Pulsing ring around the button */
   .wa::after {
     content: "";
     position: absolute;

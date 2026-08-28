@@ -1,9 +1,5 @@
-/* ============================================================
-   HERO — video de fondo a pantalla completa
-   El velo blanco es fuerte a la IZQUIERDA (donde va el texto) y
-   desaparece hacia la derecha, para que el video se vea limpio.
-   (portado de legacy/styles.css)
-   ============================================================ */
+/* Full-viewport hero with background video. The white veil is strong on
+   the left (where the copy sits) and fades to the right. */
 .hero {
     position: relative;
     min-height: 100svh;
@@ -106,7 +102,7 @@
     color: transparent;
 }
 
-/* Entrada palabra a palabra del titular */
+/* Word-by-word headline entrance */
 .w { display: inline-block; overflow: hidden; vertical-align: bottom }
 .w > span { display: inline-block; transform: translateY(105%); transition: transform 1s var(--ease) }
 .hero.ready .w > span { transform: none }
@@ -116,8 +112,8 @@
 .hero.ready .w:nth-child(4) > span { transition-delay: .26s }
 .hero.ready .w:nth-child(5) > span { transition-delay: .33s }
 
-/* Arranca en .01 y no en 0: con opacity 0 el navegador no cuenta el texto
-   como pintado y el LCP se va al final de la animación de entrada. */
+/* Starts at .01, not 0: with opacity 0 the browser does not count the text
+   as painted and the LCP slips to the end of the entrance animation. */
 .hero__fade { opacity: .01; transform: translateY(22px); transition: opacity .9s var(--ease) .5s, transform .9s var(--ease) .5s }
 .hero.ready .hero__fade { opacity: 1; transform: none }
 .hero__fade.d2 { transition-delay: .62s }
@@ -127,7 +123,7 @@
 .hero p.lede { max-width: 48ch; color: var(--ink-2); margin-top: 1.8rem; text-shadow: 0 1px 16px rgba(252, 251, 249, .8) }
 .hero-cta { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.4rem }
 
-/* Cifras de confianza */
+/* Trust figures */
 .trust {
     width: 100%;
     max-width: var(--maxw);
@@ -170,7 +166,7 @@
     .hero h1 { font-size: 5.4rem }
 }
 
-/* Celular en horizontal: el hero no puede pedir toda la altura */
+/* Landscape phones: the hero cannot claim the full height */
 @media (max-height: 560px) and (orientation: landscape) {
     .hero { min-height: auto; padding-top: 6.5rem; padding-bottom: 2.5rem }
 }
