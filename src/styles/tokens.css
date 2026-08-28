@@ -1,57 +1,65 @@
-/* Design tokens. Edit only this file to retheme the whole site. */
+/* Design tokens — mundo "Carta Náutica de Puerto Rico".
+   El sitio es una carta de navegación: agua de carta como fondo (azul-gris
+   pálido frío, nunca crema), costa buff, tinta azul-negra, rumbo rojo. */
 :root {
-    /* Backgrounds */
-    --paper: #FCFBF9;
-    --paper-2: #F4F1EB;
-    --card: #FFFFFF;
+    /* Agua de carta (fondos) */
+    --water: #E3ECEE;
+    --water-2: #D5E2E6;
+    --shoal: #BFD3DA;      /* bajíos: paneles y bandas */
+    --card: #EFF4F5;       /* recuadros/insets sobre el agua */
 
-    /* Ink */
-    --ink: #0A1823;
-    --ink-2: #44535F;
-    --muted: #7E8C99;
-    --muted-strong: #5C6B78; /* like --muted but AA contrast on white */
+    /* Tierra (acentos de costa) */
+    --land: #E2D3A0;
+    --land-2: #CDB97E;
 
-    /* Lines */
-    --line: rgba(10, 24, 35, .13);
-    --line-2: rgba(10, 24, 35, .26);
-    --line-soft: rgba(10, 24, 35, .08);
+    /* Tinta de carta */
+    --ink: #22343C;
+    --ink-2: #435660;
+    --muted: #6E8089;
+    --muted-strong: #596B74; /* AA sobre --water */
 
-    /* Accent (logo blue). Tested alternatives, copy-paste to swap:
-       copper 168,95,34 / 122,66,20 · teal 11,124,140 / 8,95,108 · jade 16,119,90 / 11,90,68 */
-    --accent-rgb: 9, 91, 190;
-    --accent-deep-rgb: 7, 72, 152;
-    --accent: rgb(var(--accent-rgb));
-    --accent-deep: rgb(var(--accent-deep-rgb));
-    --accent-lt: #3D8BF2;
-    --accent-hover: var(--accent-deep);
-    --accent-wash: rgba(var(--accent-rgb), .08);
+    /* Líneas: batimetría e impresión */
+    --line: rgba(34, 52, 60, .18);
+    --line-2: rgba(34, 52, 60, .34);
+    --line-soft: rgba(34, 52, 60, .10);
 
-    /* Vivid palette: c1 logo blue · c2 Caribbean teal · c3 sunset coral · c4 sun */
-    --c1: #0A5BC4; --c1-rgb: 10, 91, 196;
-    --c2: #00BFC9; --c2-rgb: 0, 191, 201;
-    --c3: #FF6B3D; --c3-rgb: 255, 107, 61;
-    --c4: #FFB627; --c4-rgb: 255, 182, 39;
-    --grad: linear-gradient(100deg, var(--c1) 0%, #0C86D6 48%, var(--c2) 100%);
-    --grad-warm: linear-gradient(100deg, var(--c3), var(--c4));
+    /* Rumbo (el rojo que lleva al CTA) y marino profundo */
+    --course: #C2402A;
+    --course-deep: #9E301D;
+    --sea: #1E3A5F;        /* campos oscuros: bandas, footer */
+    --sea-2: #162C49;
+    --sea-ink: #DCE7ED;    /* texto sobre --sea */
+    --sea-muted: #9FB4C4;
 
-    /* Shadows */
-    --shadow-s: 0 1px 2px rgba(10, 24, 35, .05), 0 2px 8px rgba(10, 24, 35, .04);
-    --shadow-m: 0 2px 4px rgba(10, 24, 35, .04), 0 12px 28px -10px rgba(10, 24, 35, .14);
-    --shadow-l: 0 4px 8px rgba(10, 24, 35, .05), 0 30px 60px -22px rgba(10, 24, 35, .28);
+    /* Compat con el logo (azul del logo, solo junto al logo) */
+    --accent: #0A5BC4;
+    --accent-rgb: 10, 91, 196;
 
-    /* Radii, spacing, layout */
-    --r-s: 8px;
-    --r-m: 16px;
-    --r-l: 24px;
+    /* Aliases usados por componentes existentes */
+    --paper: var(--water);
+    --paper-2: var(--water-2);
+    --c1: var(--sea); --c1-rgb: 30, 58, 95;
+    --c2: #2E6B4F; --c2-rgb: 46, 107, 79;   /* verde boya */
+    --c3: var(--course); --c3-rgb: 194, 64, 42;
+    --c4: var(--land-2); --c4-rgb: 205, 185, 126;
+
+    /* Sombras: offset suave de papel levantado */
+    --shadow-s: 0 1px 2px rgba(34, 52, 60, .06), 0 2px 8px rgba(34, 52, 60, .05);
+    --shadow-m: 0 2px 4px rgba(34, 52, 60, .05), 0 12px 28px -10px rgba(34, 52, 60, .16);
+    --shadow-l: 0 4px 8px rgba(34, 52, 60, .06), 0 30px 60px -22px rgba(34, 52, 60, .30);
+
+    /* Radios: la carta es rectangular; esquinas casi rectas */
+    --r-s: 2px;
+    --r-m: 3px;
+    --r-l: 4px;
     --r-pill: 999px;
     --pad: clamp(1.25rem, 5vw, 5.5rem);
     --section: clamp(5rem, 11vw, 10rem);
     --maxw: 1240px;
 
-    /* Self-hosted fonts (@fontsource-variable). Los "* Fallback" (base.css) llevan
-       size-adjust para que el swap no cree un candidato LCP más grande ni CLS. */
-    --f-display: "Fraunces Variable", "Fraunces Fallback", "Iowan Old Style", Georgia, serif;
-    --f-body: "Inter Variable", "Inter Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* Tipografía: grabado de carta + sans técnica */
+    --f-display: "Libre Caslon Text", "Caslon Fallback", "Iowan Old Style", Georgia, serif;
+    --f-body: "Public Sans", "Public Sans Fallback", -apple-system, "Segoe UI", Roboto, sans-serif;
     --ease: cubic-bezier(.22, .61, .36, 1);
 }
 

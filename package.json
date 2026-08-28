@@ -9,13 +9,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "fonts": "node tools/subset-fonts.mjs"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "@fontsource-variable/fraunces": "^5.3.0",
-    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/libre-caslon-text": "^5.3.0",
+    "@fontsource/public-sans": "^5.3.0",
     "astro": "^7.2.9"
   },
   "allowScripts": {
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "subset-font": "^2.6.0",
     "typescript": "^6.0.3"
   }
 }
