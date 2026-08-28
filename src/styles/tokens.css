@@ -48,9 +48,10 @@
     --section: clamp(5rem, 11vw, 10rem);
     --maxw: 1240px;
 
-    /* Self-hosted fonts (@fontsource-variable) */
-    --f-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
-    --f-body: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* Self-hosted fonts (@fontsource-variable). Los "* Fallback" (base.css) llevan
+       size-adjust para que el swap no cree un candidato LCP más grande ni CLS. */
+    --f-display: "Fraunces Variable", "Fraunces Fallback", "Iowan Old Style", Georgia, serif;
+    --f-body: "Inter Variable", "Inter Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --ease: cubic-bezier(.22, .61, .36, 1);
 }
 

@@ -17,7 +17,7 @@ const posterUrl = poster
 ---
 
 <div class="vbg" data-parallax={parallax}>
-  <video muted loop playsinline preload="none" poster={posterUrl} data-src={src}></video>
+  <video muted loop playsinline preload="none" data-poster={posterUrl} data-src={src}></video>
 </div>
 <div class="grain"></div>
 
@@ -55,8 +55,14 @@ const posterUrl = poster
 <script>
   /* Background videos weigh several MB: load each one only when its band
      approaches the viewport. The poster (a real frame) covers meanwhile. */
+  /* Video solo desktop y sin reduced-motion: en móvil el poster basta y ahorra varios MB.
+     El poster también se difiere (data-poster): eager penaliza el LCP estando below-fold. */
+  const wantVideo =
+    matchMedia('(min-width: 768px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
   const vids = Array.from(document.querySelectorAll<HTMLVideoElement>('.vbg video[data-src]'));
   const start = (v: HTMLVideoElement): void => {
+    if (v.dataset.poster) v.poster = v.dataset.poster;
+    if (!wantVideo) return;
     v.src = v.dataset.src ?? '';
     v.play().catch(() => {});
   };

@@ -1,5 +1,4 @@
 ---
-import { getImage } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import Nav from '@/components/layout/Nav.astro';
 import Footer from '@/components/layout/Footer.astro';
@@ -14,7 +13,6 @@ import VideoBand from '@/components/sections/VideoBand.astro';
 import Testimonials from '@/components/sections/Testimonials.astro';
 import Faq from '@/components/sections/Faq.astro';
 import Contact from '@/components/sections/Contact.astro';
-import { hero } from '@/data/hero';
 import { meta } from '@/data/site';
 import { t, type Lang } from '@/i18n';
 
@@ -23,8 +21,6 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-// The hero poster is the LCP candidate: preload it with priority.
-const heroPoster = await getImage({ src: hero.poster, width: 1600, format: 'webp', quality: 90 });
 ---
 
 <BaseLayout
@@ -34,7 +30,6 @@ const heroPoster = await getImage({ src: hero.poster, width: 1600, format: 'webp
   ogTitle={t(meta.ogTitle, lang)}
   ogDescription={t(meta.ogDescription, lang)}
 >
-  <link slot="head" rel="preload" as="image" href={heroPoster.src} fetchpriority="high" />
   <Nav {lang} />
   <Hero {lang} />
   <Marquee {lang} />

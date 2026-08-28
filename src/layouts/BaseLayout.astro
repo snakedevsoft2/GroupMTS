@@ -1,7 +1,4 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource-variable/fraunces/opsz.css';
-import '@fontsource-variable/fraunces/opsz-italic.css';
 import '@/styles/tokens.css';
 import '@/styles/base.css';
 import '@/styles/buttons.css';
@@ -10,9 +7,9 @@ import '@/styles/motion.css';
 import Seo from '@/components/seo/Seo.astro';
 import SchemaOrg from '@/components/seo/SchemaOrg.astro';
 import { dicts, type Lang } from '@/i18n';
-import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
-import frauncesItalic from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-italic.woff2?url';
+import interLatin from '@/assets/fonts/inter-var.woff2?url';
+import frauncesLatin from '@/assets/fonts/fraunces-var.woff2?url';
+import frauncesItalic from '@/assets/fonts/fraunces-var-italic.woff2?url';
 
 interface Props {
   lang: Lang;
@@ -24,6 +21,18 @@ interface Props {
 
 const { lang, title, description, ogTitle, ogDescription } = Astro.props;
 const dict = dicts[lang];
+
+/* @font-face inline — un request CSS menos; swap + fallbacks ajustados (base.css). */
+const fontFaces = [
+  ['Inter Variable', 'normal', interLatin],
+  ['Fraunces Variable', 'normal', frauncesLatin],
+  ['Fraunces Variable', 'italic', frauncesItalic],
+]
+  .map(
+    ([family, style, url]) =>
+      `@font-face{font-family:"${family}";font-style:${style};font-weight:100 900;font-display:swap;src:url(${url}) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2013-2014,U+2018-2019,U+201C-201D,U+2026,U+2212}`,
+  )
+  .join('');
 ---
 
 <!doctype html>
@@ -37,6 +46,7 @@ const dict = dicts[lang];
     <link rel="preload" as="font" type="font/woff2" href={interLatin} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={frauncesLatin} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={frauncesItalic} crossorigin />
+    <style set:html={fontFaces}></style>
     <Seo {lang} {title} {description} {ogTitle} {ogDescription} />
     <SchemaOrg {lang} />
     <slot name="head" />

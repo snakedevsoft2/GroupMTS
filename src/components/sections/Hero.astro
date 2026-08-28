@@ -1,6 +1,6 @@
 ---
-import './hero.css';
-import { getImage } from 'astro:assets';
+import '@/styles/hero.css';
+import { Image } from 'astro:assets';
 import { hero, trust } from '@/data/hero';
 import { site } from '@/data/site';
 import { dicts, t, type Lang } from '@/i18n';
@@ -12,19 +12,25 @@ interface Props {
 const { lang } = Astro.props;
 const dict = dicts[lang];
 const words = hero.h1[lang];
-/* High quality on purpose: an over-compressed poster falls below
-   Chrome's entropy threshold and never qualifies as the LCP. */
-const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', quality: 90 });
 ---
 
 <header class="hero" id="hero">
   <div class="hero__bg" data-parallax="-.14">
-    <video muted loop playsinline preload="none" poster={poster.src} data-src={hero.video}></video>
+    {/* Frame real del video como fondo responsive; el video (solo desktop) aparece encima al cargar. */}
+    <Image
+      src={hero.poster}
+      widths={[828, 1280, 1920]}
+      sizes="100vw"
+      format="webp"
+      quality={85}
+      loading="eager"
+      alt=""
+      aria-hidden="true"
+    />
+    <video muted loop playsinline preload="none" data-src={hero.video}></video>
   </div>
 
   <div class="hero__inner" id="heroInner">
-    <span class="badge hero__fade"><span class="dot"></span><span>{t(hero.badge, lang)}</span></span>
-
     <h1>
       {
         words.map((w) => (
@@ -55,7 +61,6 @@ const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', q
       <a href="#transformacion" class="btn btn--ghost" data-magnetic><span>{dict.seeRestorations}</span></a>
     </div>
 
-    <span class="hero__tag hero__fade d3"><span class="dot"></span><span>{t(hero.tag, lang)}</span></span>
   </div>
 
   <div class="trust hero__fade d4" id="trust">
@@ -79,8 +84,9 @@ const poster = await getImage({ src: hero.poster, width: 1600, format: 'webp', q
   /* The video (several MB) starts after load so it does not compete with
      first paint; the poster (a real frame) covers meanwhile. play() may be
      rejected by autoplay policy; that is not an error. */
+  /* Solo desktop y sin reduced-motion: en móvil el poster basta y ahorra ~4MB. */
   const video = hero.querySelector<HTMLVideoElement>('video[data-src]');
-  if (video) {
+  if (video && matchMedia('(min-width: 768px)').matches && !reduce) {
     const startVideo = (): void => {
       video.src = video.dataset.src ?? '';
       video.play().catch(() => {});
