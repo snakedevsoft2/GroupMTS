@@ -3,8 +3,7 @@ import type { Localized } from '@/i18n';
 /* Single source of truth: the FAQPage JSON-LD is generated from here. */
 
 export const faqsHead = {
-  eyebrow: { es: 'Preguntas frecuentes', en: 'FAQ' },
-  titleHtml: { es: 'Antes de <em>cotizar</em>', en: 'Before you <em>ask</em>' },
+  titleHtml: { es: 'Preguntas antes de <em>cotizar</em>', en: 'Questions before you <em>ask</em>' },
 };
 
 export interface Faq {

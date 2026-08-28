@@ -13,7 +13,6 @@ const { lang } = Astro.props;
 <section class="section section--tint" id="servicios">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow reveal">{t(servicesHead.eyebrow, lang)}</span>
       <h2 class="reveal" data-d="1" set:html={t(servicesHead.titleHtml, lang)} />
       <p class="lede reveal" data-d="2">{t(servicesHead.lede, lang)}</p>
     </div>
@@ -63,20 +62,6 @@ const { lang } = Astro.props;
   .card[data-tone="2"] { --tone: var(--c2); --tone-rgb: var(--c2-rgb) }
   .card[data-tone="3"] { --tone: var(--c3); --tone-rgb: var(--c3-rgb) }
   .card[data-tone="4"] { --tone: var(--c4); --tone-rgb: var(--c4-rgb) }
-
-  /* Top edge that draws itself on hover */
-  .card::after {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 3px;
-    background: var(--tone);
-    transform: scaleX(0);
-    transform-origin: 0 50%;
-    transition: transform .55s var(--ease);
-  }
-
-  .card:hover::after { transform: scaleX(1) }
 
   /* Spotlight following the mouse (--mx/--my set by cursor.ts) */
   .card::before {

@@ -3,8 +3,7 @@ import type { Localized } from '@/i18n';
 /* Owner-confirmed real testimonials (see PRODUCT.md). */
 
 export const testimonialsHead = {
-  eyebrow: { es: 'Lo que dicen', en: 'What they say' },
-  titleHtml: { es: 'Capitanes y <em>propietarios</em>', en: 'Captains and <em>owners</em>' },
+  titleHtml: { es: 'Lo que dicen capitanes y <em>propietarios</em>', en: 'What captains and <em>owners</em> say' },
 };
 
 export interface Testimonial {

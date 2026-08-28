@@ -13,7 +13,6 @@ export const hero = {
   video: '/videos/fondo.mp4',
   /* Real frame extracted from the video itself. */
   poster: fondoPoster as ImageMetadata,
-  badge: { es: 'Tapicería · Interiores · Plásticos', en: 'Upholstery · Interiors · Plastics' },
   h1: {
     es: [
       { t: 'Tapizamos' },
@@ -33,7 +32,6 @@ export const hero = {
     es: 'Más áreas de tu bote, un solo taller: tapicería de alta gama, plafones, paredes, muebles, enclosures blandos y duros, back drops y capotas extendidas. Cubrimos lo que la mayoría de los talleres no toca.',
     en: "More of your boat, one single shop: high-end upholstery, headliners, walls, furniture, soft and hard enclosures, back drops and extended tops. We cover areas of your boat that most shops won't touch.",
   },
-  tag: { es: 'Taller propio · Puerto Rico', en: 'Our own shop · Puerto Rico' },
 };
 
 /* Owner-confirmed figures only (see PRODUCT.md). */

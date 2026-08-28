@@ -75,7 +75,6 @@ export const taller = {
   video: '/videos/taller.mp4',
   /* Real frame extracted from the video itself. */
   poster: tallerPoster as ImageMetadata,
-  eyebrow: { es: 'Taller propio', en: 'Our own shop' },
   titleHtml: {
     es: 'Hecho en Puerto Rico,<br>en nuestro propio <em>taller</em>',
     en: 'Made in Puerto Rico,<br>in our own <em>shop</em>',

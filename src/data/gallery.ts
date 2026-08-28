@@ -14,7 +14,6 @@ import t08 from '@/assets/gallery/trabajo-08.jpg';
 
 /* Real before/after photo pair. */
 export const beforeAfter = {
-  eyebrow: { es: 'Restauraciones', en: 'Before & After' },
   titleHtml: { es: 'Transformación <em>impecable</em>', en: 'Flawless <em>restoration</em>' },
   lede: {
     es: 'Arrastra el control para comparar el estado original con el resultado entregado.',
@@ -26,7 +25,6 @@ export const beforeAfter = {
 
 /* Real work gallery. */
 export const galleryHead = {
-  eyebrow: { es: 'Trabajos recientes', en: 'Recent work' },
   titleHtml: { es: 'Nuestro portafolio <em>a bordo</em>', en: 'Our portfolio <em>on board</em>' },
   lede: {
     es: 'Filtra por tipo de trabajo y haz clic en cualquier foto para verla en grande.',

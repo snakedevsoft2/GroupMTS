@@ -14,7 +14,6 @@ const dict = dicts[lang];
 <section class="videoband">
   <VideoBackdrop src={taller.video} parallax="-.12" poster={taller.poster} />
   <div>
-    <span class="eyebrow reveal" style="justify-content:center">{t(taller.eyebrow, lang)}</span>
     <h2 class="reveal" data-d="1" set:html={t(taller.titleHtml, lang)} />
     <p class="lede reveal" data-d="2">{t(taller.lede, lang)}</p>
     <button class="play reveal" data-d="3" id="playBtn" aria-label={dict.playAria}>
@@ -50,9 +49,7 @@ const dict = dicts[lang];
   .videoband :global(.grain) { opacity: .4 }
 
   .videoband h2 { max-width: 20ch; margin-inline: auto; color: #fff }
-  .videoband h2 :global(em) { background: none; color: var(--c2); -webkit-text-fill-color: var(--c2) }
-  .videoband .eyebrow { color: var(--c2) }
-  .videoband .eyebrow::before { background: var(--c2) }
+  .videoband h2 :global(em) { color: var(--c2) }
   .videoband .lede { margin-inline: auto; color: rgba(255, 255, 255, .72) }
 
   .play {

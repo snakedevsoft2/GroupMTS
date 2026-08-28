@@ -3,7 +3,6 @@ import type { Localized } from '@/i18n';
 /* The 4-step process (see PRODUCT.md). */
 
 export const processHead = {
-  eyebrow: { es: 'Cómo trabajamos', en: 'How we work' },
   titleHtml: {
     es: 'De la visita al muelle<br>a la <em>entrega final</em>',
     en: 'From the dock visit<br>to the <em>final handover</em>',

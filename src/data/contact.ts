@@ -3,7 +3,6 @@ import type { Localized } from '@/i18n';
 /* Final contact CTA. Hard data (phone, email, socials) lives in site.ts. */
 
 export const contact = {
-  eyebrow: { es: 'Conecta con nosotros', en: 'Get in touch' },
   titleHtml: {
     es: 'Cuéntanos qué necesita<br>tu <em>embarcación</em>',
     en: 'Tell us what your<br><em>boat</em> needs',

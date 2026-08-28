@@ -1,5 +1,5 @@
 ---
-import './testimonials.css';
+import '@/styles/testimonials.css';
 import VideoBackdrop from '@/components/ui/VideoBackdrop.astro';
 import { hero } from '@/data/hero';
 import { testimonials, testimonialsHead } from '@/data/testimonials';
@@ -19,7 +19,6 @@ const stars = [1, 2, 3, 4, 5];
 
   <div class="wrap">
     <div class="head head--light">
-      <span class="eyebrow reveal">{t(testimonialsHead.eyebrow, lang)}</span>
       <h2 class="reveal" data-d="1" set:html={t(testimonialsHead.titleHtml, lang)} />
     </div>
   </div>

@@ -3,7 +3,6 @@ import type { Localized } from '@/i18n';
 /* The four service lines (see PRODUCT.md). */
 
 export const servicesHead = {
-  eyebrow: { es: 'Nuestras especialidades', en: 'What we do' },
   titleHtml: {
     es: 'Del cojín al plafón,<br>y todo lo que hay <em>en medio</em>',
     en: 'From cushions to headliners,<br>and everything <em>in between</em>',

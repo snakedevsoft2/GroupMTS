@@ -13,7 +13,6 @@ const { lang } = Astro.props;
 <section class="section" id="contacto">
   <div class="wrap">
     <div class="cta reveal">
-      <span class="eyebrow" style="justify-content:center">{t(contact.eyebrow, lang)}</span>
       <h2 set:html={t(contact.titleHtml, lang)} />
       <p class="lede">{t(contact.lede, lang)}</p>
       <div class="cta-buttons">
@@ -81,8 +80,6 @@ const { lang } = Astro.props;
   }
 
   .cta > :global(*) { position: relative }
-  .cta .eyebrow { color: var(--c2) }
-  .cta .eyebrow::before { background: var(--c2) }
   .cta h2 { color: #fff }
   .cta h2 :global(em) { color: var(--c2) }
   .cta .lede { margin-inline: auto; color: rgba(255, 255, 255, .72) }
