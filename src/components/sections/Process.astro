@@ -1,5 +1,5 @@
 ---
-/* El proceso como derrota trazada: 4 waypoints sobre la línea de rumbo. */
+/* El proceso como orden del club: actos numerados en romano, filete de latón. */
 import { processHead, processSteps } from '@/data/process';
 import { t, type Lang } from '@/i18n';
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const stageWord = lang === 'es' ? 'ETAPA' : 'LEG';
+const roman = ['I', 'II', 'III', 'IV', 'V'];
 ---
 
 <section class="section section--tint" id="proceso">
@@ -16,12 +16,11 @@ const stageWord = lang === 'es' ? 'ETAPA' : 'LEG';
     <div class="head">
       <h2 class="reveal" data-d="1" set:html={t(processHead.titleHtml, lang)} />
     </div>
-    <ol class="route reveal" data-d="1">
+    <ol class="acts reveal" data-d="1">
       {
         processSteps.map((step, i) => (
-          <li class="leg">
-            <span class="leg__pt" aria-hidden="true"></span>
-            <span class="leg__no">{stageWord} {i + 1}</span>
+          <li class="act">
+            <span class="act__no">{roman[i]}</span>
             <h3>{t(step.title, lang)}</h3>
             <p>{t(step.text, lang)}</p>
           </li>
@@ -32,62 +31,30 @@ const stageWord = lang === 'es' ? 'ETAPA' : 'LEG';
 </section>
 
 <style>
-  .route {
+  .acts {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2.4rem 1.6rem;
-    position: relative;
+    gap: 2rem 2.2rem;
   }
 
   @media (min-width: 900px) {
-    .route { grid-template-columns: repeat(4, 1fr) }
+    .acts { grid-template-columns: repeat(4, 1fr) }
   }
 
-  .leg { position: relative; padding-top: 1.7rem }
+  .act { border-top: 1px solid var(--brass); padding-top: 1.2rem }
 
-  /* La línea de derrota pasa por los waypoints */
-  .leg::before {
-    content: "";
-    position: absolute;
-    top: .55rem;
-    left: 0;
-    right: 0;
-    border-top: 2px dashed var(--course);
-    opacity: .8;
-  }
-
-  .leg__pt {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1.1rem;
-    height: 1.1rem;
-    border-radius: 50%;
-    background: var(--course);
-    border: 2px solid var(--water-2);
-    box-shadow: 0 0 0 1px var(--course);
-  }
-
-  /* En columna (móvil) la línea baja en vertical */
-  @media (max-width: 899px) {
-    .leg::before { right: auto; bottom: -2.4rem; left: .5rem; top: 1.3rem; border-top: 0; border-left: 2px dashed var(--course) }
-    .leg:last-child::before { display: none }
-    .leg { padding-left: 2.2rem; padding-top: 0 }
-    .leg__pt { top: .15rem }
-  }
-
-  .leg__no {
+  .act__no {
     display: block;
-    font-size: .66rem;
-    font-weight: 600;
-    letter-spacing: .22em;
-    color: var(--course);
-    margin-bottom: .6rem;
+    font-family: var(--f-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--brass-deep);
+    margin-bottom: .9rem;
   }
 
-  .leg h3 { font-size: 1.05rem; margin-bottom: .55rem }
-  .leg p { font-size: .87rem; color: var(--muted-strong) }
+  .act h3 { font-size: 1.05rem; margin-bottom: .55rem }
+  .act p { font-size: .87rem; color: var(--muted-strong) }
 </style>

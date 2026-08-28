@@ -1,54 +1,63 @@
-/* Design tokens — mundo "Carta Náutica de Puerto Rico".
-   El sitio es una carta de navegación: agua de carta como fondo (azul-gris
-   pálido frío, nunca crema), costa buff, tinta azul-negra, rumbo rojo. */
+/* Design tokens — mundo "Yacht Broker": navy profundo cinematográfico,
+   blanco cálido de cubierta, latón sobrio. Lujo quieto, líneas finas. */
 :root {
-    /* Agua de carta (fondos) */
-    --water: #E3ECEE;
-    --water-2: #D5E2E6;
-    --shoal: #BFD3DA;      /* bajíos: paneles y bandas */
-    --card: #EFF4F5;       /* recuadros/insets sobre el agua */
+    /* Grounds */
+    --navy: #0B1C2C;         /* navy casi negro: hero, bandas */
+    --navy-2: #0E2438;       /* panel sobre navy */
+    --navy-3: #14304A;       /* borde/elevación sobre navy */
+    --deck: #F6F8FA;         /* blanco cálido: secciones claras */
+    --deck-2: #ECF1F5;       /* alterno claro */
+    --card: #FFFFFF;
 
-    /* Tierra (acentos de costa) */
-    --land: #E2D3A0;
-    --land-2: #CDB97E;
+    /* Tinta sobre claro */
+    --ink: #10202E;
+    --ink-2: #3D5164;
+    --muted: #6E8093;
+    --muted-strong: #57697C; /* AA sobre deck */
 
-    /* Tinta de carta */
-    --ink: #22343C;
-    --ink-2: #435660;
-    --muted: #6E8089;
-    --muted-strong: #596B74; /* AA sobre --water */
+    /* Texto sobre navy */
+    --foam: #E9EFF4;
+    --foam-muted: #9FB2C2;
 
-    /* Líneas: batimetría e impresión */
-    --line: rgba(34, 52, 60, .18);
-    --line-2: rgba(34, 52, 60, .34);
-    --line-soft: rgba(34, 52, 60, .10);
+    /* Latón: el acento de herraje pulido */
+    --brass: #C9A96A;
+    --brass-deep: #A8874A;
+    --brass-soft: rgba(201, 169, 106, .35);
 
-    /* Rumbo (el rojo que lleva al CTA) y marino profundo */
-    --course: #C2402A;
-    --course-deep: #9E301D;
-    --sea: #1E3A5F;        /* campos oscuros: bandas, footer */
-    --sea-2: #162C49;
-    --sea-ink: #DCE7ED;    /* texto sobre --sea */
-    --sea-muted: #9FB4C4;
+    /* Líneas */
+    --line: rgba(16, 32, 46, .16);
+    --line-2: rgba(16, 32, 46, .30);
+    --line-soft: rgba(16, 32, 46, .09);
+    --hairline-light: rgba(233, 239, 244, .22);
 
-    /* Compat con el logo (azul del logo, solo junto al logo) */
+    /* Logo del cliente */
     --accent: #0A5BC4;
     --accent-rgb: 10, 91, 196;
 
-    /* Aliases usados por componentes existentes */
-    --paper: var(--water);
-    --paper-2: var(--water-2);
-    --c1: var(--sea); --c1-rgb: 30, 58, 95;
-    --c2: #2E6B4F; --c2-rgb: 46, 107, 79;   /* verde boya */
-    --c3: var(--course); --c3-rgb: 194, 64, 42;
-    --c4: var(--land-2); --c4-rgb: 205, 185, 126;
+    /* Aliases de compat */
+    --paper: var(--deck);
+    --paper-2: var(--deck-2);
+    --water: var(--deck);
+    --water-2: var(--deck-2);
+    --sea: var(--navy-2);
+    --sea-2: var(--navy);
+    --sea-ink: var(--foam);
+    --sea-muted: var(--foam-muted);
+    --course: var(--brass-deep);
+    --course-deep: #8D7038;
+    --land: var(--brass);
+    --land-2: var(--brass-deep);
+    --c1: var(--navy-2); --c1-rgb: 14, 36, 56;
+    --c2: var(--brass); --c2-rgb: 201, 169, 106;
+    --c3: var(--brass-deep); --c3-rgb: 168, 135, 74;
+    --c4: var(--foam-muted); --c4-rgb: 159, 178, 194;
 
-    /* Sombras: offset suave de papel levantado */
-    --shadow-s: 0 1px 2px rgba(34, 52, 60, .06), 0 2px 8px rgba(34, 52, 60, .05);
-    --shadow-m: 0 2px 4px rgba(34, 52, 60, .05), 0 12px 28px -10px rgba(34, 52, 60, .16);
-    --shadow-l: 0 4px 8px rgba(34, 52, 60, .06), 0 30px 60px -22px rgba(34, 52, 60, .30);
+    /* Sombras suaves de estudio */
+    --shadow-s: 0 1px 2px rgba(11, 28, 44, .06), 0 2px 10px rgba(11, 28, 44, .05);
+    --shadow-m: 0 2px 4px rgba(11, 28, 44, .05), 0 14px 34px -12px rgba(11, 28, 44, .18);
+    --shadow-l: 0 4px 8px rgba(11, 28, 44, .06), 0 34px 70px -24px rgba(11, 28, 44, .35);
 
-    /* Radios: la carta es rectangular; esquinas casi rectas */
+    /* Geometría: broker = rectitud casi absoluta */
     --r-s: 2px;
     --r-m: 3px;
     --r-l: 4px;
@@ -57,7 +66,7 @@
     --section: clamp(5rem, 11vw, 10rem);
     --maxw: 1240px;
 
-    /* Tipografía: grabado de carta + sans técnica */
+    /* Tipografía: Caslon elegante + Public Sans técnica */
     --f-display: "Libre Caslon Text", "Caslon Fallback", "Iowan Old Style", Georgia, serif;
     --f-body: "Public Sans", "Public Sans Fallback", -apple-system, "Segoe UI", Roboto, sans-serif;
     --ease: cubic-bezier(.22, .61, .36, 1);

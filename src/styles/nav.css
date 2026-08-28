@@ -12,9 +12,9 @@
 }
 
 .nav.is-stuck {
-    background: rgba(227, 236, 238, .9);
+    background: rgba(11, 28, 44, .92);
     backdrop-filter: blur(16px) saturate(140%);
-    border-bottom-color: var(--line);
+    border-bottom-color: var(--hairline-light);
     padding-block: .85rem;
     box-shadow: 0 1px 20px -10px rgba(34, 52, 60, .35);
 }
@@ -45,7 +45,7 @@
     font-size: .54rem;
     letter-spacing: .32em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--foam-muted);
     margin-top: .4rem;
     font-weight: 500;
     white-space: nowrap;
@@ -76,7 +76,7 @@
     font-size: .8rem;
     letter-spacing: .11em;
     text-transform: uppercase;
-    color: var(--ink-2);
+    color: var(--foam-muted);
     font-weight: 500;
     position: relative;
     z-index: 1;
@@ -90,7 +90,7 @@
 .nav-links a:nth-of-type(3) { animation-delay: .44s }
 .nav-links a:nth-of-type(4) { animation-delay: .51s }
 .nav-links a:nth-of-type(5) { animation-delay: .58s }
-.nav-links a:hover, .nav-links a.active { color: var(--course) }
+.nav-links a:hover, .nav-links a.active { color: var(--brass) }
 
 /* Subrayado de rumbo: sigue el mouse, descansa en el link activo */
 .nav-pill {
@@ -101,7 +101,7 @@
     height: 0;
     z-index: 0;
     opacity: 0;
-    border-bottom: 2px dashed var(--course);
+    border-bottom: 1px solid var(--brass);
     pointer-events: none;
     transition: left .5s var(--ease), width .5s var(--ease), opacity .35s var(--ease);
 }
@@ -120,8 +120,8 @@
     gap: .22rem;
     padding: .45rem .8rem;
     border-radius: var(--r-s);
-    border: 1px solid var(--line);
-    background: var(--card);
+    border: 1px solid rgba(233, 239, 244, .3);
+    background: transparent;
     font-size: .7rem;
     font-weight: 600;
     letter-spacing: .1em;
@@ -130,12 +130,12 @@
     animation: navDown .6s var(--ease) backwards .66s;
 }
 
-.lang:hover { border-color: var(--course); box-shadow: var(--shadow-s) }
+.lang:hover { border-color: var(--brass); box-shadow: none }
 .lang__sep { opacity: .35 }
-.lang__on { color: var(--course) }
-.lang__off { color: var(--muted-strong) }
-.lang.is-en .lang__on { color: var(--muted-strong) }
-.lang.is-en .lang__off { color: var(--course) }
+.lang__on { color: var(--brass) }
+.lang__off { color: var(--foam-muted) }
+.lang.is-en .lang__on { color: var(--foam-muted) }
+.lang.is-en .lang__off { color: var(--brass) }
 
 .lang--drawer {
     display: none;

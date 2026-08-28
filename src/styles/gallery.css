@@ -79,7 +79,7 @@
     border-radius: var(--r-s);
     display: grid;
     place-items: center;
-    background: rgba(239, 244, 245, .94);
+    background: rgba(246, 248, 250, .94);
     border: 1px solid var(--line-2);
     color: var(--course);
     opacity: 0;

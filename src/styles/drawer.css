@@ -1,5 +1,5 @@
-.burger { display: none; width: 2.6rem; height: 2.6rem; place-items: center; border-radius: 50%; border: 1px solid var(--line) }
-.burger span { display: block; width: 17px; height: 1.5px; background: var(--ink); position: relative; transition: .3s var(--ease) }
+.burger { display: none; width: 2.6rem; height: 2.6rem; place-items: center; border-radius: 50%; border: 1px solid rgba(233, 239, 244, .3) }
+.burger span { display: block; width: 17px; height: 1.5px; background: var(--foam); position: relative; transition: .3s var(--ease) }
 
 .burger span::before, .burger span::after {
     content: "";
@@ -7,7 +7,7 @@
     left: 0;
     width: 17px;
     height: 1.5px;
-    background: var(--ink);
+    background: var(--foam);
     transition: .3s var(--ease);
 }
 
@@ -23,7 +23,7 @@ body.menu-open .burger span::after { top: 0; transform: rotate(-45deg) }
     position: fixed;
     inset: 0;
     z-index: 99;
-    background: rgba(227, 236, 238, .98);
+    background: rgba(11, 28, 44, .98);
     backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
@@ -41,8 +41,8 @@ body.menu-open .drawer { opacity: 1; visibility: visible }
     font-family: var(--f-display);
     font-size: clamp(1.7rem, 7vw, 2.6rem);
     padding-block: .4rem;
-    border-bottom: 1px solid var(--line);
-    color: var(--ink);
+    border-bottom: 1px solid var(--hairline-light);
+    color: var(--foam);
     transform: translateY(14px);
     opacity: 0;
     transition: .45s var(--ease);
@@ -54,7 +54,7 @@ body.menu-open .drawer a { transform: none; opacity: 1 }
 .drawer a:nth-child(3) { transition-delay: .16s }
 .drawer a:nth-child(4) { transition-delay: .21s }
 .drawer a:nth-child(5) { transition-delay: .26s }
-.drawer a:hover { color: var(--course) }
+.drawer a:hover { color: var(--brass) }
 
 /* Landscape phones: the drawer needs its own scroll */
 @media (max-height: 560px) and (orientation: landscape) {

@@ -1,39 +1,40 @@
-/* Botones del mundo carta: el primario es el waypoint de destino (rumbo
-   rojo, esquinas casi rectas); el secundario, un recuadro de tinta. */
+/* Botones del club: primario de latón pulido, secundario de filete. */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: .5rem;
-    padding: .95rem 1.6rem;
+    padding: .95rem 1.7rem;
     border-radius: var(--r-s);
-    background: var(--course);
-    color: #FDF6F1;
+    background: var(--brass);
+    color: #14202C;
     font-weight: 600;
-    font-size: .95rem;
-    letter-spacing: .02em;
-    border: 1px solid var(--course-deep);
+    font-size: .93rem;
+    letter-spacing: .04em;
+    border: 1px solid var(--brass-deep);
     box-shadow: var(--shadow-s);
     transition: background .25s, box-shadow .3s var(--ease), transform .25s var(--ease);
 }
 
-.btn:hover { background: var(--course-deep); box-shadow: var(--shadow-m) }
+.btn:hover { background: #D6BA80; box-shadow: var(--shadow-m) }
 .btn:active { transform: translateY(1px) }
 
+/* Sobre fondos navy el ghost lleva filete claro; sobre claro, filete tinta */
 .btn--ghost {
     background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--line-2);
+    color: var(--foam);
+    border: 1px solid rgba(233, 239, 244, .38);
     box-shadow: none;
 }
 
-.btn--ghost:hover { background: rgba(34, 52, 60, .06); border-color: var(--ink-2) }
+.btn--ghost:hover { background: rgba(233, 239, 244, .1); border-color: var(--foam) }
 
-/* Botón sobre bandas marinas oscuras */
-.btn--light {
-    background: var(--land);
-    color: var(--sea-2);
-    border-color: var(--land-2);
+.section .btn--ghost, .section--tint .btn--ghost {
+    color: var(--ink);
+    border-color: var(--line-2);
 }
 
-.btn--light:hover { background: var(--land-2) }
+.section .btn--ghost:hover, .section--tint .btn--ghost:hover {
+    background: rgba(16, 32, 46, .06);
+    border-color: var(--ink-2);
+}

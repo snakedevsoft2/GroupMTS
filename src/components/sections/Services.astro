@@ -48,24 +48,25 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
   }
 
   @media (min-width: 1180px) {
-    .zones { grid-template-columns: repeat(3, 1fr) }
-    .zone:first-child { grid-row: span 2 }
+    .zones { gap: 1.7rem }
   }
 
+  /* Placa de club: filete de latón fino con paspartú */
   .zone {
     position: relative;
     padding: clamp(1.7rem, 2.6vw, 2.3rem);
     background: var(--card);
     border: 1px solid var(--line-2);
-    outline: 3px double var(--line);
-    outline-offset: 4px;
+    outline: 1px solid var(--brass-soft);
+    outline-offset: 5px;
     box-shadow: var(--shadow-s);
-    transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s;
+    transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s, outline-color .3s;
   }
 
   .zone:hover {
     transform: translateY(-5px);
-    border-color: var(--ink-2);
+    border-color: var(--brass-deep);
+    outline-color: var(--brass);
     box-shadow: var(--shadow-m);
   }
 
@@ -81,8 +82,8 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
   .zone__no {
     font-size: .68rem;
     font-weight: 600;
-    letter-spacing: .22em;
-    color: var(--course);
+    letter-spacing: .24em;
+    color: var(--brass-deep);
   }
 
   .zone__mark { color: var(--ink-2) }
@@ -98,9 +99,9 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
     list-style: none;
     display: grid;
     gap: .5rem;
-    border-top: 1px dashed var(--line-2);
+    border-top: 1px solid var(--line-soft);
   }
 
   .zone li { font-size: .85rem; color: var(--muted-strong); display: flex; gap: .6rem; align-items: baseline }
-  .zone li::before { content: "—"; color: var(--course); flex: none }
+  .zone li::before { content: "—"; color: var(--brass-deep); flex: none }
 </style>
