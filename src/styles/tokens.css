@@ -50,8 +50,9 @@
 
     /* Self-hosted fonts (@fontsource-variable). Los "* Fallback" (base.css) llevan
        size-adjust para que el swap no cree un candidato LCP más grande ni CLS. */
-    --f-display: "Fraunces Variable", "Fraunces Fallback", "Iowan Old Style", Georgia, serif;
-    --f-body: "Inter Variable", "Inter Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --f-display: "Archivo Variable", "Archivo Fallback", Arial, sans-serif;
+    --f-body: "Archivo Variable", "Archivo Fallback", Arial, sans-serif;
+    --f-mono: "Spline Sans Mono", "Courier New", monospace;
     --ease: cubic-bezier(.22, .61, .36, 1);
 }
 

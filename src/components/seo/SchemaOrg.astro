@@ -15,6 +15,7 @@ const base = Astro.site!;
 const business = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
+  '@id': new URL('/#business', base).href,
   name: 'GroupMTS - Marine Tops',
   legalName: site.legalName,
   description: t(meta.schemaDescription, lang),
@@ -34,6 +35,16 @@ const business = {
   openingHours: site.openingHoursSchema,
 };
 
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': new URL('/#website', base).href,
+  url: base.href,
+  name: 'GroupMTS - Marine Tops',
+  inLanguage: lang === 'es' ? 'es-PR' : 'en-US',
+  publisher: { '@id': new URL('/#business', base).href },
+};
+
 /* Generated from src/data/faqs.ts — never duplicated by hand. */
 const faqPage = {
   '@context': 'https://schema.org',
@@ -47,4 +58,5 @@ const faqPage = {
 ---
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(business)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(website)} />
 <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPage)} />

@@ -41,7 +41,7 @@
 
 .logo small {
     display: block;
-    font-family: var(--f-body);
+    font-family: var(--f-mono);
     font-size: .54rem;
     letter-spacing: .32em;
     text-transform: uppercase;
@@ -73,7 +73,8 @@
 
 .nav-links a {
     white-space: nowrap;
-    font-size: .8rem;
+    font-family: var(--f-mono);
+    font-size: .76rem;
     letter-spacing: .11em;
     text-transform: uppercase;
     color: var(--ink-2);
@@ -125,8 +126,9 @@
     border-radius: var(--r-pill);
     border: 1px solid var(--line);
     background: var(--card);
+    font-family: var(--f-mono);
     font-size: .7rem;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: .1em;
     color: var(--muted);
     transition: border-color .3s var(--ease), box-shadow .3s var(--ease);

@@ -1,19 +1,10 @@
-/* Fallbacks con métricas ajustadas a Inter/Fraunces (patrón fontaine). */
+/* Fallback con métricas ajustadas a Archivo (patrón fontaine). */
 @font-face {
-    font-family: "Inter Fallback";
-    src: local("Segoe UI"), local("Arial");
-    size-adjust: 111%;
-    ascent-override: 90.4%;
-    descent-override: 22.5%;
-    line-gap-override: 0%;
-}
-
-@font-face {
-    font-family: "Fraunces Fallback";
-    src: local("Georgia"), local("Times New Roman");
-    size-adjust: 104%;
-    ascent-override: 96%;
-    descent-override: 26%;
+    font-family: "Archivo Fallback";
+    src: local("Arial"), local("Segoe UI");
+    size-adjust: 99%;
+    ascent-override: 89%;
+    descent-override: 22%;
     line-gap-override: 0%;
 }
 
@@ -28,7 +19,7 @@ body {
     font-family: var(--f-body);
     font-size: clamp(1rem, .96rem + .2vw, 1.06rem);
     line-height: 1.7;
-    font-weight: 350;
+    font-weight: 400;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
@@ -40,20 +31,34 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px }
 ::selection { background: rgba(var(--accent-rgb), .16); color: var(--ink) }
 
-h1, h2, h3 {
+/* Grotesk condensada en caps: voz de taller, no de plantilla */
+h1, h2 {
     font-family: var(--f-display);
-    font-weight: 400;
-    line-height: 1.06;
-    letter-spacing: -.02em;
+    font-weight: 760;
+    font-variation-settings: "wdth" 72;
+    text-transform: uppercase;
+    line-height: 1.02;
+    letter-spacing: -.012em;
     margin: 0;
     color: var(--ink);
 }
 
-h1 { font-size: clamp(2.6rem, 7vw, 5.2rem) }
-h2 { font-size: clamp(2rem, 4.4vw, 3.4rem) }
-h3 { font-size: clamp(1.1rem, 1.8vw, 1.35rem); letter-spacing: -.01em }
+h3 {
+    font-family: var(--f-display);
+    font-weight: 640;
+    font-variation-settings: "wdth" 80;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--ink);
+}
+
+h1 { font-size: clamp(2.5rem, 7vw, 5.4rem) }
+h2 { font-size: clamp(1.9rem, 4.4vw, 3.3rem) }
+h3 { font-size: clamp(1.05rem, 1.8vw, 1.3rem) }
 p { margin: 0 }
-em { font-style: italic; color: var(--accent) }
+
+/* Énfasis por tinta, no por itálica sintética */
+em { font-style: normal; color: var(--accent) }
 
 .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad) }
 .section { padding-block: var(--section); position: relative }

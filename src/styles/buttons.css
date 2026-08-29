@@ -1,47 +1,51 @@
+/* Botón-placa (ref. dlpbasculas): rectángulo duro, mono en caps, la tinta
+   se llena de lado a lado al pasar. Nunca pill genérico. */
 .btn {
-    --bg: var(--accent);
-    --fg: #fff;
+    --cap-bg: var(--accent);
+    --cap-fg: #fff;
+    --cap-fill: var(--accent-lt);
     position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .65em;
-    padding: 1em 1.85em;
-    border-radius: var(--r-pill);
-    font-size: .9rem;
-    font-weight: 500;
-    letter-spacing: .02em;
-    background: var(--accent);
-    color: var(--fg);
+    gap: .6rem;
+    padding: .78rem 1.35rem;
+    background: var(--cap-bg);
+    color: var(--cap-fg);
+    font-family: var(--f-mono);
+    font-size: .8rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    min-height: 44px;
     white-space: nowrap;
-    box-shadow: 0 1px 2px rgba(10, 24, 35, .08), 0 12px 26px -12px rgba(var(--accent-rgb), .65);
-    transition: box-shadow .4s var(--ease), background .3s;
+    transition: color .35s var(--ease);
 }
 
-.btn > * { position: relative; z-index: 1 }
-
-
-.btn:hover {
-    background: var(--accent-hover);
-    box-shadow: 0 2px 4px rgba(10, 24, 35, .1), 0 18px 34px -14px rgba(var(--accent-rgb), .7);
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--cap-fill);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s var(--ease);
 }
 
-.btn--ghost {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--line-2);
-    box-shadow: none;
-}
+.btn:hover, .btn:focus-visible { color: #fff }
+.btn:hover::before, .btn:focus-visible::before { transform: scaleX(1) }
 
-.btn--ghost:hover {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-    box-shadow: none;
-}
+.btn--ghost { --cap-bg: transparent; --cap-fg: var(--ink); --cap-fill: var(--ink) }
 
-.btn svg { width: 1.15em; height: 1.15em; flex: none }
+.btn svg { width: 1.1em; height: 1.1em; flex: none }
 
 @media (max-width: 360px) {
-    .btn { padding: .9em 1.4em; font-size: .85rem }
+    .btn { padding: .7rem 1.05rem; font-size: .74rem }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn::before { transition: none }
 }
