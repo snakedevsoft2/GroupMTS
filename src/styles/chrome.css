@@ -11,8 +11,9 @@
     background: linear-gradient(90deg, var(--c1), var(--c2) 45%, var(--c4) 75%, var(--c3));
 }
 
-/* El cursor es un yate en planta que navega hacia donde va el mouse.
-   El JS lo traslada y lo rota; aquí solo vive su piel. */
+/* El cursor es una lancha caricatura de perfil que navega con el mouse.
+   El JS la traslada, la voltea según el rumbo y la inclina; aquí viven su
+   piel y el balanceo de olas. */
 .cursor, .cursor-dot {
     position: fixed;
     top: 0;
@@ -23,8 +24,14 @@
     transition: opacity .3s;
 }
 
-.cursor { width: 24px; height: 44px; margin: -22px 0 0 -12px }
+.cursor { width: 48px; height: 34px; margin: -18px 0 0 -24px }
 .cursor svg { display: block; filter: drop-shadow(0 2px 6px rgba(10, 24, 35, .28)); transition: transform .3s var(--ease) }
+.cursor svg g { animation: boat-bob 2.8s ease-in-out infinite; transform-origin: 24px 21px }
+
+@keyframes boat-bob {
+    0%, 100% { transform: rotate(-2.2deg) translateY(.3px) }
+    50% { transform: rotate(2.2deg) translateY(-.3px) }
+}
 
 .cursor-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: var(--accent) }
 

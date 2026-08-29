@@ -11,8 +11,8 @@ export function initCursor(): void {
   if (!cur || !dot) return;
 
   let cx = 0, cy = 0, tx = 0, ty = 0;
-  /* El yate arranca proa al norte y vira hacia el rumbo del movimiento. */
-  let heading = 0;
+  /* La lancha mira hacia donde navega (flip suave) y cabecea con la velocidad. */
+  let dir = 1, dirTarget = 1, tilt = 0;
   document.addEventListener('mousemove', (e) => {
     tx = e.clientX;
     ty = e.clientY;
@@ -24,13 +24,11 @@ export function initCursor(): void {
     const dy = ty - cy;
     cx += dx * 0.16;
     cy += dy * 0.16;
-    /* Solo vira cuando hay rumbo real; con el mouse quieto mantiene el suyo. */
-    if (dx * dx + dy * dy > 4) {
-      const target = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
-      let delta = ((target - heading + 540) % 360) - 180;
-      heading += delta * 0.12;
-    }
-    cur.style.transform = `translate(${cx.toFixed(2)}px,${cy.toFixed(2)}px) rotate(${heading.toFixed(1)}deg)`;
+    if (Math.abs(dx) > 1.5) dirTarget = dx > 0 ? 1 : -1;
+    dir += (dirTarget - dir) * 0.14;
+    const tiltTarget = Math.max(-9, Math.min(9, dx * 0.3));
+    tilt += (tiltTarget - tilt) * 0.1;
+    cur.style.transform = `translate(${cx.toFixed(2)}px,${cy.toFixed(2)}px) scaleX(${dir.toFixed(3)}) rotate(${tilt.toFixed(1)}deg)`;
     requestAnimationFrame(loop);
   })();
 
