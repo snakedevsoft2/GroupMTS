@@ -7,9 +7,9 @@
 
     /* Ink */
     --ink: #0A1823;
-    --ink-2: #44535F;
-    --muted: #7E8C99;
-    --muted-strong: #5C6B78; /* like --muted but AA contrast on white */
+    --ink-2: #3A4954;
+    --muted: #647683;
+    --muted-strong: #51636F; /* like --muted but AA contrast on white */
 
     /* Lines */
     --line: rgba(10, 24, 35, .13);

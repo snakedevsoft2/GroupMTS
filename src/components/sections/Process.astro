@@ -58,17 +58,11 @@ const { lang } = Astro.props;
     line-height: 1;
     display: block;
     margin-bottom: 1.2rem;
-    -webkit-text-stroke: 1.5px var(--c1);
+    -webkit-text-stroke: 1.5px var(--accent);
     transition: color .5s var(--ease);
   }
 
-  .step:nth-child(2) b { -webkit-text-stroke-color: var(--c2) }
-  .step:nth-child(3) b { -webkit-text-stroke-color: var(--c3) }
-  .step:nth-child(4) b { -webkit-text-stroke-color: var(--c4) }
-  .step:hover b { color: rgba(var(--c1-rgb), .12) }
-  .step:nth-child(2):hover b { color: rgba(var(--c2-rgb), .14) }
-  .step:nth-child(3):hover b { color: rgba(var(--c3-rgb), .14) }
-  .step:nth-child(4):hover b { color: rgba(var(--c4-rgb), .16) }
+  .step:hover b { color: rgba(var(--accent-rgb), .12) }
 
   .step h3 { font-size: 1.05rem; margin-bottom: .55rem }
   .step p { font-size: .87rem; color: var(--muted) }

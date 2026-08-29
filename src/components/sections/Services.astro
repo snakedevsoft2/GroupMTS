@@ -47,8 +47,8 @@ const { lang } = Astro.props;
   }
 
   .card {
-    --tone: var(--c1);
-    --tone-rgb: var(--c1-rgb);
+    --tone: var(--accent);
+    --tone-rgb: var(--accent-rgb);
     position: relative;
     padding: clamp(1.9rem, 3vw, 2.6rem);
     border-radius: var(--r-m);
@@ -58,10 +58,6 @@ const { lang } = Astro.props;
     box-shadow: var(--shadow-s);
     transition: transform .5s var(--ease), border-color .4s, box-shadow .5s var(--ease);
   }
-
-  .card[data-tone="2"] { --tone: var(--c2); --tone-rgb: var(--c2-rgb) }
-  .card[data-tone="3"] { --tone: var(--c3); --tone-rgb: var(--c3-rgb) }
-  .card[data-tone="4"] { --tone: var(--c4); --tone-rgb: var(--c4-rgb) }
 
   /* Spotlight following the mouse (--mx/--my set by cursor.ts) */
   .card::before {

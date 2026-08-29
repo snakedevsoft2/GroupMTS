@@ -55,10 +55,7 @@ const items = marquee.map((item) => t(item, lang));
     white-space: nowrap;
   }
 
-  .marquee__group span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c1); flex: none }
-  .marquee__group span:nth-child(4n+2)::before { background: var(--c2) }
-  .marquee__group span:nth-child(4n+3)::before { background: var(--c3) }
-  .marquee__group span:nth-child(4n+4)::before { background: var(--c4) }
+  .marquee__group span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none }
 
   @media (prefers-reduced-motion: reduce) {
     /* Keeps moving, just slower: it is a gentle drift, not a harsh effect */

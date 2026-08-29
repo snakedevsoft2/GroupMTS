@@ -45,7 +45,19 @@ const fontFaces =
   <body>
     <a class="skip" href="#main">{dict.skip}</a>
     <div class="progress" aria-hidden="true"></div>
-    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true">
+      {/* Yate en planta: navega hacia donde se mueve el mouse */}
+      <svg viewBox="0 0 24 44" width="24" height="44">
+        <path
+          d="M12 1 C 17 9, 19 18, 19 27 C 19 36, 16 41, 12 42 C 8 41, 5 36, 5 27 C 5 18, 7 9, 12 1 Z"
+          fill="rgba(255,255,255,.85)"
+          stroke="var(--accent)"
+          stroke-width="1.6"
+        ></path>
+        <path d="M12 8 C 15 14, 16 20, 16 26 C 16 32, 14 36, 12 37 C 10 36, 8 32, 8 26 C 8 20, 9 14, 12 8 Z" fill="rgba(10,91,196,.18)"></path>
+        <circle cx="12" cy="30" r="1.6" fill="var(--accent)"></circle>
+      </svg>
+    </div>
     <div class="cursor-dot" aria-hidden="true"></div>
     <slot />
     <script>

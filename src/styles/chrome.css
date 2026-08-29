@@ -11,36 +11,27 @@
     background: linear-gradient(90deg, var(--c1), var(--c2) 45%, var(--c4) 75%, var(--c3));
 }
 
+/* El cursor es un yate en planta que navega hacia donde va el mouse.
+   El JS lo traslada y lo rota; aquí solo vive su piel. */
 .cursor, .cursor-dot {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
     pointer-events: none;
-    border-radius: 50%;
     opacity: 0;
     transition: opacity .3s;
 }
 
-.cursor {
-    width: 32px;
-    height: 32px;
-    margin: -16px 0 0 -16px;
-    border: 1px solid rgba(var(--accent-rgb), .55);
-    transition: opacity .3s, width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), background .35s, border-color .35s;
-}
+.cursor { width: 24px; height: 44px; margin: -22px 0 0 -12px }
+.cursor svg { display: block; filter: drop-shadow(0 2px 6px rgba(10, 24, 35, .28)); transition: transform .3s var(--ease) }
 
-.cursor-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: var(--accent) }
+.cursor-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: var(--accent) }
 
 body.cursor-on .cursor, body.cursor-on .cursor-dot { opacity: 1 }
 
-body.cursor-hot .cursor {
-    width: 60px;
-    height: 60px;
-    margin: -30px 0 0 -30px;
-    background: rgba(var(--accent-rgb), .09);
-    border-color: var(--accent);
-}
+/* Sobre elementos interactivos el yate "atraca": crece un poco */
+body.cursor-hot .cursor svg { transform: scale(1.25) }
 
 @media (hover: none), (pointer: coarse) {
     .cursor, .cursor-dot { display: none }

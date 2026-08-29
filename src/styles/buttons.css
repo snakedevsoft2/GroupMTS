@@ -1,9 +1,10 @@
-/* Botón-placa (ref. dlpbasculas): rectángulo duro, mono en caps, la tinta
-   se llena de lado a lado al pasar. Nunca pill genérico. */
+/* Botón-placa con corte de proa: rectángulo duro con la esquina de salida
+   biselada — ni pill genérico ni caja muerta. La tinta se llena al pasar. */
 .btn {
     --cap-bg: var(--accent);
     --cap-fg: #fff;
     --cap-fill: var(--accent-lt);
+    --chamfer: 12px;
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -11,17 +12,17 @@
     align-items: center;
     justify-content: center;
     gap: .6rem;
-    padding: .78rem 1.35rem;
+    padding: .8rem 1.5rem .8rem 1.35rem;
     background: var(--cap-bg);
     color: var(--cap-fg);
     font-family: var(--f-mono);
     font-size: .8rem;
     letter-spacing: .06em;
     text-transform: uppercase;
-    border: 2px solid var(--ink);
     min-height: 44px;
     white-space: nowrap;
-    transition: color .35s var(--ease);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%);
+    transition: color .35s var(--ease), background .3s;
 }
 
 .btn::before {
@@ -38,12 +39,12 @@
 .btn:hover, .btn:focus-visible { color: #fff }
 .btn:hover::before, .btn:focus-visible::before { transform: scaleX(1) }
 
-.btn--ghost { --cap-bg: transparent; --cap-fg: var(--ink); --cap-fill: var(--ink) }
+.btn--ghost { --cap-bg: rgba(10, 24, 35, .07); --cap-fg: var(--ink); --cap-fill: var(--ink) }
 
 .btn svg { width: 1.1em; height: 1.1em; flex: none }
 
 @media (max-width: 360px) {
-    .btn { padding: .7rem 1.05rem; font-size: .74rem }
+    .btn { padding: .7rem 1.2rem .7rem 1.05rem; font-size: .74rem }
 }
 
 @media (prefers-reduced-motion: reduce) {
