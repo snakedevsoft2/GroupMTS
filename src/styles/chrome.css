@@ -1,5 +1,4 @@
 /* Global chrome: scroll progress bar + custom cursor. */
-/* La barra de progreso es el rumbo recorrido */
 .progress {
     position: fixed;
     top: 0;
@@ -9,7 +8,7 @@
     z-index: 150;
     transform-origin: 0 50%;
     transform: scaleX(0);
-    background: var(--brass);
+    background: linear-gradient(90deg, var(--c1), var(--c2) 45%, var(--c4) 75%, var(--c3));
 }
 
 .cursor, .cursor-dot {
@@ -27,11 +26,11 @@
     width: 32px;
     height: 32px;
     margin: -16px 0 0 -16px;
-    border: 1px solid rgba(168, 135, 74, .65);
+    border: 1px solid rgba(var(--accent-rgb), .55);
     transition: opacity .3s, width .35s var(--ease), height .35s var(--ease), margin .35s var(--ease), background .35s, border-color .35s;
 }
 
-.cursor-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: var(--brass-deep) }
+.cursor-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: var(--accent) }
 
 body.cursor-on .cursor, body.cursor-on .cursor-dot { opacity: 1 }
 
@@ -39,8 +38,8 @@ body.cursor-hot .cursor {
     width: 60px;
     height: 60px;
     margin: -30px 0 0 -30px;
-    background: rgba(201, 169, 106, .1);
-    border-color: var(--brass-deep);
+    background: rgba(var(--accent-rgb), .09);
+    border-color: var(--accent);
 }
 
 @media (hover: none), (pointer: coarse) {

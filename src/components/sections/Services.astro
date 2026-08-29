@@ -1,5 +1,5 @@
 ---
-import Burgee from '@/components/ui/Burgee.astro';
+import ServiceIcon from '@/components/ui/ServiceIcon.astro';
 import { services, servicesHead } from '@/data/services';
 import { t, type Lang } from '@/i18n';
 
@@ -8,7 +8,6 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
 ---
 
 <section class="section section--tint" id="servicios">
@@ -17,14 +16,11 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
       <h2 class="reveal" data-d="1" set:html={t(servicesHead.titleHtml, lang)} />
       <p class="lede reveal" data-d="2">{t(servicesHead.lede, lang)}</p>
     </div>
-    <div class="zones">
+    <div class="grid-3">
       {
         services.map((s, i) => (
-          <article class="zone reveal" data-d={i + 1}>
-            <header class="zone__head">
-              <span class="zone__no">{zoneWord} {i + 1}</span>
-              <span class="zone__mark"><Burgee size=".8rem" /></span>
-            </header>
+          <article class="card reveal" data-d={i + 1} data-spotlight data-tone={i + 1}>
+            <div class="card__icon"><ServiceIcon icon={s.icon} /></div>
             <h3>{t(s.title, lang)}</h3>
             <p>{t(s.text, lang)}</p>
             <ul>
@@ -40,67 +36,78 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
 </section>
 
 <style>
-  /* Zonas de la carta: recuadros con marco doble, la zona 1 manda. */
-  .zones { display: grid; gap: 1.4rem; grid-template-columns: 1fr }
+  .grid-3 { display: grid; gap: 1.1rem; grid-template-columns: 1fr }
 
-  @media (min-width: 700px) {
-    .zones { grid-template-columns: repeat(2, 1fr) }
+  @media (min-width: 560px) {
+    .grid-3 { grid-template-columns: repeat(2, 1fr) }
   }
 
   @media (min-width: 1180px) {
-    .zones { gap: 1.7rem }
+    .grid-3 { grid-template-columns: repeat(4, 1fr) }
   }
 
-  /* Placa de club: filete de latón fino con paspartú */
-  .zone {
+  .card {
+    --tone: var(--c1);
+    --tone-rgb: var(--c1-rgb);
     position: relative;
-    padding: clamp(1.7rem, 2.6vw, 2.3rem);
+    padding: clamp(1.9rem, 3vw, 2.6rem);
+    border-radius: var(--r-m);
     background: var(--card);
-    border: 1px solid var(--line-2);
-    outline: 1px solid var(--brass-soft);
-    outline-offset: 5px;
+    border: 1px solid var(--line);
+    overflow: hidden;
     box-shadow: var(--shadow-s);
-    transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s, outline-color .3s;
+    transition: transform .5s var(--ease), border-color .4s, box-shadow .5s var(--ease);
   }
 
-  .zone:hover {
-    transform: translateY(-5px);
-    border-color: var(--brass-deep);
-    outline-color: var(--brass);
-    box-shadow: var(--shadow-m);
+  .card[data-tone="2"] { --tone: var(--c2); --tone-rgb: var(--c2-rgb) }
+  .card[data-tone="3"] { --tone: var(--c3); --tone-rgb: var(--c3-rgb) }
+  .card[data-tone="4"] { --tone: var(--c4); --tone-rgb: var(--c4-rgb) }
+
+  /* Spotlight following the mouse (--mx/--my set by cursor.ts) */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .45s;
+    pointer-events: none;
+    background: radial-gradient(22rem 18rem at var(--mx, 50%) var(--my, 0%), rgba(var(--tone-rgb), .13), transparent 65%);
   }
 
-  .zone__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: .8rem;
-    margin-bottom: 1.2rem;
+  .card:hover { transform: translateY(-8px); border-color: rgba(var(--tone-rgb), .4); box-shadow: var(--shadow-m) }
+  .card:hover::before { opacity: 1 }
+
+  .card__icon {
+    color: var(--tone);
+    margin-bottom: 1.4rem;
+    transition: transform .5s var(--ease);
   }
 
-  .zone__no {
-    font-size: .68rem;
-    font-weight: 600;
-    letter-spacing: .24em;
-    color: var(--course-deep);
-  }
+  .card:hover .card__icon { transform: translateY(-3px) }
 
-  .zone__mark { line-height: 1 }
+  .card__icon :global(svg) { width: 1.9rem; height: 1.9rem }
 
-  .zone h3 { margin-bottom: .7rem }
-  .zone p { color: var(--ink-2); font-size: .94rem }
+  .card h3 { margin-bottom: .75rem }
+  .card p { color: var(--ink-2); font-size: .94rem }
 
-  /* Notas de zona: guiones de anotación, no dots de colores */
-  .zone ul {
-    margin: 1.2rem 0 0;
-    padding: 1.2rem 0 0;
+  .card ul {
+    margin: 1.3rem 0 0;
+    padding: 1.3rem 0 0;
     list-style: none;
     display: grid;
     gap: .5rem;
     border-top: 1px solid var(--line-soft);
   }
 
-  .zone li { font-size: .85rem; color: var(--muted-strong); display: flex; gap: .6rem; align-items: baseline }
-  .zone li::before { content: "—"; color: var(--brass-deep); flex: none }
+  .card li { font-size: .85rem; color: var(--muted); display: flex; gap: .6rem; align-items: baseline }
+
+  .card li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--tone);
+    flex: none;
+    transform: translateY(-2px);
+  }
 </style>

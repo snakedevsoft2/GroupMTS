@@ -1,10 +1,9 @@
 ---
 import '@/styles/hero.css';
-import { getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import { hero, trust } from '@/data/hero';
 import { site } from '@/data/site';
 import { dicts, t, type Lang } from '@/i18n';
-import Burgee from '@/components/ui/Burgee.astro';
 
 interface Props {
   lang: Lang;
@@ -13,54 +12,58 @@ interface Props {
 const { lang } = Astro.props;
 const dict = dicts[lang];
 const words = hero.h1[lang];
-/* El video real, enmarcado como cuadro de la sede. */
-const poster = await getImage({ src: hero.poster, width: 760, format: 'webp', quality: 80 });
-const estLabel = lang === 'es' ? 'TALLER NÁUTICO · PUERTO RICO' : 'MARINE WORKSHOP · PUERTO RICO';
-const frameLabel = lang === 'es' ? 'Nuestro taller en acción' : 'Our shop at work';
 ---
 
 <header class="hero" id="hero">
-  <div class="hero__inner" id="heroInner">
-    <div class="hero__plate">
-      <p class="est"><Burgee size=".95rem" /> {estLabel}</p>
-
-      <h1>
-        {
-          words.map((w) => (
-            <Fragment>
-              {w.em ? <em>{w.t}</em> : w.t}
-              {w.br ? <br /> : ' '}
-            </Fragment>
-          ))
-        }
-      </h1>
-
-      <p class="lede">{t(hero.lede, lang)}</p>
-
-      <div class="hero-cta">
-        <a href={t(site.whatsapp, lang)} target="_blank" rel="noopener noreferrer" class="btn" data-magnetic>
-          <span>
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width:1.15em;height:1.15em;vertical-align:-.18em;margin-right:.4em">
-              <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.05-1.32A10 10 0 1 0 12 2zm-3.1 5.8h.55c.15.01.35-.06.54.41.2.49.68 1.7.74 1.82.06.12.1.26.02.42-.08.16-.12.26-.24.4-.12.14-.25.31-.36.42-.12.12-.24.25-.1.49.14.24.63 1.04 1.36 1.69.94.83 1.73 1.09 1.97 1.21.24.12.38.1.52-.06.14-.16.61-.71.77-.95.16-.24.33-.2.55-.12.22.08 1.43.67 1.67.79.24.12.4.18.46.28.06.11.06.6-.14 1.17-.21.58-1.21 1.13-1.66 1.17-.45.04-.87.2-2.94-.62-2.49-.98-4.07-3.52-4.19-3.68-.12-.16-.99-1.31-.99-2.5s.63-1.78.85-2.02c.22-.24.48-.3.64-.3z"></path>
-            </svg><span>{dict.quoteWhatsApp}</span>
-          </span>
-        </a>
-        <a href="#transformacion" class="btn btn--ghost" data-magnetic><span>{dict.seeRestorations}</span></a>
-      </div>
-    </div>
-
-    {/* El cuadro de la sede: video real con marco de latón */}
-    <figure class="hero__frame">
-      <div class="frame__media">
-        <img src={poster.src} width="760" height="428" alt="" loading="eager" />
-        <video muted loop playsinline preload="none" data-src={hero.video}></video>
-      </div>
-      <figcaption>{frameLabel}</figcaption>
-    </figure>
+  <div class="hero__bg" data-parallax="-.14">
+    {/* Frame real del video como fondo responsive; el video (solo desktop) aparece encima al cargar. */}
+    <Image
+      src={hero.poster}
+      widths={[828, 1280, 1920]}
+      sizes="100vw"
+      format="webp"
+      quality={85}
+      loading="eager"
+      alt=""
+      aria-hidden="true"
+    />
+    <video muted loop playsinline preload="none" data-src={hero.video}></video>
   </div>
 
-  {/* Palmarés: cifras reales grabadas en la barra de honores */}
-  <div class="trust" id="trust">
+  <div class="hero__inner" id="heroInner">
+    <h1>
+      {
+        words.map((w) => (
+          <Fragment>
+            <span class="w"><span>{w.em ? <em>{w.t}</em> : w.t}</span></span>
+            {w.br ? <br /> : ' '}
+          </Fragment>
+        ))
+      }
+    </h1>
+
+    <p class="lede hero__fade d2">{t(hero.lede, lang)}</p>
+
+    <div class="hero-cta hero__fade d3">
+      <a href={t(site.whatsapp, lang)} target="_blank" rel="noopener noreferrer" class="btn" data-magnetic>
+        <span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            style="width:1.15em;height:1.15em;vertical-align:-.18em;margin-right:.4em"
+          >
+            <path
+              d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.05-1.32A10 10 0 1 0 12 2zm-3.1 5.8h.55c.15.01.35-.06.54.41.2.49.68 1.7.74 1.82.06.12.1.26.02.42-.08.16-.12.26-.24.4-.12.14-.25.31-.36.42-.12.12-.24.25-.1.49.14.24.63 1.04 1.36 1.69.94.83 1.73 1.09 1.97 1.21.24.12.38.1.52-.06.14-.16.61-.71.77-.95.16-.24.33-.2.55-.12.22.08 1.43.67 1.67.79.24.12.4.18.46.28.06.11.06.6-.14 1.17-.21.58-1.21 1.13-1.66 1.17-.45.04-.87.2-2.94-.62-2.49-.98-4.07-3.52-4.19-3.68-.12-.16-.99-1.31-.99-2.5s.63-1.78.85-2.02c.22-.24.48-.3.64-.3z"
+            ></path>
+          </svg><span>{dict.quoteWhatsApp}</span>
+        </span>
+      </a>
+      <a href="#transformacion" class="btn btn--ghost" data-magnetic><span>{dict.seeRestorations}</span></a>
+    </div>
+
+  </div>
+
+  <div class="trust hero__fade d4" id="trust">
     {
       trust.map((item) => (
         <div>
@@ -78,30 +81,33 @@ const frameLabel = lang === 'es' ? 'Nuestro taller en acción' : 'Our shop at wo
   const hero = document.getElementById('hero')!;
   requestAnimationFrame(() => hero.classList.add('ready'));
 
-  /* Video del cuadro: solo desktop y sin reduced-motion; el poster cubre. */
+  /* The video (several MB) starts after load so it does not compete with
+     first paint; the poster (a real frame) covers meanwhile. play() may be
+     rejected by autoplay policy; that is not an error. */
+  /* Solo desktop y sin reduced-motion: en móvil el poster basta y ahorra ~4MB. */
   const video = hero.querySelector<HTMLVideoElement>('video[data-src]');
   if (video && matchMedia('(min-width: 768px)').matches && !reduce) {
     const startVideo = (): void => {
       video.src = video.dataset.src ?? '';
-      video.addEventListener('playing', () => video.classList.add('on'), { once: true });
       video.play().catch(() => {});
     };
     if (document.readyState === 'complete') startVideo();
     else window.addEventListener('load', startVideo, { once: true });
   }
 
-  /* El contenido se retira suave al scroll */
+  /* Hero content fades and lifts on scroll */
   const heroInner = document.getElementById('heroInner')!;
   onScroll(() => {
     if (reduce) return;
     const y = window.scrollY;
-    if (y > window.innerHeight) return;
-    const p = Math.min(1, y / (window.innerHeight * 0.85));
-    heroInner.style.transform = `translate3d(0,${(p * -50).toFixed(1)}px,0)`;
-    heroInner.style.opacity = (1 - p * 1.1).toFixed(3);
+    const vh = window.innerHeight;
+    if (y > vh) return;
+    const p = Math.min(1, y / (vh * 0.85));
+    heroInner.style.transform = `translate3d(0,${(p * -70).toFixed(1)}px,0)`;
+    heroInner.style.opacity = (1 - p * 1.15).toFixed(3);
   });
 
-  /* Palmarés */
+  /* Trust counters */
   const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-count]'));
   function runCounters(): void {
     for (const el of counters) {

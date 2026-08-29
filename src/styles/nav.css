@@ -12,11 +12,11 @@
 }
 
 .nav.is-stuck {
-    background: rgba(11, 28, 44, .92);
+    background: rgba(252, 251, 249, .86);
     backdrop-filter: blur(16px) saturate(140%);
-    border-bottom-color: var(--hairline-light);
+    border-bottom-color: var(--line);
     padding-block: .85rem;
-    box-shadow: 0 1px 20px -10px rgba(34, 52, 60, .35);
+    box-shadow: 0 1px 20px -10px rgba(10, 24, 35, .35);
 }
 
 .nav.is-hidden { transform: translateY(-115%) }
@@ -24,6 +24,17 @@
 .logo { display: block; line-height: 1 }
 .nav .logo { animation: navDown .85s var(--ease) backwards .12s }
 .logo__img { position: relative; display: block; overflow: hidden }
+
+/* Shine sweep across the logo */
+.nav .logo__img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform: translateX(-130%);
+    background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, .85) 50%, transparent 62%);
+    animation: shine 7s var(--ease) 2.6s infinite;
+}
 
 .logo img { height: 1.6rem; width: auto; display: block; transition: filter .45s var(--ease), transform .45s var(--ease) }
 .nav .logo:hover img { filter: saturate(1.15); transform: translateX(2px) }
@@ -34,7 +45,7 @@
     font-size: .54rem;
     letter-spacing: .32em;
     text-transform: uppercase;
-    color: var(--foam-muted);
+    color: var(--muted);
     margin-top: .4rem;
     font-weight: 500;
     white-space: nowrap;
@@ -65,7 +76,7 @@
     font-size: .8rem;
     letter-spacing: .11em;
     text-transform: uppercase;
-    color: var(--foam-muted);
+    color: var(--ink-2);
     font-weight: 500;
     position: relative;
     z-index: 1;
@@ -79,19 +90,22 @@
 .nav-links a:nth-of-type(3) { animation-delay: .44s }
 .nav-links a:nth-of-type(4) { animation-delay: .51s }
 .nav-links a:nth-of-type(5) { animation-delay: .58s }
-.nav-links a:hover, .nav-links a.active { color: var(--brass) }
+.nav-links a:hover, .nav-links a.active { color: var(--accent) }
 
-/* Subrayado de rumbo: sigue el mouse, descansa en el link activo */
+/* Sliding pill: follows the mouse, rests on the active link */
 .nav-pill {
     position: absolute;
-    bottom: -.2rem;
+    top: 50%;
     left: 0;
     width: 0;
-    height: 0;
+    height: 2.1rem;
     z-index: 0;
     opacity: 0;
-    border-bottom: 1px solid var(--brass);
+    transform: translateY(-50%);
+    border-radius: var(--r-pill);
     pointer-events: none;
+    background: rgba(var(--accent-rgb), .09);
+    border: 1px solid rgba(var(--accent-rgb), .24);
     transition: left .5s var(--ease), width .5s var(--ease), opacity .35s var(--ease);
 }
 
@@ -108,9 +122,9 @@
     align-items: center;
     gap: .22rem;
     padding: .45rem .8rem;
-    border-radius: var(--r-s);
-    border: 1px solid rgba(233, 239, 244, .3);
-    background: transparent;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: var(--card);
     font-size: .7rem;
     font-weight: 600;
     letter-spacing: .1em;
@@ -119,12 +133,12 @@
     animation: navDown .6s var(--ease) backwards .66s;
 }
 
-.lang:hover { border-color: var(--brass); box-shadow: none }
+.lang:hover { border-color: var(--c1); box-shadow: 0 6px 16px -8px rgba(var(--c1-rgb), .6) }
 .lang__sep { opacity: .35 }
-.lang__on { color: var(--brass) }
-.lang__off { color: var(--foam-muted) }
-.lang.is-en .lang__on { color: var(--foam-muted) }
-.lang.is-en .lang__off { color: var(--brass) }
+.lang__on { color: var(--c1) }
+.lang__off { color: var(--muted-strong) }
+.lang.is-en .lang__on { color: var(--muted-strong) }
+.lang.is-en .lang__off { color: var(--c1) }
 
 .lang--drawer {
     display: none;
@@ -140,6 +154,7 @@
 .nav .social a:nth-of-type(2) { animation-delay: .79s }
 .nav .social a:nth-of-type(3) { animation-delay: .86s }
 .nav .btn { animation: navDown .7s var(--ease) backwards .90s }
+.nav .burger { animation: navDown .6s var(--ease) backwards .55s }
 
 /* Below 1360px the social icons hide (the footer has them);
    below 1180px we switch to the burger menu. */
@@ -160,7 +175,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nav .logo, .nav-links a, .nav .social a, .nav .btn { animation: none }
+    .nav .logo, .nav-links a, .nav .social a, .nav .btn, .nav .burger { animation: none }
+    .nav .logo__img::after { display: none }
     .nav-pill { display: none }
     .nav-links a:hover .roll span { transform: none }
 }

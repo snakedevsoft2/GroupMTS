@@ -1,8 +1,6 @@
 ---
-/* Línea de gallardetes del club: los oficios del taller izados en banda. */
 import { marquee } from '@/data/site';
 import { t, type Lang } from '@/i18n';
-import Burgee from '@/components/ui/Burgee.astro';
 
 interface Props {
   lang: Lang;
@@ -12,45 +10,107 @@ const { lang } = Astro.props;
 const items = marquee.map((item) => t(item, lang));
 ---
 
-<div class="pennants" role="presentation">
-  <div class="pennants__row">
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
     {
-      items.map((label) => (
-        <span class="pennants__item">
-          <Burgee size=".85rem" />
-          {label}
-        </span>
+      [0, 1].map(() => (
+        <div class="marquee__group">
+          {items.map((label) => (
+            <span>{label}</span>
+          ))}
+        </div>
       ))
     }
   </div>
 </div>
 
 <style>
-  .pennants {
-    border-block: 1px solid var(--brass-soft);
-    background: var(--navy-2);
-    padding: 1.15rem var(--pad);
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    padding-block: 1.5rem;
+    border-block: 1px solid var(--line);
+    background: var(--paper-2);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
 
-  .pennants__row {
-    max-width: var(--maxw);
-    margin-inline: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .6rem 2.4rem;
-    align-items: center;
-    justify-content: center;
+  /* The script drives the real speed; this is the no-JS fallback */
+  .marquee__track { display: flex; width: max-content; animation: slide 22s linear infinite; will-change: transform }
+  .marquee:hover .marquee__track { animation-play-state: paused }
+
+  @keyframes slide {
+    to { transform: translateX(-50%) }
   }
 
-  .pennants__item {
+  .marquee__group { display: flex; align-items: center; gap: 3.2rem; padding-right: 3.2rem }
+
+  .marquee__group span {
     display: inline-flex;
     align-items: center;
-    gap: .65rem;
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--foam-muted);
+    gap: .9rem;
+    font-family: var(--f-display);
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    color: var(--ink);
     white-space: nowrap;
   }
+
+  .marquee__group span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c1); flex: none }
+  .marquee__group span:nth-child(4n+2)::before { background: var(--c2) }
+  .marquee__group span:nth-child(4n+3)::before { background: var(--c3) }
+  .marquee__group span:nth-child(4n+4)::before { background: var(--c4) }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Keeps moving, just slower: it is a gentle drift, not a harsh effect */
+    .marquee__track { animation-duration: 55s !important }
+  }
 </style>
+
+<script>
+  import { reduce } from '@/scripts/scroll';
+
+  /* Self-moving marquee that reacts to scroll. Replaces the CSS
+     animation with its own loop to add scroll velocity. */
+  const track = document.querySelector<HTMLElement>('.marquee__track');
+  if (track) {
+    let groupW = 0;
+    let x = 0;
+    let vel = 0;
+    let hover = false;
+    let lastY = window.scrollY;
+
+    const measure = (): void => {
+      const first = track.firstElementChild;
+      if (first instanceof HTMLElement) groupW = first.offsetWidth;
+    };
+
+    track.style.animation = 'none';
+    measure();
+
+    const box = track.parentElement!;
+    box.addEventListener('mouseenter', () => { hover = true; });
+    box.addEventListener('mouseleave', () => { hover = false; });
+    window.addEventListener('resize', measure, { passive: true });
+
+    (function tick() {
+      const y = window.scrollY;
+      if (!reduce) {
+        vel += (y - lastY) * 0.45; /* scroll pushes it */
+        vel *= 0.9; /* and it brakes on its own */
+      }
+      lastY = y;
+
+      /* With reduced motion it drifts slower and ignores scroll pushes,
+         but it never stops: it is the one animation we keep. */
+      const base = reduce ? 1.1 : hover ? 0.35 : 1.7;
+      x -= base + vel;
+
+      if (groupW > 0) {
+        while (x <= -groupW) { x += groupW; measure(); }
+        while (x > 0) x -= groupW;
+      }
+      track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+      requestAnimationFrame(tick);
+    })();
+  }
+</script>

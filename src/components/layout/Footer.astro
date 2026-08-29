@@ -33,22 +33,40 @@ const { lang } = Astro.props;
 
 <style>
   footer {
-    border-top: 1px solid var(--brass-soft);
+    border-top: 1px solid var(--line);
     padding: clamp(3rem, 6vw, 4.5rem) 0 clamp(2.2rem, 4vw, 3rem);
-    background: var(--navy);
-    color: var(--foam-muted);
+    background: var(--paper-2);
     position: relative;
     overflow: hidden;
   }
 
+  footer::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 -60% 0;
+    height: 120%;
+    pointer-events: none;
+    background: radial-gradient(40% 60% at 50% 100%, rgba(var(--c2-rgb), .16), transparent 70%);
+  }
+
   .foot { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.6rem }
-  .foot p { font-size: .78rem; color: var(--foam-muted); padding-top: 1.6rem; border-top: 1px solid var(--hairline-light); width: min(100%, 32rem) }
+  .foot p { font-size: .78rem; color: var(--muted); padding-top: 1.6rem; border-top: 1px solid var(--line); width: min(100%, 32rem) }
 
   .foot__logo { align-items: center; text-align: center; transition: transform .5s var(--ease) }
   .foot__logo:hover { transform: translateY(-3px) scale(1.03) }
   .foot__logo :global(img) { height: 2.5rem }
   .foot__logo :global(small) { letter-spacing: .36em; margin-top: .6rem }
 
+  /* The shine also sweeps the footer logo */
+  .foot__logo :global(.logo__img)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform: translateX(-130%);
+    background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, .9) 50%, transparent 62%);
+    animation: shine 8s var(--ease) 4s infinite;
+  }
 
   .foot__social :global(.social a) { width: 2.6rem; height: 2.6rem }
 
@@ -57,20 +75,21 @@ const { lang } = Astro.props;
     align-items: center;
     gap: .6rem;
     font-size: .95rem;
-    font-weight: 600;
-    color: var(--foam);
+    font-weight: 500;
+    color: var(--ink);
     padding: .55rem 1.15rem;
-    border-radius: var(--r-s);
-    border: 1px solid rgba(233, 239, 244, .3);
-    background: transparent;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line-2);
+    background: var(--card);
     transition: .35s var(--ease);
   }
 
-  .foot__mail svg { width: 1.05rem; height: 1.05rem; color: var(--brass) }
+  .foot__mail svg { width: 1.05rem; height: 1.05rem; color: var(--c1) }
 
   .foot__mail:hover {
-    border-color: var(--brass);
-    color: var(--brass);
+    border-color: var(--c1);
+    color: var(--c1);
+    box-shadow: 0 10px 24px -12px rgba(var(--c1-rgb), .7);
     transform: translateY(-2px);
   }
 
@@ -78,6 +97,9 @@ const { lang } = Astro.props;
     .foot__mail { font-size: .8rem; padding: .5rem .9rem }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .foot__logo :global(.logo__img)::after { display: none }
+  }
 </style>
 
 <script>

@@ -37,6 +37,7 @@
     html { scroll-behavior: auto }
 
     /* Content must never stay hidden behind an entrance animation */
-    .reveal { opacity: 1; transform: none }
+    .reveal, .hero__fade { opacity: 1; transform: none }
     .mask::after { display: none }
+    .w > span { transform: none }
 }

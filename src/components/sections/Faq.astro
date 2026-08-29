@@ -52,13 +52,13 @@ const { lang } = Astro.props;
     top: 50%;
     width: 11px;
     height: 11px;
-    border-right: 1.5px solid var(--course);
-    border-bottom: 1.5px solid var(--course);
+    border-right: 1.5px solid var(--accent);
+    border-bottom: 1.5px solid var(--accent);
     transform: translateY(-70%) rotate(45deg);
     transition: transform .35s var(--ease);
   }
 
-  .faq summary:hover, .faq details[open] summary { color: var(--course) }
+  .faq summary:hover, .faq details[open] summary { color: var(--accent) }
   .faq details[open] summary::after { transform: translateY(-20%) rotate(-135deg) }
 
   .faq .a { padding: 0 2rem 1.7rem 0; color: var(--ink-2); font-size: .94rem }

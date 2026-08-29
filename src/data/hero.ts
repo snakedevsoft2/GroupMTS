@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import type { Localized } from '@/i18n';
-import tallerPoster from '@/assets/posters/taller-poster.jpg';
+import fondoPoster from '@/assets/posters/fondo-poster.jpg';
 
 export interface HeroWord {
   t: string;
@@ -10,9 +10,9 @@ export interface HeroWord {
 }
 
 export const hero = {
-  video: '/videos/taller.mp4',
+  video: '/videos/fondo.mp4',
   /* Real frame extracted from the video itself. */
-  poster: tallerPoster as ImageMetadata,
+  poster: fondoPoster as ImageMetadata,
   h1: {
     es: [
       { t: 'Tapizamos' },

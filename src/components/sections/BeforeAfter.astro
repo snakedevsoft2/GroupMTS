@@ -57,15 +57,14 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
   .ba {
     position: relative;
     aspect-ratio: 16/9;
+    border-radius: var(--r-l);
     overflow: hidden;
-    border: 1px solid var(--line-2);
-    outline: 1px solid var(--brass-soft);
-    outline-offset: 5px;
+    border: 1px solid var(--line);
     box-shadow: var(--shadow-l);
     touch-action: pan-y;
     cursor: ew-resize;
     user-select: none;
-    background: var(--water-2);
+    background: var(--paper-2);
   }
 
   @media (max-width: 640px) {
@@ -75,15 +74,15 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
   .ba :global(.ba__img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
   .ba :global(.ba__top) { clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0) }
 
-  /* Rótulos de carta: rectangulares, tinta sobre papel */
   .ba__tag {
     position: absolute;
     bottom: 1.1rem;
     z-index: 3;
     padding: .45rem 1rem;
-    border-radius: var(--r-s);
-    background: rgba(246, 248, 250, .94);
-    border: 1px solid var(--line-2);
+    border-radius: var(--r-pill);
+    background: rgba(252, 251, 249, .92);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
     font-size: .68rem;
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -92,7 +91,7 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
   }
 
   .ba__tag--l { left: 1.1rem }
-  .ba__tag--r { right: 1.1rem; background: var(--course-deep); color: #FFF; border-color: var(--course-deep) }
+  .ba__tag--r { right: 1.1rem; background: var(--accent); color: #fff; border-color: transparent }
 
   .ba__handle {
     position: absolute;
@@ -100,8 +99,9 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
     bottom: 0;
     left: var(--pos, 50%);
     z-index: 4;
-    width: 0;
-    border-left: 2px solid var(--brass);
+    width: 2px;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(10, 24, 35, .4);
     transform: translateX(-1px);
     pointer-events: none;
   }
@@ -116,10 +116,10 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: var(--card);
-    border: 1px solid var(--course);
-    color: var(--course);
-    box-shadow: 0 6px 22px rgba(34, 52, 60, .28);
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--accent);
+    box-shadow: 0 6px 22px rgba(10, 24, 35, .28);
   }
 
   .ba__knob svg { width: 1.3rem; height: 1.3rem }
@@ -134,11 +134,7 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
     cursor: ew-resize;
   }
 
-  .ba__hint { margin-top: 1.2rem; font-size: .78rem; color: var(--muted-strong); text-align: center; letter-spacing: .08em }
-
-  @media (pointer: coarse) {
-    .ba__hint { display: none }
-  }
+  .ba__hint { margin-top: 1.2rem; font-size: .78rem; color: var(--muted); text-align: center; letter-spacing: .08em }
 </style>
 
 <script>

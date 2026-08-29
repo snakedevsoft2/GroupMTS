@@ -1,145 +1,126 @@
-/* Hero = el salón de la sede: navy de blazer, placa grabada,
-   el trabajo real colgado como cuadro con marco de latón. */
+/* Full-viewport hero with background video. The white veil is strong on
+   the left (where the copy sits) and fades to the right. */
 .hero {
     position: relative;
     min-height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: clamp(2.2rem, 4.5vw, 3.4rem);
+    gap: clamp(2.5rem, 5vw, 3.8rem);
     overflow: hidden;
     isolation: isolate;
-    padding: clamp(7.5rem, 12vw, 9.5rem) var(--pad) clamp(2.6rem, 5vw, 4rem);
-    background:
-        radial-gradient(120% 90% at 78% 18%, rgba(20, 48, 74, .55), transparent 60%),
-        var(--navy);
+    padding: clamp(8rem, 13vw, 10rem) var(--pad) clamp(3rem, 6vw, 4.5rem);
 }
 
-.hero__inner {
-    width: 100%;
-    max-width: var(--maxw);
-    margin-inline: auto;
-    display: grid;
-    gap: clamp(2.4rem, 5vw, 4.5rem);
-    align-items: center;
-    will-change: transform, opacity;
+.hero__bg {
+    position: absolute;
+    inset: -8% 0;
+    z-index: -2;
+    overflow: hidden;
+    background: linear-gradient(160deg, #DCE6F0, #C3D3E2);
 }
 
-@media (min-width: 980px) {
-    .hero__inner { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr) }
-}
+.hero__bg img, .hero__bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform }
 
-/* La placa: filete de latón arriba, versalitas espaciadas */
-.est {
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-    font-size: .7rem;
-    font-weight: 600;
-    letter-spacing: .28em;
-    color: var(--brass);
-    border-top: 1px solid var(--brass-soft);
-    border-bottom: 1px solid var(--hairline-light);
-    padding: .6rem 0;
-    max-width: 34ch;
-    margin-bottom: 2rem;
-}
-
-.hero h1 {
-    max-width: 15ch;
-    color: var(--foam);
-    font-size: clamp(2.4rem, 5.4vw, 4.5rem);
-}
-
-.hero h1 em { color: var(--brass) }
-
-.hero p.lede { max-width: 46ch; margin-top: 1.6rem; color: var(--foam-muted) }
-.hero-cta { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.4rem }
-
-/* El cuadro: marco fino de latón con paspartú navy */
-.hero__frame {
-    margin: 0;
-    border: 1px solid var(--brass);
-    outline: 1px solid var(--brass-soft);
-    outline-offset: 6px;
-    background: var(--navy-2);
-    padding: .6rem;
-    box-shadow: var(--shadow-l);
-}
-
-.frame__media { position: relative; aspect-ratio: 16 / 10; overflow: hidden }
-.frame__media img, .frame__media video {
+.hero__bg::after {
+    content: "";
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    background:
+        linear-gradient(100deg, rgba(252, 251, 249, .95) 0%, rgba(252, 251, 249, .90) 24%, rgba(252, 251, 249, .55) 46%, rgba(252, 251, 249, .12) 66%, rgba(252, 251, 249, 0) 82%),
+        linear-gradient(180deg, rgba(252, 251, 249, .55) 0%, rgba(252, 251, 249, 0) 20%, rgba(252, 251, 249, 0) 55%, rgba(252, 251, 249, .75) 85%, var(--paper) 100%);
 }
 
-.frame__media video { opacity: 0; transition: opacity .8s }
-.frame__media video.on { opacity: 1 }
-
-.hero__frame figcaption {
-    font-size: .66rem;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--foam-muted);
-    padding: .65rem .2rem .15rem;
-    text-align: center;
+@media (max-width: 900px) {
+    .hero__bg::after {
+        background: linear-gradient(180deg, rgba(252, 251, 249, .92) 0%, rgba(252, 251, 249, .80) 42%, rgba(252, 251, 249, .60) 62%, rgba(252, 251, 249, .92) 88%, var(--paper) 100%);
+    }
 }
 
-/* Palmarés: la barra de honores con filetes de latón */
+.hero__inner { width: 100%; max-width: var(--maxw); margin-inline: auto; will-change: transform, opacity }
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5.4vw, 4.8rem);
+    max-width: 18ch;
+    text-shadow: 0 1px 24px rgba(252, 251, 249, .7);
+}
+
+.hero h1 em {
+    font-style: italic;
+    color: var(--c1);
+}
+
+/* Word-by-word headline entrance */
+.w { display: inline-block; overflow: hidden; vertical-align: bottom }
+.w > span { display: inline-block; transform: translateY(105%); transition: transform 1s var(--ease) }
+.hero.ready .w > span { transform: none }
+.hero.ready .w:nth-child(1) > span { transition-delay: .05s }
+.hero.ready .w:nth-child(2) > span { transition-delay: .12s }
+.hero.ready .w:nth-child(3) > span { transition-delay: .19s }
+.hero.ready .w:nth-child(4) > span { transition-delay: .26s }
+.hero.ready .w:nth-child(5) > span { transition-delay: .33s }
+
+/* Starts at .01, not 0: with opacity 0 the browser does not count the text
+   as painted and the LCP slips to the end of the entrance animation. */
+.hero__fade { opacity: .01; transform: translateY(22px); transition: opacity .9s var(--ease) .5s, transform .9s var(--ease) .5s }
+.hero.ready .hero__fade { opacity: 1; transform: none }
+.hero__fade.d2 { transition-delay: .62s }
+.hero__fade.d3 { transition-delay: .74s }
+.hero__fade.d4 { transition-delay: .86s }
+
+/* Móvil: sin animación de entrada — el paint retrasado hunde el LCP con CPU lenta. */
+@media (max-width: 767px) {
+    .w > span { transform: none; transition: none }
+    .hero__fade { opacity: 1; transform: none; transition: none }
+}
+
+.hero p.lede { max-width: 48ch; color: var(--ink-2); margin-top: 1.8rem; text-shadow: 0 1px 16px rgba(252, 251, 249, .8) }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.4rem }
+
+/* Trust figures */
 .trust {
     width: 100%;
     max-width: var(--maxw);
     margin-inline: auto;
     display: flex;
     flex-wrap: wrap;
-    border-top: 1px solid var(--brass-soft);
-    border-bottom: 1px solid var(--hairline-light);
+    gap: clamp(1.5rem, 4vw, 3.6rem);
+    padding-top: 2.1rem;
+    border-top: 1px solid var(--line);
 }
 
-.trust div {
-    min-width: 8rem;
-    flex: 1;
-    padding: 1.1rem 1.4rem 1.1rem 0;
-}
-
-.trust div + div { border-left: 1px solid var(--hairline-light); padding-left: 1.4rem }
+.trust div { min-width: 8rem }
 
 .trust b {
     display: block;
     font-family: var(--f-display);
-    font-size: clamp(1.7rem, 3.2vw, 2.5rem);
-    line-height: 1.1;
-    color: var(--brass);
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
-.trust span {
-    font-size: .7rem;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--foam-muted);
-}
-
-@media (max-width: 979px) {
-    .hero__frame { max-width: 520px }
-}
+.trust div:nth-child(1) b { color: var(--c1) }
+.trust div:nth-child(2) b { color: var(--c2) }
+.trust div:nth-child(3) b { color: var(--c3) }
+.trust div:nth-child(4) b { color: var(--c4) }
+.trust span { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted) }
 
 @media (max-width: 620px) {
-    .hero { padding-top: 6.5rem }
-    .trust { display: grid; grid-template-columns: 1fr 1fr }
-    .trust div { min-width: 0; padding-block: .85rem }
-    .trust div + div { border-left: 0; padding-left: 0 }
-    .trust div:nth-child(even) { border-left: 1px solid var(--hairline-light); padding-left: 1.2rem }
-    .trust div:nth-child(n+3) { border-top: 1px solid var(--hairline-light) }
+    .hero { padding-bottom: 6rem }
+    .trust { gap: 1.3rem 1.7rem }
+    .trust div { min-width: 6.5rem }
 }
 
 @media (max-width: 360px) {
-    .hero h1 { font-size: 2.05rem }
+    .hero h1 { font-size: 2.1rem }
+    .trust div { min-width: 5.5rem }
 }
 
+@media (min-width: 2000px) {
+    .hero h1 { font-size: 5.4rem }
+}
+
+/* Landscape phones: the hero cannot claim the full height */
 @media (max-height: 560px) and (orientation: landscape) {
-    .hero { min-height: auto; padding-top: 6rem; padding-bottom: 2.5rem }
+    .hero { min-height: auto; padding-top: 6.5rem; padding-bottom: 2.5rem }
 }
