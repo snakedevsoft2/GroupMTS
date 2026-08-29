@@ -50,8 +50,15 @@
     color: var(--c1);
 }
 
-/* Word-by-word headline entrance */
-.w { display: inline-block; overflow: hidden; vertical-align: bottom }
+/* Word-by-word headline entrance. El padding+margin negativo dan aire al
+   voladizo de la itálica (la "o" de "Rico") sin mover el layout. */
+.w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding: 0 .14em .06em 0;
+    margin: 0 -.14em -.06em 0;
+}
 .w > span { display: inline-block; transform: translateY(105%); transition: transform 1s var(--ease) }
 .hero.ready .w > span { transform: none }
 .hero.ready .w:nth-child(1) > span { transition-delay: .05s }
