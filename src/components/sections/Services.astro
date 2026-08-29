@@ -1,5 +1,5 @@
 ---
-import ServiceIcon from '@/components/ui/ServiceIcon.astro';
+import Burgee from '@/components/ui/Burgee.astro';
 import { services, servicesHead } from '@/data/services';
 import { t, type Lang } from '@/i18n';
 
@@ -23,7 +23,7 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
           <article class="zone reveal" data-d={i + 1}>
             <header class="zone__head">
               <span class="zone__no">{zoneWord} {i + 1}</span>
-              <span class="zone__mark"><ServiceIcon icon={s.icon} /></span>
+              <span class="zone__mark"><Burgee size=".8rem" /></span>
             </header>
             <h3>{t(s.title, lang)}</h3>
             <p>{t(s.text, lang)}</p>
@@ -86,8 +86,7 @@ const zoneWord = lang === 'es' ? 'ZONA' : 'ZONE';
     color: var(--course-deep);
   }
 
-  .zone__mark { color: var(--ink-2) }
-  .zone__mark :global(svg) { width: 1.35rem; height: 1.35rem; display: block }
+  .zone__mark { line-height: 1 }
 
   .zone h3 { margin-bottom: .7rem }
   .zone p { color: var(--ink-2); font-size: .94rem }

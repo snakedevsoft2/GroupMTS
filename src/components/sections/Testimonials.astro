@@ -1,7 +1,7 @@
 ---
 import '@/styles/testimonials.css';
 import VideoBackdrop from '@/components/ui/VideoBackdrop.astro';
-import { hero } from '@/data/hero';
+import fondoPoster from '@/assets/posters/fondo-poster.jpg';
 import { testimonials, testimonialsHead } from '@/data/testimonials';
 import { dicts, t, type Lang } from '@/i18n';
 
@@ -15,7 +15,7 @@ const stars = [1, 2, 3, 4, 5];
 ---
 
 <section class="quotes-band">
-  <VideoBackdrop src={hero.video} parallax="-.10" poster={hero.poster} />
+  <VideoBackdrop src="/videos/fondo.mp4" parallax="-.10" poster={fondoPoster} />
 
   <div class="wrap">
     <div class="head head--light">

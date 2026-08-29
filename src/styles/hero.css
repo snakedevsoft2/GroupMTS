@@ -129,7 +129,11 @@
 
 @media (max-width: 620px) {
     .hero { padding-top: 6.5rem }
-    .trust div { min-width: 6.5rem; padding-block: .85rem }
+    .trust { display: grid; grid-template-columns: 1fr 1fr }
+    .trust div { min-width: 0; padding-block: .85rem }
+    .trust div + div { border-left: 0; padding-left: 0 }
+    .trust div:nth-child(even) { border-left: 1px solid var(--hairline-light); padding-left: 1.2rem }
+    .trust div:nth-child(n+3) { border-top: 1px solid var(--hairline-light) }
 }
 
 @media (max-width: 360px) {

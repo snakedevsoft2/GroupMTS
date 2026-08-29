@@ -134,7 +134,11 @@ const sizes = '(max-width: 1240px) 92vw, 1150px';
     cursor: ew-resize;
   }
 
-  .ba__hint { margin-top: 1.2rem; font-size: .78rem; color: var(--muted); text-align: center; letter-spacing: .08em }
+  .ba__hint { margin-top: 1.2rem; font-size: .78rem; color: var(--muted-strong); text-align: center; letter-spacing: .08em }
+
+  @media (pointer: coarse) {
+    .ba__hint { display: none }
+  }
 </style>
 
 <script>

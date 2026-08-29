@@ -25,17 +25,6 @@
 .nav .logo { animation: navDown .85s var(--ease) backwards .12s }
 .logo__img { position: relative; display: block; overflow: hidden }
 
-/* Shine sweep across the logo */
-.nav .logo__img::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    transform: translateX(-130%);
-    background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, .85) 50%, transparent 62%);
-    animation: shine 7s var(--ease) 2.6s infinite;
-}
-
 .logo img { height: 1.6rem; width: auto; display: block; transition: filter .45s var(--ease), transform .45s var(--ease) }
 .nav .logo:hover img { filter: saturate(1.15); transform: translateX(2px) }
 
@@ -151,7 +140,6 @@
 .nav .social a:nth-of-type(2) { animation-delay: .79s }
 .nav .social a:nth-of-type(3) { animation-delay: .86s }
 .nav .btn { animation: navDown .7s var(--ease) backwards .90s }
-.nav .burger { animation: navDown .6s var(--ease) backwards .55s }
 
 /* Below 1360px the social icons hide (the footer has them);
    below 1180px we switch to the burger menu. */
@@ -161,7 +149,7 @@
 
 @media (max-width: 1180px) {
     .nav-links { display: none }
-    .burger { display: grid }
+    .nav .burger { display: grid }
     .nav .lang { display: none }
     .lang--drawer { display: inline-flex }
 }
@@ -172,8 +160,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .nav .logo, .nav-links a, .nav .social a, .nav .btn, .nav .burger { animation: none }
-    .nav .logo__img::after { display: none }
+    .nav .logo, .nav-links a, .nav .social a, .nav .btn { animation: none }
     .nav-pill { display: none }
     .nav-links a:hover .roll span { transform: none }
 }
