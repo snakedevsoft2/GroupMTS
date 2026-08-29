@@ -19,8 +19,6 @@
     box-shadow: 0 1px 20px -10px rgba(10, 24, 35, .35);
 }
 
-.nav.is-hidden { transform: translateY(-115%) }
-
 .logo { display: block; line-height: 1 }
 .nav .logo { animation: navDown .85s var(--ease) backwards .12s }
 .logo__img { position: relative; display: block; overflow: hidden }

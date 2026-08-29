@@ -77,7 +77,6 @@ const links = [
   const navLinksBox = document.getElementById('navLinks');
   const pill = document.getElementById('navPill');
   let overNav = false;
-  let lastY = 0;
 
   /* Letter relay: the duplicate below slides up on hover */
   for (const a of links) {
@@ -113,12 +112,9 @@ const links = [
     window.addEventListener('resize', restPill, { passive: true });
   }
 
-  /* Sticky bar: hides scrolling down, returns scrolling up */
+  /* Sticky bar: siempre visible; solo cambia de piel al despegar del tope */
   onScroll(() => {
-    const y = window.scrollY;
-    nav.classList.toggle('is-stuck', y > 40);
-    nav.classList.toggle('is-hidden', y > 420 && y > lastY && !document.body.classList.contains('menu-open'));
-    lastY = y;
+    nav.classList.toggle('is-stuck', window.scrollY > 40);
   });
 
   /* Mobile menu */

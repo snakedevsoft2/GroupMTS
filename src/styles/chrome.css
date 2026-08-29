@@ -8,7 +8,7 @@
     z-index: 150;
     transform-origin: 0 50%;
     transform: scaleX(0);
-    background: linear-gradient(90deg, var(--c1), var(--c2) 45%, var(--c4) 75%, var(--c3));
+    background: var(--accent);
 }
 
 /* El cursor es una lancha caricatura de perfil que navega con el mouse.
