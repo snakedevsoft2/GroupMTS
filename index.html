@@ -8,13 +8,14 @@
     <meta name="description"
         content="Tapicería náutica, interiores completos y plásticos para botes en Puerto Rico. Cojinería, plafones, paredes, muebles, enclosures blandos y duros, back drops y capotas extendidas.">
     <meta name="theme-color" content="#FCFBF9">
-    <link rel="icon" type="image/png" href="ICONO/icono.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="ICONO/icono-48.png">
+    <link rel="apple-touch-icon" href="ICONO/icono-180.png">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="GroupMTS — Marine Upholstery, Interiors &amp; Plastics">
     <meta property="og:description"
         content="Tapicería, interiores, plásticos y capotas para botes. Taller propio en Puerto Rico.">
-    <meta property="og:image" content="IMG/logo-claro.png">
+    <meta property="og:image" content="ICONO/icono.png">
     <meta property="og:locale" content="es_PR">
     <meta property="og:locale:alternate" content="en_US">
 
@@ -92,12 +93,11 @@
 
     <!-- ============================ HERO ============================ -->
     <header class="hero" id="hero">
-        <!-- ▸ VIDEO DE FONDO: pon el tuyo en VIDEO/fondo.mp4 y entra solo -->
+        <!-- ▸ VIDEO DE FONDO: VIDEO/fondo.mp4 (computadora) y VIDEO/fondo-movil.mp4 (celular).
+             El poster se ve al instante mientras el video carga. script.js elige cuál bajar. -->
         <div class="hero__bg" data-parallax="-.14">
-            <video autoplay muted loop playsinline preload="metadata"
-                data-fallback="https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-luxury-yacht-sailing-41548-large.mp4">
-                <source src="VIDEO/fondo.mp4" type="video/mp4">
-            </video>
+            <video muted loop playsinline preload="none" poster="VIDEO/fondo-poster.webp"
+                data-src="VIDEO/fondo.mp4" data-src-mobile="VIDEO/fondo-movil.mp4"></video>
         </div>
 
         <div class="hero__inner" id="heroInner">
@@ -282,9 +282,14 @@
                         el control para comparar el estado original con el resultado entregado.</p>
                 </div>
                 <div class="ba reveal mask" data-d="1" id="ba" style="--pos:52%">
-                    <img class="ba__img" alt="Interior restaurado" loading="lazy" src="IMG/Despues-silla.webp">
-                    <img class="ba__img ba__top" alt="Interior antes de la restauración" loading="lazy"
-                        src="IMG/Antes-silla.webp">
+                    <img class="ba__img" alt="Interior restaurado" loading="lazy" decoding="async"
+                        src="IMG/Despues-silla.webp"
+                        srcset="IMG/sm/Despues-silla-800.webp 800w, IMG/Despues-silla.webp 1365w"
+                        sizes="(min-width:1330px) 1150px, 92vw" width="1365" height="768">
+                    <img class="ba__img ba__top" alt="Interior antes de la restauración" loading="lazy" decoding="async"
+                        src="IMG/Antes-silla.webp"
+                        srcset="IMG/sm/Antes-silla-800.webp 800w, IMG/Antes-silla.webp 1365w"
+                        sizes="(min-width:1330px) 1150px, 92vw" width="1365" height="768">
                     <span class="ba__tag ba__tag--l" data-en="Before">Antes</span>
                     <span class="ba__tag ba__tag--r" data-en="After">Después</span>
                     <input type="range" min="0" max="100" value="52" id="baRange" aria-label="Antes / Después"
@@ -367,7 +372,10 @@
 
                 <div class="gallery reveal" data-d="2" id="gallery">
                     <figure class="shot" data-cat="tapiceria" tabindex="0" role="button">
-                        <img src="IMG/trabajo-01.webp" alt="Cojinería de proa restaurada" loading="lazy">
+                        <img src="IMG/sm/trabajo-01-480.webp"
+                            srcset="IMG/sm/trabajo-01-480.webp 480w, IMG/sm/trabajo-01-800.webp 800w, IMG/trabajo-01.webp 1200w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-01.webp" alt="Cojinería de proa restaurada" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -376,7 +384,10 @@
                         <figcaption data-en="Bow cushions · 42' Express">Cojinería de proa · 42' Express</figcaption>
                     </figure>
                     <figure class="shot" data-cat="interiores" tabindex="0" role="button">
-                        <img src="IMG/trabajo-02.webp" alt="Camarote tapizado" loading="lazy">
+                        <img src="IMG/sm/trabajo-02-480.webp"
+                            srcset="IMG/sm/trabajo-02-480.webp 480w, IMG/trabajo-02.webp 736w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="640"
+                            data-full="IMG/trabajo-02.webp" alt="Camarote tapizado" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -385,7 +396,10 @@
                         <figcaption data-en="Master cabin">Camarote principal</figcaption>
                     </figure>
                     <figure class="shot" data-cat="capotas" tabindex="0" role="button">
-                        <img src="IMG/trabajo-03.webp" alt="Bimini y capota extendida instalados" loading="lazy">
+                        <img src="IMG/sm/trabajo-03-480.webp"
+                            srcset="IMG/sm/trabajo-03-480.webp 480w, IMG/sm/trabajo-03-800.webp 800w, IMG/trabajo-03.webp 1200w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-03.webp" alt="Bimini y capota extendida instalados" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -394,7 +408,10 @@
                         <figcaption data-en="Bimini &amp; extended top">Bimini &amp; capota extendida</figcaption>
                     </figure>
                     <figure class="shot" data-cat="tapiceria" tabindex="0" role="button">
-                        <img src="IMG/trabajo-04.webp" alt="Asientos de mando tapizados" loading="lazy">
+                        <img src="IMG/sm/trabajo-04-480.webp"
+                            srcset="IMG/sm/trabajo-04-480.webp 480w, IMG/sm/trabajo-04-800.webp 800w, IMG/trabajo-04.webp 1200w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-04.webp" alt="Asientos de mando tapizados" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -403,7 +420,10 @@
                         <figcaption data-en="Helm seating">Asientos de mando</figcaption>
                     </figure>
                     <figure class="shot" data-cat="interiores" tabindex="0" role="button">
-                        <img src="IMG/trabajo-05.webp" alt="Plafón y paredes de salón tapizados" loading="lazy">
+                        <img src="IMG/sm/trabajo-05-480.webp"
+                            srcset="IMG/sm/trabajo-05-480.webp 480w, IMG/sm/trabajo-05-800.webp 800w, IMG/trabajo-05.webp 1080w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-05.webp" alt="Plafón y paredes de salón tapizados" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -412,7 +432,10 @@
                         <figcaption data-en="Salon headliner &amp; walls">Plafón &amp; paredes de salón</figcaption>
                     </figure>
                     <figure class="shot" data-cat="plasticos" tabindex="0" role="button">
-                        <img src="IMG/trabajo-06.webp" alt="Enclosure blando con ventanas de PVC cristal" loading="lazy">
+                        <img src="IMG/sm/trabajo-06-480.webp"
+                            srcset="IMG/sm/trabajo-06-480.webp 480w, IMG/sm/trabajo-06-800.webp 800w, IMG/trabajo-06.webp 1200w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-06.webp" alt="Enclosure blando con ventanas de PVC cristal" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -421,8 +444,10 @@
                         <figcaption data-en="Soft enclosure · clear PVC">Enclosure blando · PVC cristal</figcaption>
                     </figure>
                     <figure class="shot" data-cat="interiores" tabindex="0" role="button">
-                        <img src="IMG/trabajo-07.webp" alt="Muebles y colchón a medida en camarote de proa"
-                            loading="lazy">
+                        <img src="IMG/sm/trabajo-07-480.webp"
+                            srcset="IMG/sm/trabajo-07-480.webp 480w, IMG/sm/trabajo-07-800.webp 800w, IMG/trabajo-07.webp 1080w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-07.webp" alt="Muebles y colchón a medida en camarote de proa" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -432,7 +457,10 @@
                         </figcaption>
                     </figure>
                     <figure class="shot" data-cat="plasticos" tabindex="0" role="button">
-                        <img src="IMG/trabajo-08.webp" alt="Enclosure duro con back drop" loading="lazy">
+                        <img src="IMG/sm/trabajo-08-480.webp"
+                            srcset="IMG/sm/trabajo-08-480.webp 480w, IMG/sm/trabajo-08-800.webp 800w, IMG/trabajo-08.webp 1080w"
+                            sizes="(min-width:1000px) min(22vw, 320px), (min-width:520px) 46vw, 60vw" width="480" height="480"
+                            data-full="IMG/trabajo-08.webp" alt="Enclosure duro con back drop" loading="lazy" decoding="async">
                         <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.8" stroke-linecap="round">
                                 <circle cx="11" cy="11" r="7" />
@@ -448,10 +476,8 @@
         <section class="videoband">
             <!-- VIDEO DE FONDO 2 ▸ VIDEO/taller.mp4 -->
             <div class="vbg" data-parallax="-.12">
-                <video autoplay muted loop playsinline preload="none"
-                    data-fallback="https://assets.mixkit.co/videos/preview/mixkit-yacht-sailing-in-the-middle-of-the-sea-41547-large.mp4">
-                    <source data-src="VIDEO/taller.mp4" type="video/mp4">
-                </video>
+                <video muted loop playsinline preload="none" poster="VIDEO/taller-poster.webp"
+                    data-src="VIDEO/taller.mp4" data-src-mobile="VIDEO/taller-movil.mp4"></video>
             </div>
             <div class="grain"></div>
             <div>
@@ -472,14 +498,10 @@
         </section>
 
         <!-- ============================ TESTIMONIOS ============================ -->
-        <!-- ▸ VIDEO DE FONDO de esta banda: VIDEO/clientes.mp4 (opcional) -->
+        <!-- ▸ VIDEO DE FONDO de esta banda (opcional): sube VIDEO/clientes.mp4 y agrega dentro del .vbg
+             <video muted loop playsinline preload="none" data-src="VIDEO/clientes.mp4"></video> -->
         <section class="quotes-band">
-            <div class="vbg" data-parallax="-.10">
-                <video autoplay muted loop playsinline preload="none"
-                    data-fallback="https://assets.mixkit.co/videos/preview/mixkit-yacht-sailing-in-the-middle-of-the-sea-41547-large.mp4">
-                    <source data-src="VIDEO/clientes.mp4" type="video/mp4">
-                </video>
-            </div>
+            <div class="vbg" data-parallax="-.10"></div>
             <div class="grain"></div>
 
             <div class="wrap">

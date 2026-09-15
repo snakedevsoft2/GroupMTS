@@ -54,47 +54,72 @@ function applyLang(lang){
 /* ---------- Año ---------- */
 $('#year').textContent = new Date().getFullYear();
 
-/* ---------- Video de fondo: usa el tuyo, si no existe cae al de muestra ----------
-   Los videos que no se ven al abrir la pagina llevan data-src en su <source>:
-   solo se descargan cuando el visitante se acerca a esa seccion. */
+/* ---------- Videos de fondo ----------
+   Ningun video trae src en el HTML (el poster se ve al instante):
+   - en pantallas chicas se baja la version liviana (data-src-mobile);
+   - con "ahorro de datos" o conexion 2G no se baja nada y queda el poster;
+   - solo se descargan al acercarse a su seccion y se pausan al salir de
+     pantalla, para no gastar bateria ni procesador. */
+var conn = navigator.connection || {};
+var liteData = !!conn.saveData || /2g/.test(conn.effectiveType || '');
+var smallScreen = window.matchMedia('(max-width: 900px)').matches;
+var autoVideo = !liteData;
 function playVideo(v){ var p = v.play(); if(p && p.catch) p.catch(function(){}); }
 function loadVideo(v){
-  var src = v.querySelector('source[data-src]');
-  if(!src) return;
-  src.setAttribute('src', src.getAttribute('data-src'));
-  src.removeAttribute('data-src');
-  v.load(); playVideo(v);
+  if(v.getAttribute('src')) return true;
+  var s = (smallScreen && v.getAttribute('data-src-mobile')) || v.getAttribute('data-src');
+  if(!s) return false;
+  v.setAttribute('src', s);
+  return true;
 }
-var lazyVideos = [];
-$$('video[data-fallback]').forEach(function(v){
-  var src = v.querySelector('source');
-  if(!src) return;
-  src.addEventListener('error', function(){
-    var fb = v.getAttribute('data-fallback');
-    if(fb && src.getAttribute('src') !== fb){
-      src.setAttribute('src', fb); v.load(); playVideo(v);
-    }
-  });
-  if(src.hasAttribute('data-src')) lazyVideos.push(v); else playVideo(v);
-});
-if('IntersectionObserver' in window){
-  var vio = new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ loadVideo(e.target); vio.unobserve(e.target); } });
-  }, {rootMargin: '400px 0px'});
-  lazyVideos.forEach(function(v){ vio.observe(v); });
-} else {
-  lazyVideos.forEach(loadVideo);
+var bgVideos = $$('video[data-src]');
+function startVideos(){
+  if('IntersectionObserver' in window){
+    var vio = new IntersectionObserver(function(en){
+      en.forEach(function(e){
+        var v = e.target;
+        if(e.isIntersecting){
+          if(autoVideo && !v.dataset.userPaused && loadVideo(v)) playVideo(v);
+        } else if(!v.paused){
+          v.pause();
+        }
+      });
+    }, {rootMargin: '300px 0px'});
+    bgVideos.forEach(function(v){ vio.observe(v); });
+  } else if(autoVideo){
+    bgVideos.forEach(function(v){ if(loadVideo(v)) playVideo(v); });
+  }
 }
+/* Los videos esperan a que carguen fotos, fuentes y estilos: el poster
+   cubre ese instante y la pagina queda lista antes. */
+if(document.readyState === 'complete') startVideos();
+else window.addEventListener('load', startVideos);
 
 /* Botón play/pausa de la banda de video */
-var playBtn = $('#playBtn');
-if(playBtn){
+var playBtn = $('#playBtn'), bandVideo = $('.videoband video');
+if(playBtn && bandVideo){
+  var syncPlayBtn = function(){
+    playBtn.innerHTML = bandVideo.paused
+      ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>';
+  };
+  bandVideo.addEventListener('play', syncPlayBtn);
+  bandVideo.addEventListener('pause', syncPlayBtn);
   playBtn.addEventListener('click', function(){
-    var v = $('.videoband video');
-    if(!v) return;
-    if(v.paused){ v.play(); playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>'; }
-    else { v.pause(); playBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'; }
+    if(bandVideo.paused){
+      delete bandVideo.dataset.userPaused;
+      if(loadVideo(bandVideo)) playVideo(bandVideo);
+    } else {
+      bandVideo.dataset.userPaused = '1';
+      bandVideo.pause();
+    }
   });
+}
+
+/* Ejecuta fn solo mientras el elemento esta en pantalla (para los bucles de animacion) */
+function whileVisible(el, onChange){
+  if(!el || !('IntersectionObserver' in window)){ onChange(true); return; }
+  new IntersectionObserver(function(en){ onChange(en[0].isIntersecting); }, {rootMargin: '100px 0px'}).observe(el);
 }
 
 /* ---------- Logo a prueba de TODO ----------
@@ -271,17 +296,19 @@ if('IntersectionObserver' in window){
 var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 if(fine && !reduce){
   var cur = $('.cursor'), dot = $('.cursor-dot');
-  var cx = 0, cy = 0, tx = 0, ty = 0;
+  var cx = 0, cy = 0, tx = 0, ty = 0, curRaf = 0;
   document.addEventListener('mousemove', function(e){
     tx = e.clientX; ty = e.clientY;
     dot.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
-    document.body.classList.add('cursor-on');
-  });
-  (function loop(){
+    if(!document.body.classList.contains('cursor-on')) document.body.classList.add('cursor-on');
+    if(!curRaf) curRaf = requestAnimationFrame(curLoop);
+  }, {passive:true});
+  /* El aro sigue al puntero y el bucle se apaga solo cuando lo alcanza */
+  function curLoop(){
     cx += (tx - cx) * .16; cy += (ty - cy) * .16;
     cur.style.transform = 'translate(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px)';
-    requestAnimationFrame(loop);
-  })();
+    curRaf = (Math.abs(tx - cx) > .1 || Math.abs(ty - cy) > .1) ? requestAnimationFrame(curLoop) : 0;
+  }
   $$('a, button, .shot, summary, .ba').forEach(function(el){
     el.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-hot'); });
     el.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-hot'); });
@@ -329,26 +356,40 @@ if(mqTrack){
   mqBox.addEventListener('mouseleave', function(){ mqHover = false; });
   window.addEventListener('resize', measureMarquee, {passive:true});
 
-  (function mqTick(){
+  /* Solo corre mientras la marquesina esta en pantalla. La velocidad se
+     ajusta al tiempo real entre cuadros, asi va igual en pantallas de
+     60 Hz, 120 Hz o en equipos lentos. */
+  var mqRaf = 0, mqOn = false, mqT = 0;
+  var mqStart = function(){
+    if(mqRaf || !mqOn) return;
+    mqLastY = window.scrollY; mqT = 0;
+    mqRaf = requestAnimationFrame(mqTick);
+  };
+  var mqTick = function(ts){
+    mqRaf = 0;
+    if(!mqOn) return;
+    var k = mqT ? Math.min(3, (ts - mqT) / 16.667) : 1;
+    mqT = ts;
     var y = window.scrollY;
     if(!reduce){
-      mqVel += (y - mqLastY) * 0.45; // el scroll la empuja
-      mqVel *= 0.90;                 // y se va frenando sola
+      mqVel += (y - mqLastY) * 0.45;   // el scroll la empuja
+      mqVel *= Math.pow(0.90, k);      // y se va frenando sola
     }
     mqLastY = y;
 
     // Con "reducir movimiento" del sistema va mas lenta y sin empujon de scroll,
     // pero no se detiene: es la unica animacion que mantenemos.
     var base = reduce ? 1.1 : (mqHover ? 0.35 : 1.7);
-    mqX -= base + mqVel;
+    mqX -= base * k + mqVel;
 
     if(mqGroupW > 0){
       while(mqX <= -mqGroupW){ mqX += mqGroupW; measureMarquee(); }
       while(mqX > 0){ mqX -= mqGroupW; }
     }
     mqTrack.style.transform = 'translate3d(' + mqX.toFixed(2) + 'px,0,0)';
-    requestAnimationFrame(mqTick);
-  })();
+    mqRaf = requestAnimationFrame(mqTick);
+  };
+  whileVisible(mqBox, function(vis){ mqOn = vis; if(vis) mqStart(); });
 }
 
 /* ---------- Antes / después ---------- */
@@ -405,15 +446,25 @@ $$('.filter').forEach(function(btn){
 var lb = $('#lb'), lbImg = $('#lbImg'), lbCap = $('#lbCap'), lbCount = $('#lbCount');
 var idx = 0, lastFocus = null;
 function visibleShots(){ return shots.filter(function(s){ return !s.classList.contains('hide'); }); }
+/* La galeria muestra miniaturas; el lightbox usa la foto grande (data-full) */
+function fullSrc(s){
+  var im = s && s.querySelector('img');
+  return im ? (im.getAttribute('data-full') || im.currentSrc || im.src) : '';
+}
 function show(i){
   var list = visibleShots();
   if(!list.length) return;
   idx = (i + list.length) % list.length;
   var s = list[idx], im = s.querySelector('img');
-  lbImg.src = im ? im.currentSrc || im.src : '';
+  lbImg.src = fullSrc(s);
   lbImg.alt = im ? im.alt : '';
   lbCap.textContent = s.querySelector('figcaption').textContent;
   lbCount.textContent = (idx + 1) + ' / ' + list.length;
+  // precarga la anterior y la siguiente para que las flechas respondan al instante
+  [idx - 1, idx + 1].forEach(function(j){
+    var src = fullSrc(list[(j + list.length) % list.length]);
+    if(src) (new Image()).src = src;
+  });
 }
 function openLb(s){
   lastFocus = document.activeElement;
@@ -468,17 +519,27 @@ if(car){
   ['mouseenter','pointerdown','focusin'].forEach(function(ev){ car.addEventListener(ev, carStop); });
   ['mouseleave','focusout'].forEach(function(ev){ car.addEventListener(ev, carStart); });
 
-  (function carTick(){
-    if(!carPause && !document.hidden && !reduce){
-      car.scrollLeft += 0.6;              /* velocidad del desfile */
+  /* El desfile solo corre mientras el carrusel esta en pantalla */
+  var carRaf = 0, carOn = false, carT = 0;
+  var carTick = function(ts){
+    carRaf = 0;
+    if(!carOn) return;
+    var k = carT ? Math.min(3, (ts - carT) / 16.667) : 1;
+    carT = ts;
+    if(!carPause && !reduce){
+      car.scrollLeft += 0.6 * k;          /* velocidad del desfile */
     }
     var h = carHalf();
     if(h > 0){
       if(car.scrollLeft >= h) car.scrollLeft -= h;
       else if(car.scrollLeft < 0) car.scrollLeft += h;
     }
-    requestAnimationFrame(carTick);
-  })();
+    carRaf = requestAnimationFrame(carTick);
+  };
+  whileVisible(car, function(vis){
+    carOn = vis;
+    if(vis && !carRaf){ carT = 0; carRaf = requestAnimationFrame(carTick); }
+  });
 
   var down = false, startX = 0, startL = 0, moved = 0;
   car.addEventListener('pointerdown', function(e){
