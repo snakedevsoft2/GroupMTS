@@ -212,11 +212,12 @@ function heroFade(){
 
 /* ---------- Bucle de scroll con rAF ---------- */
 var ticking = false;
+var revealFallback = function(){};   // lo define el revelado, mas abajo
 function onScroll(){
   if(ticking) return;
   ticking = true;
   requestAnimationFrame(function(){
-    navScroll(); progress(); parallax(); heroFade();
+    navScroll(); progress(); parallax(); heroFade(); revealFallback();
     ticking = false;
   });
 }
@@ -241,9 +242,30 @@ drawer.addEventListener('click', function(e){ if(e.target.tagName === 'A') setMe
 /* ---------- Revelado + scrollspy ---------- */
 if('IntersectionObserver' in window){
   var io = new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    en.forEach(function(e){ if(e.isIntersecting) settle(e.target); });
   }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
-  $$('.reveal, .mask').forEach(function(el){ io.observe(el); });
+  var pendingReveal = $$('.reveal, .mask');
+  function settle(el){
+    el.classList.add('in');
+    io.unobserve(el);
+    var i = pendingReveal.indexOf(el);
+    if(i > -1) pendingReveal.splice(i, 1);
+  }
+  pendingReveal.forEach(function(el){ io.observe(el); });
+
+  /* Red de seguridad: en algunos navegadores móviles el IntersectionObserver
+     no dispara cuando la barra de direcciones aparece/desaparece a medio scroll
+     (cambia el alto del viewport). Sin esto, esas secciones podían quedar
+     invisibles para siempre (p.ej. las fotos de antes/después). */
+  revealFallback = function(){
+    if(!pendingReveal.length) return;
+    var vh = window.innerHeight;
+    pendingReveal.slice().forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < vh * 1.15 && r.bottom > -vh * 0.3) settle(el);
+    });
+  };
+  revealFallback();
 
   var spy = new IntersectionObserver(function(en){
     en.forEach(function(e){
@@ -394,6 +416,21 @@ if(mqTrack){
 
 /* ---------- Antes / después ---------- */
 var ba = $('#ba'), range = $('#baRange');
+if(ba){
+  /* Si el recorte pequeño (IMG/sm/...) falla en una red móvil o el archivo
+     no existe en el servidor, reintenta una vez con la imagen grande del
+     atributo src en vez de dejar el hueco en blanco. */
+  $$('.ba__img', ba).forEach(function(img){
+    img.addEventListener('error', function handler(){
+      img.removeEventListener('error', handler);
+      if(img.hasAttribute('srcset')){
+        img.removeAttribute('srcset');
+        img.removeAttribute('sizes');
+        img.src = img.getAttribute('src');
+      }
+    });
+  });
+}
 if(ba && range){
   var setPos = function(v){
     v = Math.max(0, Math.min(100, v));
